@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.system.mapper.DictMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.modules.system.domain.Dict">
+        <id column="dict_id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <collection property="dictDetails" ofType="me.zhengjie.modules.system.domain.DictDetail">
+            <id column="dd_id" property="id" jdbcType="BIGINT"/>
+            <result column="label" property="label" jdbcType="VARCHAR"/>
+            <result column="value" property="value" jdbcType="VARCHAR"/>
+            <result column="dd_create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        d.dict_id, d.name, d.description, d.create_by, d.update_by, d.create_time, d.update_time
+    </sql>
+
+    <sql id="Dict_Details_Column_List">
+        dd.detail_id as dd_id, dd.label, dd.`value`, dd.create_time as dd_create_time
+    </sql>
+
+    <sql id="Where_sql">
+        <where>
+            <if test="criteria.blurry != null and criteria.blurry != ''">
+                and (
+                    d.name like concat('%', #{criteria.blurry}, '%')
+                    or d.description like concat('%', #{criteria.blurry}, '%')
+                )
+            </if>
+        </where>
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT d.*,
+        <include refid="Dict_Details_Column_List"/>
+        from (
+            select <include refid="Base_Column_List"/>
+            from sys_dict d
+            <include refid="Where_sql"/>
+            <if test="criteria.offset != null">
+                limit #{criteria.offset}, #{criteria.size}
+            </if>
+        ) d
+        left join sys_dict_detail dd on d.dict_id = dd.dict_id
+        order by d.dict_id desc
+    </select>
+
+    <select id="countAll" resultType="java.lang.Long">
+        select count(*)
+        from sys_dict d
+        <include refid="Where_sql"/>
+    </select>
+</mapper>

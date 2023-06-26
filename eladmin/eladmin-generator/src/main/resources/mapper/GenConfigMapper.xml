@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.mapper.GenConfigMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.domain.GenConfig">
+        <id column="config_id" property="id"/>
+        <result column="table_name" property="tableName"/>
+        <result column="api_alias" property="apiAlias"/>
+        <result column="pack" property="pack"/>
+        <result column="module_name" property="moduleName"/>
+        <result column="path" property="path"/>
+        <result column="api_path" property="apiPath"/>
+        <result column="author" property="author"/>
+        <result column="prefix" property="prefix"/>
+        <result column="cover" property="cover"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        config_id, table_name, api_alias, pack, module_name, path, api_path, author, prefix, cover
+    </sql>
+
+    <select id="findByTableName" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM code_gen_config
+        WHERE table_name = #{tableName}
+    </select>
+</mapper>

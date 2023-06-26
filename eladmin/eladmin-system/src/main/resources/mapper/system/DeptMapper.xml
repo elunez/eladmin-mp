@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.system.mapper.DeptMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.modules.system.domain.Dept">
+        <id column="dept_id" property="id"/>
+        <result column="dept_sort" property="deptSort"/>
+        <result column="name" property="name"/>
+        <result column="enabled" property="enabled"/>
+        <result column="pid" property="pid"/>
+        <result column="sub_count" property="subCount"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="BaseResultMap">
+        dept_id, name, pid, sub_count, create_time, update_time, create_by, update_by, enabled, dept_sort
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="BaseResultMap"/>
+        from sys_dept
+        <where>
+            <if test="criteria.ids != null and criteria.ids.size() > 0">
+                and dept_id in
+                <foreach collection="criteria.ids" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="criteria.name != null and criteria.name != ''">
+                and name like concat('%', #{criteria.name}, '%')
+            </if>
+            <if test="criteria.enabled != null">
+                and enabled = #{criteria.enabled}
+            </if>
+            <if test="criteria.pid != null">
+                and pid = #{criteria.pid}
+            </if>
+            <if test="criteria.pidIsNull != null">
+                and pid is null
+            </if>
+            <if test="criteria.createTime != null and criteria.createTime.size() != 0">
+                and create_time between #{criteria.createTime[0]} and #{criteria.createTime[1]}
+            </if>
+        </where>
+        order by dept_sort
+    </select>
+
+    <select id="findByPid" resultMap="BaseResultMap">
+        select
+        <include refid="BaseResultMap"/>
+        from sys_dept
+        where pid = #{pid}
+    </select>
+
+    <select id="findByPidIsNull" resultMap="BaseResultMap">
+        select
+        <include refid="BaseResultMap"/>
+        from sys_dept
+        where pid is null
+    </select>
+
+    <select id="findByRoleId" resultType="me.zhengjie.modules.system.domain.Dept">
+        select d.dept_id as id, d.name, d.pid, d.sub_count, d.create_time, d.update_time, d.create_by, d.update_by, d.enabled, d.dept_sort
+        from sys_dept d, sys_roles_depts r
+        where d.dept_id = r.dept_id and r.role_id = #{roleId}
+    </select>
+</mapper>

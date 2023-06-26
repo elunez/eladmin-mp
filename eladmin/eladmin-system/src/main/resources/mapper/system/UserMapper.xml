@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.system.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.modules.system.domain.User">
+        <id column="user_user_id" property="id"/>
+        <result column="user_dept_id" property="deptId"/>
+        <result column="user_username" property="username"/>
+        <result column="user_nick_name" property="nickName"/>
+        <result column="user_email" property="email"/>
+        <result column="user_phone" property="phone"/>
+        <result column="user_gender" property="gender"/>
+        <result column="user_avatar_name" property="avatarName"/>
+        <result column="user_avatar_path" property="avatarPath"/>
+        <result column="user_password" property="password"/>
+        <result column="user_is_admin" property="isAdmin"/>
+        <result column="user_enabled" property="enabled"/>
+        <result column="user_pwd_reset_time" property="pwdResetTime"/>
+        <result column="user_create_by" property="createBy"/>
+        <result column="user_update_by" property="updateBy"/>
+        <result column="user_create_time" property="createTime"/>
+        <result column="user_update_time" property="updateTime"/>
+        <association property="dept" javaType="me.zhengjie.modules.system.domain.Dept">
+            <id column="dept_id" property="id"/>
+            <result column="dept_name" property="name"/>
+        </association>
+        <collection property="jobs" ofType="me.zhengjie.modules.system.domain.Job">
+            <id column="job_id" property="id"/>
+            <result column="job_name" property="name"/>
+        </collection>
+        <collection property="roles" ofType="me.zhengjie.modules.system.domain.Role">
+            <id column="role_id" property="id"/>
+            <result column="role_name" property="name"/>
+            <result column="role_level" property="level"/>
+            <result column="role_data_scope" property="dataScope"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+           u.user_id as user_user_id, u.dept_id as user_dept_id, u.username as user_username,
+           u.nick_name as user_nick_name, u.email as user_email, u.phone as user_phone,
+           u.gender as user_gender, u.avatar_name as user_avatar_name, u.avatar_path as user_avatar_path,
+           u.enabled as user_enabled, u.pwd_reset_time as user_pwd_reset_time, u.create_by as user_create_by,
+           u.update_by as user_update_by, u.create_time as user_create_time, u.update_time as user_update_time,
+           d.dept_id as dept_id, d.name as dept_name
+    </sql>
+
+    <sql id="Job_Column_List">
+        j.job_id as job_id, j.name as job_name
+    </sql>
+
+    <sql id="Role_Column_List">
+        r.role_id as role_id, r.name as role_name, r.level as role_level, r.data_scope as role_data_scope
+    </sql>
+
+    <sql id="Whrer_Sql">
+        <where>
+            <if test="criteria.id != null">
+                and u.user_id = #{criteria.id}
+            </if>
+            <if test="criteria.enabled != null">
+                and u.enabled = #{criteria.enabled}
+            </if>
+            <if test="criteria.deptId != null">
+                and u.dept_id = #{criteria.deptId}
+            </if>
+            <if test="criteria.deptIds != null and criteria.deptIds.size() != 0">
+                and u.dept_id in
+                <foreach collection="criteria.deptIds" item="deptId" open="(" separator="," close=")">
+                    #{deptId}
+                </foreach>
+            </if>
+            <if test="criteria.blurry != null and criteria.blurry != ''">
+                and (
+                u.username like concat('%', #{criteria.blurry}, '%')
+                or u.nick_name like concat('%', #{criteria.blurry}, '%')
+                or u.email like concat('%', #{criteria.blurry}, '%')
+                )
+            </if>
+            <if test="criteria.createTime != null and criteria.createTime.size() != 0">
+                and u.create_time between #{criteria.createTime[0]} and #{criteria.createTime[1]}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select u.*,
+        <include refid="Job_Column_List"/>,
+        <include refid="Role_Column_List"/>
+        from (
+            select
+            <include refid="Base_Column_List"/>
+            from sys_user u
+            left join sys_dept d on u.dept_id = d.dept_id
+            <include refid="Whrer_Sql"/>
+            <if test="criteria.offset != null">
+                limit #{criteria.offset}, #{criteria.size}
+            </if>
+        ) u
+        left join sys_users_jobs suj on u.user_user_id = suj.user_id
+        left join sys_job j on suj.job_id = j.job_id
+        left join sys_users_roles sur on suj.user_id = sur.user_id
+        left join sys_role r on sur.role_id = r.role_id
+        order by u.user_user_id desc
+    </select>
+
+    <select id="countAll" resultType="java.lang.Long">
+        select count(*)
+        from sys_user u
+        <include refid="Whrer_Sql"/>
+    </select>
+
+    <select id="findByUsername" resultMap="BaseResultMap">
+        select
+        u.password user_password, u.is_admin user_is_admin,
+        <include refid="Base_Column_List"/>
+        from sys_user u
+        left join sys_dept d on u.dept_id = d.dept_id
+        where u.username = #{username}
+    </select>
+
+    <select id="findByEmail" resultType="me.zhengjie.modules.system.domain.User">
+        select user_id as id, username from sys_user
+        where email = #{email}
+    </select>
+
+    <select id="findByPhone" resultType="me.zhengjie.modules.system.domain.User">
+        select user_id as id, username from sys_user
+        where phone = #{phone}
+    </select>
+
+    <select id="findByRoleId" resultType="me.zhengjie.modules.system.domain.User">
+        SELECT u.user_id as id, u.username FROM sys_user u, sys_users_roles r
+        WHERE u.user_id = r.user_id AND r.role_id = #{roleId}
+        group by u.user_id
+    </select>
+
+    <select id="findByRoleDeptId" resultType="me.zhengjie.modules.system.domain.User">
+        SELECT u.* FROM sys_user u, sys_users_roles r, sys_roles_depts d
+        WHERE u.user_id = r.user_id AND r.role_id = d.role_id AND d.dept_id = #{deptId}
+        group by u.user_id
+    </select>
+
+    <select id="findByMenuId" resultType="me.zhengjie.modules.system.domain.User">
+        SELECT u.user_id as id, u.username FROM sys_user u, sys_users_roles ur, sys_roles_menus rm
+        WHERE u.user_id = ur.user_id AND ur.role_id = rm.role_id AND rm.menu_id = #{menuId}
+        group by u.user_id
+    </select>
+
+    <select id="countByJobs" resultType="int">
+        SELECT count(*) FROM sys_user u, sys_users_jobs j
+        WHERE u.user_id = j.user_id AND j.job_id IN
+        <foreach collection="jobIds" item="jobId" open="(" separator="," close=")">
+            #{jobId}
+        </foreach>
+    </select>
+
+    <select id="countByDepts" resultType="int">
+        SELECT count(*) FROM sys_user u
+        WHERE u.dept_id IN
+        <foreach collection="deptIds" item="deptId" open="(" separator="," close=")">
+            #{deptId}
+        </foreach>
+    </select>
+
+    <select id="countByRoles" resultType="int">
+        SELECT count(*) FROM sys_user u, sys_users_roles r
+        WHERE u.user_id = r.user_id AND r.role_id in
+        <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </select>
+</mapper>

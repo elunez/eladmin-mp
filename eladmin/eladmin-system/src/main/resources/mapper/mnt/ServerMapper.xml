@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatiorg//DTD Mapper 3.0//EN" "http://mybatiorg/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.mnt.mapper.ServerMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.modules.mnt.domain.Server">
+        <id column="server_id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="ip" property="ip"/>
+        <result column="port" property="port"/>
+        <result column="account" property="account"/>
+        <result column="password" property="password"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        server_id, name, ip, port, account, password, create_by, update_by, create_time, update_time
+    </sql>
+
+    <select id="findByIp" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM mnt_server
+        <where>
+            ip = #{ip}
+        </where>
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM mnt_server
+        <where>
+            <if test="criteria.blurry != null and criteria.blurry != ''">
+                AND (
+                    name LIKE CONCAT('%',#{criteria.blurry},'%')
+                    or ip LIKE CONCAT('%',#{criteria.blurry},'%')
+                )
+            </if>
+            <if test="criteria.createTime != null and criteria.createTime.size() != 0">
+                AND create_time BETWEEN #{criteria.createTime[0]} AND #{criteria.createTime[1]}
+            </if>
+        </where>
+        order by server_id desc
+    </select>
+</mapper>

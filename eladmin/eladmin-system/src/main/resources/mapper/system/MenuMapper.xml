@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.system.mapper.MenuMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.modules.system.domain.Menu">
+        <id column="menu_id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="name" property="componentName"/>
+        <result column="menu_sort" property="menuSort"/>
+        <result column="component" property="component"/>
+        <result column="path" property="path"/>
+        <result column="type" property="type"/>
+        <result column="permission" property="permission"/>
+        <result column="icon" property="icon"/>
+        <result column="cache" property="cache"/>
+        <result column="hidden" property="hidden"/>
+        <result column="pid" property="pid"/>
+        <result column="sub_count" property="subCount"/>
+        <result column="i_frame" property="iFrame"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        menu_id, title, name, menu_sort, component, path, type, permission, icon, cache, hidden, pid, sub_count, i_frame, create_by, update_by, create_time, update_time
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        <where>
+            <if test="criteria.blurry != null and criteria.blurry != ''">
+                and (
+                    title like concat('%',#{criteria.blurry},'%')
+                    or name like concat('%',#{criteria.blurry},'%')
+                    or permission like concat('%',#{criteria.blurry},'%')
+                )
+            </if>
+            <if test="criteria.pidIsNull != null">
+                and pid is null
+            </if>
+            <if test="criteria.pid != null">
+                and pid = #{criteria.pid}
+            </if>
+            <if test="criteria.createTime != null and criteria.createTime.size() != 0">
+                and create_time between #{criteria.createTime[0]} and #{criteria.createTime[1]}
+            </if>
+        </where>
+        order by menu_sort
+    </select>
+
+    <select id="findByRoleIdsAndTypeNot" resultMap="BaseResultMap">
+        SELECT m.* FROM sys_menu m, sys_roles_menus r
+        WHERE m.menu_id = r.menu_id AND r.role_id IN
+        <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+        AND type != #{type}
+        order by m.menu_sort
+    </select>
+
+    <select id="findByPidOrderByMenuSort" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        WHERE pid = #{pid}
+        ORDER BY menu_sort
+    </select>
+
+    <select id="findByPidIsNullOrderByMenuSort" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        where pid is null
+        order by menu_sort
+    </select>
+</mapper>

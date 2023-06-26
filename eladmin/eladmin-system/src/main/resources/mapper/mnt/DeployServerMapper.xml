@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.mnt.mapper.DeployServerMapper">
+
+    <insert id="insertData">
+        insert into mnt_deploy_server (deploy_id, server_id)
+        values
+        <foreach collection="servers" item="item" open="(" separator="),(" close=")">
+            #{deployId}, #{item.id}
+        </foreach>
+    </insert>
+
+    <delete id="deleteByDeployId">
+        delete from mnt_deploy_server
+        where deploy_id = #{deployId}
+    </delete>
+
+    <delete id="deleteByDeployIds">
+        delete from mnt_deploy_server
+        where deploy_id in
+        <foreach collection="deployIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByServerIds">
+        delete from mnt_deploy_server
+        where server_id in
+        <foreach collection="serverIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

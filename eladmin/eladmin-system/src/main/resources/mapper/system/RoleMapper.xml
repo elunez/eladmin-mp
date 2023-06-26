@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.system.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.modules.system.domain.Role">
+        <id column="role_role_id" property="id"/>
+        <result column="role_name" property="name"/>
+        <result column="role_data_scope" property="dataScope"/>
+        <result column="role_level" property="level"/>
+        <result column="role_description" property="description"/>
+        <result column="role_create_by" property="createBy"/>
+        <result column="role_update_by" property="updateBy"/>
+        <result column="role_create_time" property="createTime"/>
+        <result column="role_update_time" property="updateTime"/>
+        <collection property="menus" ofType="me.zhengjie.modules.system.domain.Menu">
+            <id column="menu_id" property="id"/>
+            <result column="menu_title" property="title"/>
+            <result column="menu_permission" property="permission"/>
+        </collection>
+        <collection property="depts" ofType="me.zhengjie.modules.system.domain.Dept">
+            <id column="dept_id" property="id"/>
+            <result column="dept_name" property="name"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        role.role_id as role_role_id, role.name as role_name, role.data_scope as role_data_scope,
+        role.level as role_level, role.description as role_description, role.create_by as role_create_by,
+        role.update_by as role_update_by, role.create_time as role_create_time, role.update_time as role_update_time
+    </sql>
+
+    <sql id="Menu_Column_List">
+        menu.menu_id as menu_id, menu.title as menu_title, menu.permission as menu_permission
+    </sql>
+
+    <sql id="Dept_Column_List">
+        dept.dept_id as dept_id, dept.name as dept_name
+    </sql>
+
+    <sql id="Where_sql">
+        <where>
+            <if test="criteria.blurry != null and criteria.blurry != ''">
+                and (
+                role.name like concat('%', #{criteria.blurry}, '%')
+                or role.description like concat('%', #{criteria.blurry}, '%')
+                )
+            </if>
+            <if test="criteria.createTime != null and criteria.createTime.size() != 0">
+                and role.create_time between #{criteria.createTime[0]} and #{criteria.createTime[1]}
+            </if>
+        </where>
+    </sql>
+
+    <select id="queryAll" resultType="me.zhengjie.modules.system.domain.Role">
+        select role_id as id, name, level
+        from sys_role order by level
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select role.*,
+        <include refid="Dept_Column_List"/>,
+        <include refid="Menu_Column_List"/>
+        from (
+            select
+            <include refid="Base_Column_List"/>
+            from sys_role role
+            <include refid="Where_sql"/>
+            <if test="criteria.offset != null">
+                limit #{criteria.offset}, #{criteria.size}
+            </if>
+        ) role
+        left join sys_roles_menus srm on role.role_role_id = srm.role_id
+        left join  sys_menu menu on menu.menu_id = srm.menu_id
+        left join sys_roles_depts srd on role.role_role_id = srd.role_id
+        left join sys_dept dept on dept.dept_id = srd.dept_id
+        order by role.role_level
+    </select>
+
+    <select id="countAll" resultType="java.lang.Long">
+        select count(*)
+        from sys_role role
+        <include refid="Where_sql"/>
+    </select>
+
+    <select id="findByName" resultType="me.zhengjie.modules.system.domain.Role">
+        select role_id as id from sys_role
+        where name = #{name}
+    </select>
+
+    <select id="findById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Dept_Column_List"/>,
+        <include refid="Menu_Column_List"/>
+        from sys_role role
+        left join sys_roles_menus srm on role.role_id = srm.role_id
+        left join sys_menu menu on menu.menu_id = srm.menu_id
+        left join sys_roles_depts srd on role.role_id = srd.role_id
+        left join sys_dept dept on dept.dept_id = srd.dept_id
+        where role.role_id = #{roleId}
+    </select>
+
+    <select id="findByUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>,
+        <include refid="Dept_Column_List"/>,
+        <include refid="Menu_Column_List"/>
+        from sys_role role
+        left join sys_roles_menus srm on role.role_id = srm.role_id
+        left join sys_menu menu on menu.menu_id = srm.menu_id
+        left join sys_roles_depts srd on role.role_id = srd.role_id
+        left join sys_dept dept on dept.dept_id = srd.dept_id
+        left join sys_users_roles ur on role.role_id = ur.role_id
+        WHERE role.role_id = ur.role_id AND ur.user_id = #{userId}
+    </select>
+</mapper>

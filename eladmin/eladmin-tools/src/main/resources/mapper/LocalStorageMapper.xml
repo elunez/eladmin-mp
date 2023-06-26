@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.mapper.LocalStorageMapper">
+
+    <resultMap id="BaseResultMap" type="me.zhengjie.domain.LocalStorage">
+        <id column="storage_id" property="id" jdbcType="BIGINT"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="suffix" property="suffix" jdbcType="VARCHAR"/>
+        <result column="size" property="size" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        storage_id, real_name, name, suffix, size, type, create_time, update_time, create_by, update_by
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tool_local_storage
+        <where>
+            <if test="criteria.blurry != null and criteria.blurry != ''">
+                AND (
+                    name LIKE CONCAT('%',#{criteria.blurry},'%')
+                    OR suffix LIKE CONCAT('%',#{criteria.blurry},'%')
+                    OR type LIKE CONCAT('%',#{criteria.blurry},'%')
+                    OR create_by LIKE CONCAT('%',#{criteria.blurry},'%')
+                )
+            </if>
+            <if test="criteria.createTime != null and criteria.createTime.size() > 0">
+                AND update_time BETWEEN #{criteria.createTime[0]} AND #{criteria.createTime[1]}
+            </if>
+        </where>
+        ORDER BY storage_id DESC
+    </select>
+</mapper>

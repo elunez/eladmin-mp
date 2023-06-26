@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.quartz.mapper.QuartzJobMapper">
+
+    <resultMap id="BaseResultMap" type="me.zhengjie.modules.quartz.domain.QuartzJob">
+        <id column="job_id" property="id" jdbcType="BIGINT"/>
+        <result column="job_name" property="jobName" jdbcType="VARCHAR"/>
+        <result column="bean_name" property="beanName" jdbcType="VARCHAR"/>
+        <result column="method_name" property="methodName" jdbcType="VARCHAR"/>
+        <result column="params" property="params" jdbcType="VARCHAR"/>
+        <result column="cron_expression" property="cronExpression" jdbcType="VARCHAR"/>
+        <result column="is_pause" property="isPause" jdbcType="TINYINT"/>
+        <result column="person_in_charge" property="personInCharge" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="sub_task" property="subTask" jdbcType="VARCHAR"/>
+        <result column="pause_after_failure" property="pauseAfterFailure" jdbcType="TINYINT"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        job_id, job_name, bean_name, method_name, params, cron_expression, is_pause, person_in_charge, email, sub_task, pause_after_failure, description, create_time, update_time, create_by, update_by
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_quartz_job
+        <where>
+            <if test="criteria.jobName != null and criteria.jobName != ''">
+                AND job_name LIKE CONCAT('%',#{criteria.jobName},'%')
+            </if>
+            <if test="criteria.createTime != null and criteria.createTime.size() > 0">
+                AND update_time BETWEEN #{criteria.createTime[0]} AND #{criteria.createTime[1]}
+            </if>
+        </where>
+        ORDER BY job_id DESC
+    </select>
+
+    <select id="findByIsPauseIsFalse" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_quartz_job
+        WHERE is_pause = 0
+    </select>
+</mapper>

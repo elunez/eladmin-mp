@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.quartz.mapper.QuartzLogMapper">
+
+    <resultMap id="BaseResultMap" type="me.zhengjie.modules.quartz.domain.QuartzLog">
+        <id column="log_id" property="id" jdbcType="BIGINT"/>
+        <result column="job_name" property="jobName" jdbcType="VARCHAR"/>
+        <result column="bean_name" property="beanName" jdbcType="VARCHAR"/>
+        <result column="method_name" property="methodName" jdbcType="VARCHAR"/>
+        <result column="params" property="params" jdbcType="VARCHAR"/>
+        <result column="cron_expression" property="cronExpression" jdbcType="VARCHAR"/>
+        <result column="is_success" property="isSuccess" jdbcType="VARCHAR"/>
+        <result column="exception_detail" property="exceptionDetail" jdbcType="BIGINT"/>
+        <result column="time" property="time" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        log_id, job_name, bean_name, method_name, params, cron_expression, is_success, exception_detail, time, create_time
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_quartz_log
+        <where>
+            <if test="criteria.jobName != null and criteria.jobName != ''">
+                AND job_name LIKE CONCAT('%',#{criteria.jobName},'%')
+            </if>
+            <if test="criteria.isSuccess != null and criteria.isSuccess != ''">
+                AND is_success = #{criteria.isSuccess}
+            </if>
+            <if test="criteria.createTime != null and criteria.createTime.size() > 0">
+                AND create_time BETWEEN #{criteria.createTime[0]} AND #{criteria.createTime[1]}
+            </if>
+        </where>
+        ORDER BY log_id DESC
+    </select>
+
+</mapper>

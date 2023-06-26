@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.system.mapper.UserJobMapper">
+
+    <insert id="insertData">
+        insert into sys_users_jobs (user_id, job_id)
+        values
+        <foreach collection="jobs" item="item" open="(" separator="),(" close=")">
+            #{userId}, #{item.id}
+        </foreach>
+    </insert>
+
+    <delete id="deleteByUserId">
+        delete from sys_users_jobs
+        where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteByUserIds">
+        delete from sys_users_jobs
+        where user_id in
+        <foreach collection="userIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

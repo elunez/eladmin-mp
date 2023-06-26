@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.system.mapper.DictDetailMapper">
+<resultMap id="BaseResultMap" type="me.zhengjie.modules.system.domain.DictDetail">
+        <id column="detail_id" property="id" jdbcType="BIGINT"/>
+        <result column="label" property="label" jdbcType="VARCHAR"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+        <result column="dict_sort" property="dictSort" jdbcType="INTEGER"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <association property="dict" javaType="me.zhengjie.modules.system.domain.Dict">
+            <id column="dict_id" property="id" jdbcType="BIGINT"/>
+            <result column="name" property="name" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        dd.detail_id, dd.label, dd.`value`, dd.`dict_sort`, dd.create_by, dd.update_by, dd.create_time, dd.update_time, d.dict_id, d.name
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from sys_dict_detail dd, sys_dict d
+        where dd.dict_id = d.dict_id
+        <if test="criteria.dictName != null and criteria.dictName != ''">
+            and d.name = #{criteria.dictName}
+        </if>
+        <if test="criteria.label != null and criteria.label != ''">
+            and dd.label = #{criteria.label}
+        </if>
+        order by dd.dict_sort
+    </select>
+
+    <select id="findByDictName" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from sys_dict_detail dd, sys_dict d
+        where dd.dict_id = d.dict_id
+        <if test="name != null and name != ''">
+            and d.name = #{name}
+        </if>
+        order by dd.dict_sort
+    </select>
+
+    <delete id="deleteByDictBatchIds">
+        delete from sys_dict_detail
+        where dict_id in
+        <foreach collection="dictIds" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>
