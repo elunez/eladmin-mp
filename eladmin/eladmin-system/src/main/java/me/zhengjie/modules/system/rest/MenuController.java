@@ -88,7 +88,7 @@ public class MenuController {
     @PreAuthorize("@el.check('menu:list')")
     public ResponseEntity<Object> queryMenu(MenuQueryCriteria criteria) throws Exception {
         List<Menu> menuList = menuService.queryAll(criteria, true);
-        return new ResponseEntity<>(PageUtil.toPage(menuList, menuList.size()),HttpStatus.OK);
+        return new ResponseEntity<>(PageUtil.toPage(menuList),HttpStatus.OK);
     }
 
     @ApiOperation("查询菜单:根据ID获取同级与上级数据")

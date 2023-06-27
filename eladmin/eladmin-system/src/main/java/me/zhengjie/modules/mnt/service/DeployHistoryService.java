@@ -22,6 +22,7 @@ import me.zhengjie.modules.mnt.domain.vo.DeployHistoryQueryCriteria;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -35,7 +36,7 @@ public interface DeployHistoryService extends IService<DeployHistory> {
      * @param page 分页参数
      * @return /
      */
-    Object queryAll(DeployHistoryQueryCriteria criteria, Page<Object> page);
+    Map<String,Object> queryAll(DeployHistoryQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部

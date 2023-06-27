@@ -23,6 +23,7 @@ import me.zhengjie.modules.quartz.domain.vo.QuartzJobQueryCriteria;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -37,7 +38,7 @@ public interface QuartzJobService extends IService<QuartzJob> {
      * @param page 分页参数
      * @return /
      */
-    Object queryAll(QuartzJobQueryCriteria criteria, Page<Object> page);
+    Map<String,Object> queryAll(QuartzJobQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部
@@ -52,7 +53,7 @@ public interface QuartzJobService extends IService<QuartzJob> {
      * @param page 分页参数
      * @return /
      */
-    Object queryAllLog(QuartzJobQueryCriteria criteria, Page<Object> page);
+    Map<String,Object> queryAllLog(QuartzJobQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部

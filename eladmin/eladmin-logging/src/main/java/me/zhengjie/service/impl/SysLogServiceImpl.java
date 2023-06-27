@@ -18,7 +18,6 @@ package me.zhengjie.service.impl;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -49,9 +48,8 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     private final SysLogMapper sysLogMapper;
 
     @Override
-    public Object queryAll(SysLogQueryCriteria criteria, Page<SysLog> page) {
-        IPage<SysLog> data = sysLogMapper.queryAll(criteria, page);
-        return PageUtil.toPage(data.getRecords(), data.getTotal());
+    public Map<String,Object> queryAll(SysLogQueryCriteria criteria, Page<SysLog> page) {
+        return PageUtil.toPage(sysLogMapper.queryAll(criteria, page));
     }
 
     @Override
@@ -60,9 +58,8 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     }
 
     @Override
-    public Object queryAllByUser(SysLogQueryCriteria criteria, Page<SysLog> page) {
-        IPage<SysLog> data = sysLogMapper.queryAllByUser(criteria, page);
-        return PageUtil.toPage(data.getRecords(), data.getTotal());
+    public Map<String,Object> queryAllByUser(SysLogQueryCriteria criteria, Page<SysLog> page) {
+        return PageUtil.toPage(sysLogMapper.queryAllByUser(criteria, page));
     }
 
     @Override

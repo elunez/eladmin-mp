@@ -17,7 +17,6 @@ package me.zhengjie.modules.quartz.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -52,15 +51,14 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
     private final RedisUtils redisUtils;
 
     @Override
-    public Object queryAll(QuartzJobQueryCriteria criteria, Page<Object> page){
-        IPage<QuartzJob> quartzJobs = quartzJobMapper.findAll(criteria, page);
-        return PageUtil.toPage(quartzJobs.getRecords(), quartzJobs.getTotal());
+    public Map<String,Object> queryAll(QuartzJobQueryCriteria criteria, Page<Object> page){
+        return PageUtil.toPage(quartzJobMapper.findAll(criteria, page));
     }
 
     @Override
-    public Object queryAllLog(QuartzJobQueryCriteria criteria, Page<Object> page){
-        IPage<QuartzLog> quartzJobs = quartzLogMapper.findAll(criteria, page);
-        return PageUtil.toPage(quartzJobs.getRecords(), quartzJobs.getTotal());    }
+    public Map<String,Object> queryAllLog(QuartzJobQueryCriteria criteria, Page<Object> page){
+        return PageUtil.toPage(quartzLogMapper.findAll(criteria, page));
+    }
 
     @Override
     public List<QuartzJob> queryAll(QuartzJobQueryCriteria criteria) {

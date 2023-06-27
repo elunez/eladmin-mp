@@ -16,7 +16,6 @@
 package me.zhengjie.modules.mnt.service.impl;
 
 import cn.hutool.core.util.IdUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -44,9 +43,8 @@ public class DeployHistoryServiceImpl extends ServiceImpl<DeployHistoryMapper, D
     private final DeployHistoryMapper deployhistoryMapper;
 
     @Override
-    public Object queryAll(DeployHistoryQueryCriteria criteria, Page<Object> page){
-        IPage<DeployHistory> deployHistories = deployhistoryMapper.findAll(criteria, page);
-        return PageUtil.toPage(deployHistories.getRecords(), deployHistories.getTotal());
+    public Map<String,Object> queryAll(DeployHistoryQueryCriteria criteria, Page<Object> page){
+        return PageUtil.toPage(deployhistoryMapper.findAll(criteria, page));
     }
 
     @Override

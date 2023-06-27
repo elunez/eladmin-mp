@@ -15,7 +15,6 @@
  */
 package me.zhengjie.modules.mnt.service.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -47,9 +46,8 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
     private final DeployServerMapper deployServerMapper;
 
     @Override
-    public Object queryAll(AppQueryCriteria criteria, Page<Object> page){
-        IPage<App> apps = appMapper.queryAll(criteria, page);
-        return PageUtil.toPage(apps.getRecords(), apps.getTotal());
+    public Map<String,Object> queryAll(AppQueryCriteria criteria, Page<Object> page){
+        return PageUtil.toPage(appMapper.queryAll(criteria, page));
     }
 
     @Override

@@ -15,7 +15,7 @@
  */
 package me.zhengjie.utils;
 
-import org.springframework.data.domain.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import java.util.*;
 
 /**
@@ -23,6 +23,7 @@ import java.util.*;
  * @author Zheng Jie
  * @date 2018-12-10
  */
+@SuppressWarnings({"unchecked","all"})
 public class PageUtil extends cn.hutool.core.util.PageUtil {
 
     /**
@@ -41,12 +42,32 @@ public class PageUtil extends cn.hutool.core.util.PageUtil {
     }
 
     /**
-     * Page 数据处理，预防redis反序列化报错
+     * Page 数据处理
      */
-    public static Map<String,Object> toPage(Page page) {
+    public static Map<String,Object> toPage(IPage page) {
         Map<String,Object> map = new LinkedHashMap<>(2);
-        map.put("content",page.getContent());
-        map.put("totalElements",page.getTotalElements());
+        map.put("content",page.getRecords());
+        map.put("totalElements",page.getTotal());
+        return map;
+    }
+
+    /**
+     * 自定义分页
+     */
+    public static Map<String,Object> toPage(List list) {
+        Map<String,Object> map = new LinkedHashMap<>(2);
+        map.put("content",list);
+        map.put("totalElements",list.size());
+        return map;
+    }
+
+    /**
+     * 返回空数据
+     */
+    public static Map<String,Object> noData () {
+        Map<String,Object> map = new LinkedHashMap<>(2);
+        map.put("content",null);
+        map.put("totalElements",0);
         return map;
     }
 
@@ -59,5 +80,4 @@ public class PageUtil extends cn.hutool.core.util.PageUtil {
         map.put("totalElements",totalElements);
         return map;
     }
-
 }

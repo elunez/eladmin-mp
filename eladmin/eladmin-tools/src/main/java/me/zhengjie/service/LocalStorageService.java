@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author Zheng Jie
@@ -36,7 +37,7 @@ public interface LocalStorageService extends IService<LocalStorage> {
      * @param page 分页参数
      * @return /
      */
-    Object queryAll(LocalStorageQueryCriteria criteria, Page<Object> page);
+    Map<String,Object> queryAll(LocalStorageQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部数据

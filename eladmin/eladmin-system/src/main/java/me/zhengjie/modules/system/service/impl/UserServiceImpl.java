@@ -63,7 +63,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private final OnlineUserService onlineUserService;
 
     @Override
-    public Object queryAll(UserQueryCriteria criteria, Page<Object> page) {
+    public Map<String,Object> queryAll(UserQueryCriteria criteria, Page<Object> page) {
         criteria.setOffset(page.offset());
         List<User> users = userMapper.findAll(criteria);
         Long total = userMapper.countAll(criteria);

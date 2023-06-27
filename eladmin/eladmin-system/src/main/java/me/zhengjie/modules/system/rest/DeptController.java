@@ -57,8 +57,8 @@ public class DeptController {
     @GetMapping
     @PreAuthorize("@el.check('user:list','dept:list')")
     public ResponseEntity<Object> queryDept(DeptQueryCriteria criteria) throws Exception {
-        List<Dept> deptDtos = deptService.queryAll(criteria, true);
-        return new ResponseEntity<>(PageUtil.toPage(deptDtos, deptDtos.size()),HttpStatus.OK);
+        List<Dept> depts = deptService.queryAll(criteria, true);
+        return new ResponseEntity<>(PageUtil.toPage(depts),HttpStatus.OK);
     }
 
     @ApiOperation("查询部门:根据ID获取同级与上级数据")

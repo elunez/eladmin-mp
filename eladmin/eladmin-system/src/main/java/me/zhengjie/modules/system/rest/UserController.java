@@ -98,7 +98,7 @@ public class UserController {
             criteria.getDeptIds().addAll(dataScopes);
             return new ResponseEntity<>(userService.queryAll(criteria,page),HttpStatus.OK);
         }
-        return new ResponseEntity<>(PageUtil.toPage(null,0),HttpStatus.OK);
+        return new ResponseEntity<>(PageUtil.noData(),HttpStatus.OK);
     }
 
     @Log("新增用户")

@@ -27,7 +27,6 @@ import me.zhengjie.exception.EntityExistException;
 </#if>
 import me.zhengjie.utils.FileUtil;
 import lombok.RequiredArgsConstructor;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import ${package}.service.${className}Service;
@@ -56,8 +55,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
 
     @Override
     public Map<String,Object> queryAll(${className}QueryCriteria criteria, Page<Object> page){
-        IPage<${className}> ${changeClassName}Data = ${changeClassName}Mapper.findAll(criteria, page);
-        return PageUtil.toPage(${changeClassName}Data.getRecords(), ${changeClassName}Data.getTotal());
+        return PageUtil.toPage(${changeClassName}Mapper.findAll(criteria, page));
     }
 
     @Override

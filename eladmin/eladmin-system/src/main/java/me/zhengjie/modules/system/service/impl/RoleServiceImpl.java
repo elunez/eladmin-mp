@@ -69,7 +69,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public Object queryAll(RoleQueryCriteria criteria, Page<Object> page) {
+    public Map<String,Object> queryAll(RoleQueryCriteria criteria, Page<Object> page) {
         criteria.setOffset(page.offset());
         List<Role> roles = roleMapper.findAll(criteria);
         Long total = roleMapper.countAll(criteria);

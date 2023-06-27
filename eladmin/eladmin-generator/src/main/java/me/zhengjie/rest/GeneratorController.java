@@ -58,7 +58,7 @@ public class GeneratorController {
     @GetMapping(value = "/columns")
     public ResponseEntity<Object> queryColumns(@RequestParam String tableName){
         List<ColumnInfo> columnInfos = generatorService.getColumns(tableName);
-        return new ResponseEntity<>(PageUtil.toPage(columnInfos,columnInfos.size()), HttpStatus.OK);
+        return new ResponseEntity<>(PageUtil.toPage(columnInfos), HttpStatus.OK);
     }
 
     @ApiOperation("保存字段数据")

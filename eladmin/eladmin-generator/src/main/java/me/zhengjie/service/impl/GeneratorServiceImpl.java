@@ -17,14 +17,12 @@ package me.zhengjie.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ZipUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.domain.GenConfig;
 import me.zhengjie.domain.ColumnInfo;
-import me.zhengjie.domain.vo.TableInfo;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.mapper.ColumnInfoMapper;
 import me.zhengjie.service.GeneratorService;
@@ -57,9 +55,8 @@ public class GeneratorServiceImpl extends ServiceImpl<ColumnInfoMapper, ColumnIn
     private final String CONFIG_MESSAGE = "请先配置生成器";
 
     @Override
-    public Object getTables(String name, Page<Object> page) {
-        IPage<TableInfo> result = columnInfoMapper.getTables(name, page);
-        return PageUtil.toPage(result.getRecords(), result.getTotal());
+    public Map<String,Object> getTables(String name, Page<Object> page) {
+        return PageUtil.toPage(columnInfoMapper.getTables(name, page));
     }
 
     @Override

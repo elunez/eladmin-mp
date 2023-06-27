@@ -22,6 +22,7 @@ import me.zhengjie.modules.mnt.domain.vo.AppQueryCriteria;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -36,7 +37,7 @@ public interface AppService extends IService<App> {
      * @param page 分页参数
      * @return /
      */
-    Object queryAll(AppQueryCriteria criteria, Page<Object> page);
+    Map<String,Object> queryAll(AppQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部数据

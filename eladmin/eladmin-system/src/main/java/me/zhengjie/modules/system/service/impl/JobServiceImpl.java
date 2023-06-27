@@ -15,7 +15,6 @@
  */
 package me.zhengjie.modules.system.service.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -51,8 +50,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
 
     @Override
     public Map<String,Object> queryAll(JobQueryCriteria criteria, Page<Object> page) {
-        IPage<Job> jobs = jobMapper.findAll(criteria, page);
-        return PageUtil.toPage(jobs.getRecords(), jobs.getTotal());
+        return PageUtil.toPage(jobMapper.findAll(criteria, page));
     }
 
     @Override

@@ -16,7 +16,6 @@
 package me.zhengjie.modules.mnt.service.impl;
 
 import cn.hutool.core.util.IdUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -46,9 +45,8 @@ public class DatabaseServiceImpl extends ServiceImpl<DatabaseMapper, Database> i
     private final DatabaseMapper databaseMapper;
 
     @Override
-    public Object queryAll(DatabaseQueryCriteria criteria, Page<Object> page){
-        IPage<Database> databases = databaseMapper.findAll(criteria, page);
-        return PageUtil.toPage(databases.getRecords(), databases.getTotal());
+    public Map<String,Object> queryAll(DatabaseQueryCriteria criteria, Page<Object> page){
+        return PageUtil.toPage(databaseMapper.findAll(criteria, page));
     }
 
     @Override

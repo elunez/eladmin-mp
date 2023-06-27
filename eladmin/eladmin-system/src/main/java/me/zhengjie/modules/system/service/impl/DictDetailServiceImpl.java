@@ -15,7 +15,6 @@
  */
 package me.zhengjie.modules.system.service.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +47,7 @@ public class DictDetailServiceImpl extends ServiceImpl<DictDetailMapper, DictDet
 
     @Override
     public Map<String,Object> queryAll(DictDetailQueryCriteria criteria, Page<Object> page) {
-        IPage<DictDetail> details = dictDetailMapper.findAll(criteria, page);
-        return PageUtil.toPage(details.getRecords(), details.getTotal());
+        return PageUtil.toPage(dictDetailMapper.findAll(criteria, page));
     }
 
     @Override

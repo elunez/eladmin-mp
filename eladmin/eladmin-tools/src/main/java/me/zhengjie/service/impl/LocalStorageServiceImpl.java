@@ -16,7 +16,6 @@
 package me.zhengjie.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -50,9 +49,8 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
     private final FileProperties properties;
 
     @Override
-    public Object queryAll(LocalStorageQueryCriteria criteria, Page<Object> page){
-        IPage<LocalStorage> localStorages = localStorageMapper.findAll(criteria, page);
-        return PageUtil.toPage(localStorages.getRecords(), localStorages.getTotal());
+    public Map<String,Object> queryAll(LocalStorageQueryCriteria criteria, Page<Object> page){
+        return PageUtil.toPage(localStorageMapper.findAll(criteria, page));
     }
 
     @Override

@@ -16,7 +16,6 @@
 package me.zhengjie.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qiniu.common.QiniuException;
@@ -61,9 +60,8 @@ public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, Qin
     private Long maxSize;
 
     @Override
-    public Object queryAll(QiniuQueryCriteria criteria, Page<Object> page){
-        IPage<QiniuContent> qiniuContents = qiniuContentMapper.findAll(criteria, page);
-        return PageUtil.toPage(qiniuContents.getRecords(), qiniuContents.getTotal());
+    public Map<String,Object> queryAll(QiniuQueryCriteria criteria, Page<Object> page){
+        return PageUtil.toPage(qiniuContentMapper.findAll(criteria, page));
     }
 
     @Override

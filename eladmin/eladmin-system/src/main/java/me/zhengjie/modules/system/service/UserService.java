@@ -101,7 +101,7 @@ public interface UserService extends IService<User> {
      * @param page 分页参数
      * @return /
      */
-    Object queryAll(UserQueryCriteria criteria, Page<Object> page);
+    Map<String,Object> queryAll(UserQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部不分页

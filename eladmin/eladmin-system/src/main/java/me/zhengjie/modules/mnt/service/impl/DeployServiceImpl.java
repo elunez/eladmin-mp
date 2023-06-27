@@ -17,7 +17,6 @@ package me.zhengjie.modules.mnt.service.impl;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -66,7 +65,7 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
 
 
 	@Override
-	public Object queryAll(DeployQueryCriteria criteria, Page<Object> page) {
+	public Map<String,Object> queryAll(DeployQueryCriteria criteria, Page<Object> page) {
 		criteria.setOffset(page.offset());
 		List<Deploy> deploys = deployMapper.findAll(criteria);
 		Long total = deployMapper.countAll(criteria);

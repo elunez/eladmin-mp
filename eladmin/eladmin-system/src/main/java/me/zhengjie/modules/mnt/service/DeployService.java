@@ -23,6 +23,7 @@ import me.zhengjie.modules.mnt.domain.vo.DeployQueryCriteria;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -37,7 +38,7 @@ public interface DeployService extends IService<Deploy> {
      * @param page 分页参数
      * @return /
      */
-    Object queryAll(DeployQueryCriteria criteria, Page<Object> page);
+    Map<String,Object> queryAll(DeployQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部数据
