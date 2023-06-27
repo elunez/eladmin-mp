@@ -112,4 +112,14 @@
         left join sys_users_roles ur on role.role_id = ur.role_id
         WHERE role.role_id = ur.role_id AND ur.user_id = #{userId}
     </select>
+
+    <select id="countByDepts" resultType="int">
+        select count(*)
+        from sys_role r, sys_roles_depts d
+        where r.role_id = d.role_id
+        and d.dept_id in
+        <foreach collection="deptIds" item="deptId" open="(" separator="," close=")">
+            #{deptId}
+        </foreach>
+    </select>
 </mapper>

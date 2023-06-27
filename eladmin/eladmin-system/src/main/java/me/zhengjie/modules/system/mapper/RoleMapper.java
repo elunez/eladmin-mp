@@ -44,9 +44,7 @@ public interface RoleMapper extends BaseMapper<Role> {
 
     List<Role> findAll(@Param("criteria") RoleQueryCriteria criteria);
 
-    @Select("select count(*) from sys_role r, sys_roles_depts d where " +
-            "r.role_id = d.role_id and d.dept_id in ?1")
-    int countByDepts(Set<Long> deptIds);
+    int countByDepts(@Param("deptIds") Set<Long> deptIds);
 
     @Select("SELECT role.role_id as id FROM sys_role role, sys_roles_menus rm " +
             "WHERE role.role_id = rm.role_id AND rm.menu_id = #{menuId}")
