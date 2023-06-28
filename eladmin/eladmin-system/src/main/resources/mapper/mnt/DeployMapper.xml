@@ -33,7 +33,7 @@
     </sql>
 
     <sql id="Server_Column_List">
-        s_deploy.server_id as s_server_id,s_deploy.name as s_name,s_deploy.ip as s_ip,s_deploy.port as s_port,s_deploy.account as s_account,s_deploy.password as s_password
+        server.server_id as s_server_id,server.name as s_name,server.ip as s_ip,server.port as s_port,server.account as s_account,server.password as s_password
     </sql>
 
     <sql id="Where_sql">
@@ -60,7 +60,7 @@
             </if>
         ) t
         left join mnt_deploy_server mds on t.d_deploy_id = mds.deploy_id
-        left join mnt_server s_deploy on s_deploy.server_id = mds.server_id
+        left join mnt_server server on server.server_id = mds.server_id
         order by t.d_deploy_id desc
     </select>
 
@@ -78,5 +78,16 @@
         <foreach collection="appIds" item="appId" open="(" separator="," close=")">
             #{appId}
         </foreach>
+    </select>
+
+    <select id="getDeployById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Server_Column_List"/>
+        from mnt_deploy deploy
+        left join mnt_app app on deploy.app_id = app.app_id
+        left join mnt_deploy_server mds on deploy.deploy_id = mds.deploy_id
+        left join mnt_server server on server.server_id = mds.server_id
+        where deploy.deploy_id = #{deployId}
     </select>
 </mapper>

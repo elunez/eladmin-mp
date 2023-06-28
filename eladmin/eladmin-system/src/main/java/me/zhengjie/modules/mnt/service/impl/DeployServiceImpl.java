@@ -115,8 +115,7 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
 	 * @param id ID
 	 */
 	private void deployApp(String fileSavePath, Long id) {
-
-		Deploy deploy = getById(id);
+		Deploy deploy = deployMapper.getDeployById(id);
 		if (deploy == null) {
 			sendMsg("部署信息不存在", MsgType.ERROR);
 			throw new BadRequestException("部署信息不存在");
