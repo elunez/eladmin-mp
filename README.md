@@ -105,7 +105,7 @@
 - 感谢 [j.yao.SUSE](https://github.com/everhopingandwaiting) 大佬提供的匿名接口与Redis限流等功能
 
 #### 项目捐赠
-项目的发展离不开你的支持，请作者喝杯咖啡吧☕  [Donate](https://eladmin.vip/donation/)
+项目的发展离不开你的支持，请作者喝杯咖啡吧☕  [Donate](https://eladmin.vip/pages/030101/)
 
 #### 反馈交流
-- QQ交流群：一群：<strike>891137268</strike> 、二群：<strike>947578238</strike>、三群：659622532
+- QQ交流群：891137268 、947578238、659622532
