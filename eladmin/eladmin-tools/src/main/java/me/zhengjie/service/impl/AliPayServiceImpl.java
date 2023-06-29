@@ -53,7 +53,7 @@ public class AliPayServiceImpl extends ServiceImpl<AliPayConfigMapper, AlipayCon
     @Transactional(rollbackFor = Exception.class)
     public AlipayConfig config(AlipayConfig alipayConfig) {
         alipayConfig.setId(1L);
-        save(alipayConfig);
+        saveOrUpdate(alipayConfig);
         return alipayConfig;
     }
 
