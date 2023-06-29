@@ -52,7 +52,7 @@ public class QiNiuConfigServiceImpl extends ServiceImpl<QiniuConfigMapper, Qiniu
         if (!(qiniuConfig.getHost().toLowerCase().startsWith(http)||qiniuConfig.getHost().toLowerCase().startsWith(https))) {
             throw new BadRequestException("外链域名必须以http://或者https://开头");
         }
-        save(qiniuConfig);
+        saveOrUpdate(qiniuConfig);
     }
 
     @Override

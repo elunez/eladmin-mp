@@ -49,7 +49,7 @@ public class EmailServiceImpl extends ServiceImpl<EmailConfigMapper, EmailConfig
             // 对称加密
             emailConfig.setPass(EncryptUtils.desEncrypt(emailConfig.getPass()));
         }
-        save(emailConfig);
+        saveOrUpdate(emailConfig);
         return emailConfig;
     }
 
