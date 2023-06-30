@@ -19,10 +19,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.modules.system.domain.Job;
 import me.zhengjie.modules.system.domain.vo.JobQueryCriteria;
+import me.zhengjie.utils.PageResult;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -58,11 +59,12 @@ public interface JobService extends IService<Job> {
 
     /**
      * 分页查询
+     *
      * @param criteria 条件
-     * @param page 分页参数
+     * @param page     分页参数
      * @return /
      */
-    Map<String,Object> queryAll(JobQueryCriteria criteria, Page<Object> page);
+    PageResult<Job> queryAll(JobQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部数据

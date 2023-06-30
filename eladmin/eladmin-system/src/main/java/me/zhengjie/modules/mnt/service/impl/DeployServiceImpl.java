@@ -63,9 +63,8 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
 	 */
 	private final Integer count = 30;
 
-
 	@Override
-	public Map<String,Object> queryAll(DeployQueryCriteria criteria, Page<Object> page) {
+	public PageResult<Deploy> queryAll(DeployQueryCriteria criteria, Page<Object> page) {
 		criteria.setOffset(page.offset());
 		List<Deploy> deploys = deployMapper.findAll(criteria);
 		Long total = deployMapper.countAll(criteria);

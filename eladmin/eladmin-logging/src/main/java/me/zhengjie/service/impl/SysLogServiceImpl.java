@@ -48,7 +48,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     private final SysLogMapper sysLogMapper;
 
     @Override
-    public Map<String,Object> queryAll(SysLogQueryCriteria criteria, Page<SysLog> page) {
+    public PageResult<SysLog> queryAll(SysLogQueryCriteria criteria, Page<SysLog> page) {
         return PageUtil.toPage(sysLogMapper.queryAll(criteria, page));
     }
 
@@ -58,7 +58,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     }
 
     @Override
-    public Map<String,Object> queryAllByUser(SysLogQueryCriteria criteria, Page<SysLog> page) {
+    public PageResult<SysLog> queryAllByUser(SysLogQueryCriteria criteria, Page<SysLog> page) {
         return PageUtil.toPage(sysLogMapper.queryAllByUser(criteria, page));
     }
 

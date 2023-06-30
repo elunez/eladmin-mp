@@ -22,8 +22,10 @@ import lombok.RequiredArgsConstructor;
 import me.zhengjie.annotation.Log;
 import me.zhengjie.modules.system.domain.Menu;
 import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.modules.system.domain.vo.MenuVo;
 import me.zhengjie.modules.system.service.MenuService;
 import me.zhengjie.modules.system.domain.vo.MenuQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.PageUtil;
 import me.zhengjie.utils.SecurityUtils;
 import org.springframework.http.HttpStatus;
@@ -58,7 +60,7 @@ public class MenuController {
 
     @GetMapping(value = "/build")
     @ApiOperation("获取前端所需菜单")
-    public ResponseEntity<Object> buildMenus(){
+    public ResponseEntity<List<MenuVo>> buildMenus(){
         List<Menu> menuList = menuService.findByUser(SecurityUtils.getCurrentUserId());
         List<Menu> menus = menuService.buildTree(menuList);
         return new ResponseEntity<>(menuService.buildMenus(menus),HttpStatus.OK);
@@ -67,7 +69,7 @@ public class MenuController {
     @ApiOperation("返回全部的菜单")
     @GetMapping(value = "/lazy")
     @PreAuthorize("@el.check('menu:list','roles:list')")
-    public ResponseEntity<Object> queryAllMenu(@RequestParam Long pid){
+    public ResponseEntity<List<Menu>> queryAllMenu(@RequestParam Long pid){
         return new ResponseEntity<>(menuService.getMenus(pid),HttpStatus.OK);
     }
 
@@ -86,7 +88,7 @@ public class MenuController {
     @GetMapping
     @ApiOperation("查询菜单")
     @PreAuthorize("@el.check('menu:list')")
-    public ResponseEntity<Object> queryMenu(MenuQueryCriteria criteria) throws Exception {
+    public ResponseEntity<PageResult<Menu>> queryMenu(MenuQueryCriteria criteria) throws Exception {
         List<Menu> menuList = menuService.queryAll(criteria, true);
         return new ResponseEntity<>(PageUtil.toPage(menuList),HttpStatus.OK);
     }
@@ -94,7 +96,7 @@ public class MenuController {
     @ApiOperation("查询菜单:根据ID获取同级与上级数据")
     @PostMapping("/superior")
     @PreAuthorize("@el.check('menu:list')")
-    public ResponseEntity<Object> getMenuSuperior(@RequestBody List<Long> ids) {
+    public ResponseEntity<List<Menu>> getMenuSuperior(@RequestBody List<Long> ids) {
         Set<Menu> menus = new LinkedHashSet<>();
         if(CollectionUtil.isNotEmpty(ids)){
             for (Long id : ids) {

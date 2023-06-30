@@ -30,7 +30,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.Map;
 
 /**
 * @author Zheng Jie
@@ -46,7 +45,7 @@ public class DictDetailServiceImpl extends ServiceImpl<DictDetailMapper, DictDet
     private final RedisUtils redisUtils;
 
     @Override
-    public Map<String,Object> queryAll(DictDetailQueryCriteria criteria, Page<Object> page) {
+    public PageResult<DictDetail> queryAll(DictDetailQueryCriteria criteria, Page<Object> page) {
         return PageUtil.toPage(dictDetailMapper.findAll(criteria, page));
     }
 

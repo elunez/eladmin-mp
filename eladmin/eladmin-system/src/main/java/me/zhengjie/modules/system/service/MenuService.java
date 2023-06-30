@@ -18,6 +18,8 @@ package me.zhengjie.modules.system.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.modules.system.domain.Menu;
 import me.zhengjie.modules.system.domain.vo.MenuQueryCriteria;
+import me.zhengjie.modules.system.domain.vo.MenuVo;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -77,7 +79,7 @@ public interface MenuService extends IService<Menu> {
      * @param menus /
      * @return /
      */
-    Object buildMenus(List<Menu> menus);
+    List<MenuVo> buildMenus(List<Menu> menus);
 
     /**
      * 删除

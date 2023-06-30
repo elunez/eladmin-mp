@@ -20,11 +20,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.domain.QiniuConfig;
 import me.zhengjie.domain.QiniuContent;
 import me.zhengjie.domain.vo.QiniuQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Zheng Jie
@@ -34,11 +34,12 @@ public interface QiniuContentService extends IService<QiniuContent> {
 
     /**
      * 分页查询
+     *
      * @param criteria 条件
-     * @param page 分页参数
+     * @param page     分页参数
      * @return /
      */
-    Map<String,Object> queryAll(QiniuQueryCriteria criteria, Page<Object> page);
+    PageResult<QiniuContent> queryAll(QiniuQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部

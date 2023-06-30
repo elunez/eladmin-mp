@@ -23,13 +23,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.domain.GenConfig;
 import me.zhengjie.domain.ColumnInfo;
+import me.zhengjie.domain.vo.TableInfo;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.mapper.ColumnInfoMapper;
 import me.zhengjie.service.GeneratorService;
-import me.zhengjie.utils.FileUtil;
-import me.zhengjie.utils.GenUtil;
-import me.zhengjie.utils.PageUtil;
-import me.zhengjie.utils.StringUtils;
+import me.zhengjie.utils.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -55,7 +53,7 @@ public class GeneratorServiceImpl extends ServiceImpl<ColumnInfoMapper, ColumnIn
     private final String CONFIG_MESSAGE = "请先配置生成器";
 
     @Override
-    public Map<String,Object> getTables(String name, Page<Object> page) {
+    public PageResult<TableInfo> getTables(String name, Page<Object> page) {
         return PageUtil.toPage(columnInfoMapper.getTables(name, page));
     }
 

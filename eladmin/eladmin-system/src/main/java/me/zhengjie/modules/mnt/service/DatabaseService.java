@@ -19,10 +19,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.modules.mnt.domain.Database;
 import me.zhengjie.modules.mnt.domain.vo.DatabaseQueryCriteria;
+import me.zhengjie.utils.PageResult;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -33,11 +34,12 @@ public interface DatabaseService extends IService<Database> {
 
     /**
      * 分页查询
+     *
      * @param criteria 条件
-     * @param page 分页参数
+     * @param page     分页参数
      * @return /
      */
-    Map<String,Object> queryAll(DatabaseQueryCriteria criteria, Page<Object> page);
+    PageResult<Database> queryAll(DatabaseQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部

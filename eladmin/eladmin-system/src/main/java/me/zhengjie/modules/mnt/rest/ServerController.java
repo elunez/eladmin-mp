@@ -23,6 +23,7 @@ import me.zhengjie.annotation.Log;
 import me.zhengjie.modules.mnt.domain.Server;
 import me.zhengjie.modules.mnt.service.ServerService;
 import me.zhengjie.modules.mnt.domain.vo.ServerQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -54,7 +55,7 @@ public class ServerController {
     @ApiOperation(value = "查询服务器")
     @GetMapping
 	@PreAuthorize("@el.check('serverDeploy:list')")
-    public ResponseEntity<Object> queryServerDeploy(ServerQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<Server>> queryServerDeploy(ServerQueryCriteria criteria, Page<Object> page){
     	return new ResponseEntity<>(serverService.queryAll(criteria, page),HttpStatus.OK);
     }
 

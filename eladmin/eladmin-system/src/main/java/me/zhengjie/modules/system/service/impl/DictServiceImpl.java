@@ -47,7 +47,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     private final DictDetailMapper deleteDetail;
 
     @Override
-    public Map<String, Object> queryAll(DictQueryCriteria criteria, Page<Object> page){
+    public PageResult<Dict> queryAll(DictQueryCriteria criteria, Page<Object> page){
         criteria.setOffset(page.offset());
         List<Dict> dicts = dictMapper.findAll(criteria);
         Long total = dictMapper.countAll(criteria);

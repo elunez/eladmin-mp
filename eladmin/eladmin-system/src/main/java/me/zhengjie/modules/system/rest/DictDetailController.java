@@ -24,6 +24,7 @@ import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.modules.system.domain.DictDetail;
 import me.zhengjie.modules.system.service.DictDetailService;
 import me.zhengjie.modules.system.domain.vo.DictDetailQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,7 +49,7 @@ public class DictDetailController {
 
     @ApiOperation("查询字典详情")
     @GetMapping
-    public ResponseEntity<Object> queryDictDetail(DictDetailQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<DictDetail>> queryDictDetail(DictDetailQueryCriteria criteria, Page<Object> page){
         return new ResponseEntity<>(dictDetailService.queryAll(criteria, page),HttpStatus.OK);
     }
 

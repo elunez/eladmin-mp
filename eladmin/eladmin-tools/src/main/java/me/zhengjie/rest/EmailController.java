@@ -41,7 +41,7 @@ public class EmailController {
     private final EmailService emailService;
 
     @GetMapping
-    public ResponseEntity<Object> queryEmailConfig(){
+    public ResponseEntity<EmailConfig> queryEmailConfig(){
         return new ResponseEntity<>(emailService.find(),HttpStatus.OK);
     }
 
@@ -49,7 +49,7 @@ public class EmailController {
     @PutMapping
     @ApiOperation("配置邮件")
     public ResponseEntity<Object> updateEmailConfig(@Validated @RequestBody EmailConfig emailConfig) throws Exception {
-        emailService.config(emailConfig,emailService.find());
+        emailService.config(emailConfig, emailService.find());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

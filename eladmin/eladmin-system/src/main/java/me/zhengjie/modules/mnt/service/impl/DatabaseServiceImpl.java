@@ -26,6 +26,7 @@ import me.zhengjie.modules.mnt.service.DatabaseService;
 import me.zhengjie.modules.mnt.domain.vo.DatabaseQueryCriteria;
 import me.zhengjie.modules.mnt.util.SqlUtils;
 import me.zhengjie.utils.FileUtil;
+import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.PageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +46,7 @@ public class DatabaseServiceImpl extends ServiceImpl<DatabaseMapper, Database> i
     private final DatabaseMapper databaseMapper;
 
     @Override
-    public Map<String,Object> queryAll(DatabaseQueryCriteria criteria, Page<Object> page){
+    public PageResult<Database> queryAll(DatabaseQueryCriteria criteria, Page<Object> page){
         return PageUtil.toPage(databaseMapper.findAll(criteria, page));
     }
 

@@ -23,8 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.annotation.Log;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.modules.quartz.domain.QuartzJob;
+import me.zhengjie.modules.quartz.domain.QuartzLog;
 import me.zhengjie.modules.quartz.service.QuartzJobService;
 import me.zhengjie.modules.quartz.domain.vo.QuartzJobQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.SpringContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +54,7 @@ public class QuartzJobController {
     @ApiOperation("查询定时任务")
     @GetMapping
     @PreAuthorize("@el.check('timing:list')")
-    public ResponseEntity<Object> queryQuartzJob(QuartzJobQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<QuartzJob>> queryQuartzJob(QuartzJobQueryCriteria criteria, Page<Object> page){
         return new ResponseEntity<>(quartzJobService.queryAll(criteria,page), HttpStatus.OK);
     }
 
@@ -73,7 +75,7 @@ public class QuartzJobController {
     @ApiOperation("查询任务执行日志")
     @GetMapping(value = "/logs")
     @PreAuthorize("@el.check('timing:list')")
-    public ResponseEntity<Object> queryQuartzJobLog(QuartzJobQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<QuartzLog>> queryQuartzJobLog(QuartzJobQueryCriteria criteria, Page<Object> page){
         return new ResponseEntity<>(quartzJobService.queryAllLog(criteria,page), HttpStatus.OK);
     }
 

@@ -41,6 +41,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import me.zhengjie.utils.PageResult;
 
 /**
 * @description 服务实现
@@ -54,7 +55,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     private final ${className}Mapper ${changeClassName}Mapper;
 
     @Override
-    public Map<String,Object> queryAll(${className}QueryCriteria criteria, Page<Object> page){
+    public PageResult<${className}> queryAll(${className}QueryCriteria criteria, Page<Object> page){
         return PageUtil.toPage(${changeClassName}Mapper.findAll(criteria, page));
     }
 

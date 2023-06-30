@@ -20,8 +20,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.annotation.Log;
+import me.zhengjie.modules.mnt.domain.DeployHistory;
 import me.zhengjie.modules.mnt.service.DeployHistoryService;
 import me.zhengjie.modules.mnt.domain.vo.DeployHistoryQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -52,7 +54,7 @@ public class DeployHistoryController {
     @ApiOperation(value = "查询部署历史")
     @GetMapping
 	@PreAuthorize("@el.check('deployHistory:list')")
-    public ResponseEntity<Object> queryDeployHistory(DeployHistoryQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<DeployHistory>> queryDeployHistory(DeployHistoryQueryCriteria criteria, Page<Object> page){
         return new ResponseEntity<>(deployhistoryService.queryAll(criteria, page),HttpStatus.OK);
     }
 

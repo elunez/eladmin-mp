@@ -31,6 +31,7 @@ import me.zhengjie.domain.QiniuConfig;
 import me.zhengjie.domain.QiniuContent;
 import me.zhengjie.mapper.QiniuContentMapper;
 import me.zhengjie.domain.vo.QiniuQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.QiNiuUtil;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.service.QiniuContentService;
@@ -60,7 +61,7 @@ public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, Qin
     private Long maxSize;
 
     @Override
-    public Map<String,Object> queryAll(QiniuQueryCriteria criteria, Page<Object> page){
+    public PageResult<QiniuContent> queryAll(QiniuQueryCriteria criteria, Page<Object> page){
         return PageUtil.toPage(qiniuContentMapper.findAll(criteria, page));
     }
 

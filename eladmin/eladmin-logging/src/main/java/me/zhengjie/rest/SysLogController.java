@@ -23,6 +23,7 @@ import me.zhengjie.annotation.Log;
 import me.zhengjie.domain.SysLog;
 import me.zhengjie.service.SysLogService;
 import me.zhengjie.domain.vo.SysLogQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.SecurityUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,14 +64,14 @@ public class SysLogController {
     @GetMapping
     @ApiOperation("日志查询")
     @PreAuthorize("@el.check()")
-    public ResponseEntity<Object> queryLog(SysLogQueryCriteria criteria, Page<SysLog> page){
+    public ResponseEntity<PageResult<SysLog>> queryLog(SysLogQueryCriteria criteria, Page<SysLog> page){
         criteria.setLogType("INFO");
         return new ResponseEntity<>(sysLogService.queryAll(criteria,page), HttpStatus.OK);
     }
 
     @GetMapping(value = "/user")
     @ApiOperation("用户日志查询")
-    public ResponseEntity<Object> queryUserLog(SysLogQueryCriteria criteria, Page<SysLog> page){
+    public ResponseEntity<PageResult<SysLog>> queryUserLog(SysLogQueryCriteria criteria, Page<SysLog> page){
         criteria.setLogType("INFO");
         criteria.setUsername(SecurityUtils.getCurrentUsername());
         return new ResponseEntity<>(sysLogService.queryAllByUser(criteria,page), HttpStatus.OK);
@@ -79,7 +80,7 @@ public class SysLogController {
     @GetMapping(value = "/error")
     @ApiOperation("错误日志查询")
     @PreAuthorize("@el.check()")
-    public ResponseEntity<Object> queryErrorLog(SysLogQueryCriteria criteria, Page<SysLog> page){
+    public ResponseEntity<PageResult<SysLog>> queryErrorLog(SysLogQueryCriteria criteria, Page<SysLog> page){
         criteria.setLogType("ERROR");
         return new ResponseEntity<>(sysLogService.queryAll(criteria,page), HttpStatus.OK);
     }

@@ -25,6 +25,7 @@ import me.zhengjie.modules.mnt.service.DeployHistoryService;
 import me.zhengjie.modules.mnt.domain.vo.DeployHistoryQueryCriteria;
 import me.zhengjie.utils.DateUtil;
 import me.zhengjie.utils.FileUtil;
+import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.PageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +44,7 @@ public class DeployHistoryServiceImpl extends ServiceImpl<DeployHistoryMapper, D
     private final DeployHistoryMapper deployhistoryMapper;
 
     @Override
-    public Map<String,Object> queryAll(DeployHistoryQueryCriteria criteria, Page<Object> page){
+    public PageResult<DeployHistory> queryAll(DeployHistoryQueryCriteria criteria, Page<Object> page){
         return PageUtil.toPage(deployhistoryMapper.findAll(criteria, page));
     }
 

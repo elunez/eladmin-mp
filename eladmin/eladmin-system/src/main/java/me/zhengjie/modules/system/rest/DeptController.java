@@ -24,6 +24,7 @@ import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.modules.system.domain.Dept;
 import me.zhengjie.modules.system.service.DeptService;
 import me.zhengjie.modules.system.domain.vo.DeptQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.PageUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,7 +57,7 @@ public class DeptController {
     @ApiOperation("查询部门")
     @GetMapping
     @PreAuthorize("@el.check('user:list','dept:list')")
-    public ResponseEntity<Object> queryDept(DeptQueryCriteria criteria) throws Exception {
+    public ResponseEntity<PageResult<Dept>> queryDept(DeptQueryCriteria criteria) throws Exception {
         List<Dept> depts = deptService.queryAll(criteria, true);
         return new ResponseEntity<>(PageUtil.toPage(depts),HttpStatus.OK);
     }

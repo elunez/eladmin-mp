@@ -44,7 +44,6 @@ public interface EmailService extends IService<EmailConfig> {
      * 发送邮件
      * @param emailVo 邮件发送的内容
      * @param emailConfig 邮件配置
-     * @throws Exception /
      */
     void send(EmailVo emailVo, EmailConfig emailConfig);
 }

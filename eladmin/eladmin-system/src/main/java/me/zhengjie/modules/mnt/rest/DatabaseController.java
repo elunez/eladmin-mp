@@ -26,6 +26,7 @@ import me.zhengjie.modules.mnt.service.DatabaseService;
 import me.zhengjie.modules.mnt.domain.vo.DatabaseQueryCriteria;
 import me.zhengjie.modules.mnt.util.SqlUtils;
 import me.zhengjie.utils.FileUtil;
+import me.zhengjie.utils.PageResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -61,7 +62,7 @@ public class DatabaseController {
     @ApiOperation(value = "查询数据库")
     @GetMapping
 	@PreAuthorize("@el.check('database:list')")
-    public ResponseEntity<Object> queryDatabase(DatabaseQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<Database>> queryDatabase(DatabaseQueryCriteria criteria, Page<Object> page){
         return new ResponseEntity<>(databaseService.queryAll(criteria, page),HttpStatus.OK);
     }
 

@@ -49,7 +49,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
     private final UserMapper userMapper;
 
     @Override
-    public Map<String,Object> queryAll(JobQueryCriteria criteria, Page<Object> page) {
+    public PageResult<Job> queryAll(JobQueryCriteria criteria, Page<Object> page) {
         return PageUtil.toPage(jobMapper.findAll(criteria, page));
     }
 

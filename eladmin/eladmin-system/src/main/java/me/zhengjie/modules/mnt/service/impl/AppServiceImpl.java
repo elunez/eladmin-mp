@@ -26,6 +26,7 @@ import me.zhengjie.modules.mnt.mapper.DeployServerMapper;
 import me.zhengjie.modules.mnt.service.AppService;
 import me.zhengjie.modules.mnt.domain.vo.AppQueryCriteria;
 import me.zhengjie.utils.FileUtil;
+import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.PageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +47,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
     private final DeployServerMapper deployServerMapper;
 
     @Override
-    public Map<String,Object> queryAll(AppQueryCriteria criteria, Page<Object> page){
+    public PageResult<App> queryAll(AppQueryCriteria criteria, Page<Object> page){
         return PageUtil.toPage(appMapper.queryAll(criteria, page));
     }
 

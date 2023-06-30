@@ -24,6 +24,7 @@ import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.modules.system.domain.Job;
 import me.zhengjie.modules.system.service.JobService;
 import me.zhengjie.modules.system.domain.vo.JobQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -56,7 +57,7 @@ public class JobController {
     @ApiOperation("查询岗位")
     @GetMapping
     @PreAuthorize("@el.check('job:list','user:list')")
-    public ResponseEntity<Object> queryJob(JobQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<Job>> queryJob(JobQueryCriteria criteria, Page<Object> page){
         return new ResponseEntity<>(jobService.queryAll(criteria, page),HttpStatus.OK);
     }
 

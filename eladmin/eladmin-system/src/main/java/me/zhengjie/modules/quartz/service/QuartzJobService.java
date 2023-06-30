@@ -20,10 +20,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.modules.quartz.domain.QuartzJob;
 import me.zhengjie.modules.quartz.domain.QuartzLog;
 import me.zhengjie.modules.quartz.domain.vo.QuartzJobQueryCriteria;
+import me.zhengjie.utils.PageResult;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -34,11 +35,12 @@ public interface QuartzJobService extends IService<QuartzJob> {
 
     /**
      * 分页查询
+     *
      * @param criteria 条件
-     * @param page 分页参数
+     * @param page     分页参数
      * @return /
      */
-    Map<String,Object> queryAll(QuartzJobQueryCriteria criteria, Page<Object> page);
+    PageResult<QuartzJob> queryAll(QuartzJobQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部
@@ -49,11 +51,12 @@ public interface QuartzJobService extends IService<QuartzJob> {
 
     /**
      * 分页查询日志
+     *
      * @param criteria 条件
-     * @param page 分页参数
+     * @param page     分页参数
      * @return /
      */
-    Map<String,Object> queryAllLog(QuartzJobQueryCriteria criteria, Page<Object> page);
+    PageResult<QuartzLog> queryAllLog(QuartzJobQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部

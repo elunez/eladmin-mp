@@ -70,10 +70,10 @@ public class OnlineUserService {
      * @param pageable /
      * @return /
      */
-    public Map<String,Object> getAll(String filter, Pageable pageable){
+    public PageResult<OnlineUserDto> getAll(String filter, Pageable pageable){
         List<OnlineUserDto> onlineUserDtos = getAll(filter);
         return PageUtil.toPage(
-                PageUtil.toPage(pageable.getPageNumber(),pageable.getPageSize(), onlineUserDtos),
+                PageUtil.paging(pageable.getPageNumber(),pageable.getPageSize(), onlineUserDtos),
                 onlineUserDtos.size()
         );
     }

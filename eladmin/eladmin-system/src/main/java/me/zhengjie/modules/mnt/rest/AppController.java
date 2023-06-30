@@ -23,6 +23,7 @@ import me.zhengjie.annotation.Log;
 import me.zhengjie.modules.mnt.domain.App;
 import me.zhengjie.modules.mnt.service.AppService;
 import me.zhengjie.modules.mnt.domain.vo.AppQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -54,7 +55,7 @@ public class AppController {
     @ApiOperation(value = "查询应用")
     @GetMapping
 	@PreAuthorize("@el.check('app:list')")
-    public ResponseEntity<Object> queryApp(AppQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<App>> queryApp(AppQueryCriteria criteria, Page<Object> page){
         return new ResponseEntity<>(appService.queryAll(criteria, page),HttpStatus.OK);
     }
 

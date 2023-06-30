@@ -19,6 +19,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.modules.system.domain.User;
 import me.zhengjie.modules.system.domain.vo.UserQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -97,11 +98,12 @@ public interface UserService extends IService<User> {
 
     /**
      * 查询全部
+     *
      * @param criteria 条件
-     * @param page 分页参数
+     * @param page     分页参数
      * @return /
      */
-    Map<String,Object> queryAll(UserQueryCriteria criteria, Page<Object> page);
+    PageResult<User> queryAll(UserQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部不分页

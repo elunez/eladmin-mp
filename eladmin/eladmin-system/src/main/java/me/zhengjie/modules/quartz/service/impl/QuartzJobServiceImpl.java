@@ -51,12 +51,12 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
     private final RedisUtils redisUtils;
 
     @Override
-    public Map<String,Object> queryAll(QuartzJobQueryCriteria criteria, Page<Object> page){
+    public PageResult<QuartzJob> queryAll(QuartzJobQueryCriteria criteria, Page<Object> page){
         return PageUtil.toPage(quartzJobMapper.findAll(criteria, page));
     }
 
     @Override
-    public Map<String,Object> queryAllLog(QuartzJobQueryCriteria criteria, Page<Object> page){
+    public PageResult<QuartzLog> queryAllLog(QuartzJobQueryCriteria criteria, Page<Object> page){
         return PageUtil.toPage(quartzLogMapper.findAll(criteria, page));
     }
 

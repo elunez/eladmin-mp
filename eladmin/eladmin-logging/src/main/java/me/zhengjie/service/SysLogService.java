@@ -19,6 +19,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.domain.SysLog;
 import me.zhengjie.domain.vo.SysLogQueryCriteria;
+import me.zhengjie.utils.PageResult;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
 import javax.servlet.http.HttpServletResponse;
@@ -34,11 +35,12 @@ public interface SysLogService extends IService<SysLog>{
 
     /**
      * 分页查询
+     *
      * @param criteria 查询条件
-     * @param page 分页参数
+     * @param page     分页参数
      * @return /
      */
-    Map<String,Object> queryAll(SysLogQueryCriteria criteria, Page<SysLog> page);
+    PageResult<SysLog> queryAll(SysLogQueryCriteria criteria, Page<SysLog> page);
 
     /**
      * 查询全部数据
@@ -53,7 +55,7 @@ public interface SysLogService extends IService<SysLog>{
      * @param page 分页参数
      * @return -
      */
-    Map<String,Object> queryAllByUser(SysLogQueryCriteria criteria, Page<SysLog> page);
+    PageResult<SysLog> queryAllByUser(SysLogQueryCriteria criteria, Page<SysLog> page);
 
     /**
      * 保存日志数据

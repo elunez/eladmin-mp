@@ -26,6 +26,7 @@ import me.zhengjie.domain.QiniuContent;
 import me.zhengjie.service.QiNiuConfigService;
 import me.zhengjie.domain.vo.QiniuQueryCriteria;
 import me.zhengjie.service.QiniuContentService;
+import me.zhengjie.utils.PageResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -52,7 +53,7 @@ public class QiniuController {
     private final QiNiuConfigService qiNiuConfigService;
 
     @GetMapping(value = "/config")
-    public ResponseEntity<Object> queryQiNiuConfig(){
+    public ResponseEntity<QiniuConfig> queryQiNiuConfig(){
         return new ResponseEntity<>(qiNiuConfigService.getConfig(), HttpStatus.OK);
     }
 
@@ -73,7 +74,7 @@ public class QiniuController {
 
     @ApiOperation("查询文件")
     @GetMapping
-    public ResponseEntity<Object> queryQiNiu(QiniuQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<QiniuContent>> queryQiNiu(QiniuQueryCriteria criteria, Page<Object> page){
         return new ResponseEntity<>(qiniuContentService.queryAll(criteria, page),HttpStatus.OK);
     }
 

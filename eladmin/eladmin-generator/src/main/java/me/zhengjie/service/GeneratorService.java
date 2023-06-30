@@ -19,11 +19,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.domain.GenConfig;
 import me.zhengjie.domain.ColumnInfo;
+import me.zhengjie.domain.vo.TableInfo;
+import me.zhengjie.utils.PageResult;
 import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Zheng Jie
@@ -38,7 +39,7 @@ public interface GeneratorService extends IService<ColumnInfo> {
      * @param page 分页参数
      * @return /
      */
-    Map<String,Object> getTables(String name, Page<Object> page);
+    PageResult<TableInfo> getTables(String name, Page<Object> page);
 
     /**
      * 得到数据表的元数据

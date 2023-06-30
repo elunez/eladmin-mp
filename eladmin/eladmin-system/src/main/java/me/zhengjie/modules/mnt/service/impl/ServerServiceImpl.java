@@ -25,6 +25,7 @@ import me.zhengjie.modules.mnt.service.ServerService;
 import me.zhengjie.modules.mnt.domain.vo.ServerQueryCriteria;
 import me.zhengjie.modules.mnt.util.ExecuteShellUtil;
 import me.zhengjie.utils.FileUtil;
+import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.PageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +45,7 @@ public class ServerServiceImpl extends ServiceImpl<ServerMapper, Server> impleme
     private final DeployServerMapper deployServerMapper;
 
     @Override
-    public Map<String,Object> queryAll(ServerQueryCriteria criteria, Page<Object> page){
+    public PageResult<Server> queryAll(ServerQueryCriteria criteria, Page<Object> page){
         return PageUtil.toPage(serverMapper.findAll(criteria, page));
     }
 
