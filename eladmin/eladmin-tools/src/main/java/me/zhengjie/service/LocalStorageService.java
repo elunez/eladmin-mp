@@ -69,9 +69,9 @@ public interface LocalStorageService extends IService<LocalStorage> {
 
     /**
      * 导出数据
-     * @param localStorageDtos 待导出的数据
+     * @param localStorages 待导出的数据
      * @param response /
      * @throws IOException /
      */
-    void download(List<LocalStorage> localStorageDtos, HttpServletResponse response) throws IOException;
+    void download(List<LocalStorage> localStorages, HttpServletResponse response) throws IOException;
 }

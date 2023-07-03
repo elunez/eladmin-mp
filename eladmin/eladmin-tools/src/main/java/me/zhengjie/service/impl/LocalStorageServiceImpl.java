@@ -107,14 +107,14 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
     @Override
     public void download(List<LocalStorage> queryAll, HttpServletResponse response) throws IOException {
         List<Map<String, Object>> list = new ArrayList<>();
-        for (LocalStorage localStorageDTO : queryAll) {
+        for (LocalStorage localStorage : queryAll) {
             Map<String,Object> map = new LinkedHashMap<>();
-            map.put("文件名", localStorageDTO.getRealName());
-            map.put("备注名", localStorageDTO.getName());
-            map.put("文件类型", localStorageDTO.getType());
-            map.put("文件大小", localStorageDTO.getSize());
-            map.put("创建者", localStorageDTO.getCreateBy());
-            map.put("创建日期", localStorageDTO.getCreateTime());
+            map.put("文件名", localStorage.getRealName());
+            map.put("备注名", localStorage.getName());
+            map.put("文件类型", localStorage.getType());
+            map.put("文件大小", localStorage.getSize());
+            map.put("创建者", localStorage.getCreateBy());
+            map.put("创建日期", localStorage.getCreateTime());
             list.add(map);
         }
         FileUtil.downloadExcel(list, response);
