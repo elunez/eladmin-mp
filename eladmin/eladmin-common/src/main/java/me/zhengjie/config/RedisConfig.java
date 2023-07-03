@@ -82,16 +82,10 @@ public class RedisConfig extends CachingConfigurerSupport {
         template.setHashValueSerializer(fastJsonRedisSerializer);
         // fastjson 升级到 1.2.83 后需要指定序列化白名单
         ParserConfig.getGlobalInstance().addAccept("me.zhengjie.domain");
-        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.service.dto");
         // 模块内的实体类
         ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.mnt.domain");
         ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.quartz.domain");
         ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.system.domain");
-        // 模块内的 Dto
-        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.mnt.service.dto");
-        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.quartz.service.dto");
-        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.security.service.dto");
-        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.system.service.dto");
         // key的序列化采用StringRedisSerializer
         template.setKeySerializer(new StringRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());
