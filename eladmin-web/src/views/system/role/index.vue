@@ -34,6 +34,9 @@
             v-model="deptDatas"
             :load-options="loadDepts"
             :options="depts"
+            :flat="true"
+            :auto-select-descendants="true"
+            :default-expand-level="1"
             multiple
             style="width: 380px"
             placeholder="请选择"
