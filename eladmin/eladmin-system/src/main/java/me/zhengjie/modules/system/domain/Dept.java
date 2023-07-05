@@ -20,7 +20,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -52,7 +51,6 @@ public class Dept extends BaseEntity implements Serializable {
     private Set<Role> roles;
 
     @TableField(exist = false)
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Dept> children;
 
     @ApiModelProperty(value = "排序")
