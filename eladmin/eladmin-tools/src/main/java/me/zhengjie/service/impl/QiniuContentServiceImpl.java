@@ -98,7 +98,7 @@ public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, Qin
                 qiniuContent.setBucket(qiniuConfig.getBucket());
                 qiniuContent.setType(qiniuConfig.getType());
                 qiniuContent.setKey(FileUtil.getFileNameNoEx(putRet.key));
-                qiniuContent.setUrl(qiniuConfig.getHost()+"/"+putRet.key);
+                qiniuContent.setUrl(qiniuConfig.getHost() + "/" + putRet.key);
                 qiniuContent.setSize(FileUtil.getSize(Integer.parseInt(String.valueOf(file.getSize()))));
                 save(qiniuContent);
             }
