@@ -126,4 +126,11 @@ public interface UserService extends IService<User> {
      * @param resources /
      */
     void updateCenter(User resources);
+
+    /**
+     * 重置密码
+     * @param ids 用户id
+     * @param pwd 密码
+     */
+    void resetPwd(Set<Long> ids, String pwd);
 }

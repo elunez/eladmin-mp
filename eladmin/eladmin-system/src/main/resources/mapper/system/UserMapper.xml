@@ -169,4 +169,12 @@
             #{roleId}
         </foreach>
     </select>
+
+    <update id="resetPwd">
+        update sys_user set password = #{pwd}
+        where user_id in
+        <foreach collection="userIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>
