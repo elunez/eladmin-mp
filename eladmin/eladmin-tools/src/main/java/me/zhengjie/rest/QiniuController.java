@@ -78,7 +78,6 @@ public class QiniuController {
         return new ResponseEntity<>(qiniuContentService.queryAll(criteria, page),HttpStatus.OK);
     }
 
-    @Log("上传文件")
     @ApiOperation("上传文件")
     @PostMapping
     public ResponseEntity<Object> uploadQiNiu(@RequestParam MultipartFile file){

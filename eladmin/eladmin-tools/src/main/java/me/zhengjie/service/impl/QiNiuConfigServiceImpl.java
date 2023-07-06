@@ -61,6 +61,6 @@ public class QiNiuConfigServiceImpl extends ServiceImpl<QiniuConfigMapper, Qiniu
     public void updateType(String type) {
         QiniuConfig qiniuConfig = getById(1L);
         qiniuConfig.setType(type);
-        save(qiniuConfig);
+        saveOrUpdate(qiniuConfig);
     }
 }
