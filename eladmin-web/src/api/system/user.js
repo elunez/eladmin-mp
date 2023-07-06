@@ -17,6 +17,14 @@ export function del(ids) {
   })
 }
 
+export function resetPwd(ids) {
+  return request({
+    url: 'api/users/resetPwd',
+    method: 'put',
+    data: ids
+  })
+}
+
 export function edit(data) {
   return request({
     url: 'api/users',
@@ -57,5 +65,5 @@ export function updateEmail(form) {
   })
 }
 
-export default { add, edit, del }
+export default { add, edit, del, resetPwd }
 
