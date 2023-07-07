@@ -16,6 +16,12 @@
 |  github   | https://github.com/elunez/eladmin-mp |  https://github.com/elunez/eladmin-web-mp   |
 |  码云   | https://gitee.com/elunez/eladmin-mp     |  https://gitee.com/elunez/eladmin-web-mp   |
 
+#### VPS推荐
+
+<a href="https://bwh81.net/aff.php?aff=70876" target="_blank">
+<img src="https://eladmin.vip/images/banner/side.jpeg" alt="明道云零代码构建平台" style="width: 400px;border-radius: 2px;">
+</a>
+
 #### 主要特性
 - 使用最新技术栈，社区资源丰富。
 - 高效率开发，代码生成器可一键生成前后端代码
