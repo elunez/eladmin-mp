@@ -161,10 +161,10 @@ export default {
       }
     },
     getSupDepts(id) {
-      crudDept.getDeptSuperior(id).then(res => {
-        const date = res.content
-        this.buildDepts(date)
-        this.depts = date
+      crudDept.getDeptSuperior(id, true).then(res => {
+        const data = res.content
+        this.buildDepts(data)
+        this.depts = data
       })
     },
     buildDepts(depts) {
@@ -224,7 +224,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        crudDept.edit(data).then(res => {
+        crudDept.edit(data).then(() => {
           this.crud.notify(this.dict.label.dept_status[val] + '成功', CRUD.NOTIFICATION_TYPE.SUCCESS)
         }).catch(err => {
           data.enabled = !data.enabled
@@ -234,7 +234,7 @@ export default {
         data.enabled = !data.enabled
       })
     },
-    checkboxT(row, rowIndex) {
+    checkboxT(row) {
       return row.id !== 1
     }
   }

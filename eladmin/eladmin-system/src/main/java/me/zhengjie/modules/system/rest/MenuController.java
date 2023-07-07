@@ -41,7 +41,6 @@ import java.util.stream.Collectors;
  * @author Zheng Jie
  * @date 2018-12-03
  */
-
 @RestController
 @RequiredArgsConstructor
 @Api(tags = "系统：菜单管理")
@@ -101,8 +100,16 @@ public class MenuController {
         if(CollectionUtil.isNotEmpty(ids)){
             for (Long id : ids) {
                 Menu menu = menuService.findById(id);
-                menus.addAll(menuService.getSuperior(menu, new ArrayList<>()));
+                List<Menu> menuList = menuService.getSuperior(menu, new ArrayList<>());
+                for (Menu data : menuList) {
+                    if(data.getId().equals(menu.getPid())) {
+                        data.setSubCount(data.getSubCount() - 1);
+                    }
+                }
+                menus.addAll(menuList);
             }
+            // 编辑菜单时不显示自己以及自己下级的数据，避免出现PID数据环形问题
+            menus = menus.stream().filter(i -> !ids.contains(i.getId())).collect(Collectors.toSet());
             return new ResponseEntity<>(menuService.buildTree(new ArrayList<>(menus)),HttpStatus.OK);
         }
         return new ResponseEntity<>(menuService.getMenus(null),HttpStatus.OK);
