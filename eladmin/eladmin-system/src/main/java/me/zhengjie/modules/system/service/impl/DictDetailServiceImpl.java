@@ -84,7 +84,7 @@ public class DictDetailServiceImpl extends ServiceImpl<DictDetailMapper, DictDet
     }
 
     public void delCaches(DictDetail dictDetail){
-        Dict dict = dictMapper.selectById(dictDetail.getDictId());
+        Dict dict = dictMapper.selectById(dictDetail.getDict().getId());
         redisUtils.del(CacheKey.DICT_NAME + dict.getName());
     }
 }
