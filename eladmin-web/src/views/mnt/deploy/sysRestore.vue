@@ -70,7 +70,6 @@ export default {
       if (this.deployId === '') {
         return false
       }
-      this.sort = 'deployDate,desc'
       this.params['deployId'] = this.deployId
       return true
     },

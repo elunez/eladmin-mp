@@ -31,8 +31,6 @@ function CRUD(options) {
     form: {},
     // 重置表单
     defaultForm: () => {},
-    // 排序规则，默认 id 降序， 支持多字段排序 ['id,desc', 'createTime,asc']
-    sort: ['id,desc'],
     // 等待时间
     time: 50,
     // CRUD Method
@@ -350,7 +348,6 @@ function CRUD(options) {
       return {
         current: crud.page.page,
         size: crud.page.size,
-        sort: crud.sort,
         ...crud.query,
         ...crud.params
       }

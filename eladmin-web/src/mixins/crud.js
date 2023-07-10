@@ -12,8 +12,6 @@ export default {
     return {
       // 表格数据
       data: [],
-      // 排序规则，默认 id 降序， 支持多字段排序 ['id,desc', 'createTime,asc']
-      sort: ['id,desc'],
       // 页码
       page: 1,
       // 每页数据条数
@@ -85,7 +83,6 @@ export default {
       return {
         current: this.page,
         size: this.size,
-        sort: this.sort,
         ...this.query,
         ...this.params
       }

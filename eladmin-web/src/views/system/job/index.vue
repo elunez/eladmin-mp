@@ -63,7 +63,6 @@ export default {
     return CRUD({
       title: '岗位',
       url: 'api/job',
-      sort: ['jobSort,asc', 'id,desc'],
       crudMethod: { ...crudJob }
     })
   },

@@ -66,7 +66,7 @@ export default {
   components: { pagination, rrOperation, udOperation },
   cruds() {
     return [
-      CRUD({ title: '字典详情', url: 'api/dictDetail', query: { dictName: '' }, sort: ['dictSort,asc', 'id,desc'],
+      CRUD({ title: '字典详情', url: 'api/dictDetail', query: { dictName: '' },
         crudMethod: { ...crudDictDetail },
         optShow: {
           add: true,

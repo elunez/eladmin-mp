@@ -59,13 +59,13 @@
           </div>
           <crudOperation show="" :permission="permission">
             <el-button
+              slot="right"
               v-permission="['admin','user:add']"
               :disabled="crud.selections.length === 0"
               class="filter-item"
               size="mini"
               type="primary"
               icon="el-icon-refresh-left"
-              slot="right"
               @click="resetPwd(crud.selections)"
             >重置密码
             </el-button>
@@ -376,8 +376,7 @@ export default {
     },
     // 获取左侧部门数据
     getDeptDatas(node, resolve) {
-      const sort = 'id,desc'
-      const params = { sort: sort }
+      const params = {}
       if (typeof node !== 'object') {
         if (node) {
           params['name'] = node
