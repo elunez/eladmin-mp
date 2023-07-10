@@ -30,7 +30,7 @@
         <if test="criteria.label != null and criteria.label != ''">
             and dd.label = #{criteria.label}
         </if>
-        order by dd.dict_sort
+        order by dd.dict_sort, dd.dict_id desc
     </select>
 
     <select id="findByDictName" resultMap="BaseResultMap">

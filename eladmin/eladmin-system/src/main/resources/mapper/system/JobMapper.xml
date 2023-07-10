@@ -31,6 +31,6 @@
                 and create_time between #{criteria.createTime[0]} and #{criteria.createTime[1]}
             </if>
         </where>
-        order by job_sort
+        order by job_sort, job_id desc
     </select>
 </mapper>

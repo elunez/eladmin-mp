@@ -33,7 +33,7 @@
                 AND deploy_date BETWEEN #{criteria.deployDate[0]} AND #{criteria.deployDate[1]}
             </if>
         </where>
-        order by deploy_id desc
+        order by deploy_date desc
     </select>
 
 </mapper>
