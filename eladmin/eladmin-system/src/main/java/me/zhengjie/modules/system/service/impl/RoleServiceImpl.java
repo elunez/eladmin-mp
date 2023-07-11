@@ -15,6 +15,7 @@
  */
 package me.zhengjie.modules.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -110,9 +111,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         role.setLevel(resources.getLevel());
         // 更新
         saveOrUpdate(role);
+        // 删除关联部门数据
+        roleDeptMapper.deleteByRoleId(resources.getId());
         // 判断是否有部门数据，若有，则需更新关联
         if (CollectionUtil.isNotEmpty(resources.getDepts())) {
-            roleDeptMapper.deleteByRoleId(resources.getId());
             roleDeptMapper.insertData(resources.getId(), resources.getDepts());
         }
         // 更新相关缓存
@@ -124,7 +126,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         List<User> users = userMapper.findByRoleId(role.getId());
         // 更新菜单
         roleMenuMapper.deleteByRoleId(role.getId());
-        roleMenuMapper.insertData(role.getId(), role.getMenus());
+        // 判断是否为空
+        if(CollUtil.isNotEmpty(role.getMenus())){
+            roleMenuMapper.insertData(role.getId(), role.getMenus());
+        }
         // 更新缓存
         delCaches(role.getId(), users);
     }
