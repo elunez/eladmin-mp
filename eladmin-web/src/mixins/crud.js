@@ -89,12 +89,12 @@ export default {
     },
     // 改变页码
     pageChange(e) {
-      this.page = e - 1
+      this.page = e
       this.init()
     },
     // 改变每页显示数
     sizeChange(e) {
-      this.page = 0
+      this.page = 1
       this.size = e
       this.init()
     },
