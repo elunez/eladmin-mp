@@ -55,7 +55,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 
     @Override
     public List<SysLog> queryAll(SysLogQueryCriteria criteria) {
-        return sysLogMapper.queryAll(criteria).getRecords();
+        return sysLogMapper.queryAll(criteria);
     }
 
     @Override

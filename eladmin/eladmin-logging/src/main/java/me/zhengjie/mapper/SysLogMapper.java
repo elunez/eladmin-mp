@@ -23,6 +23,8 @@ import me.zhengjie.domain.vo.SysLogQueryCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * @author Zheng Jie
  * @description
@@ -31,7 +33,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface SysLogMapper extends BaseMapper<SysLog> {
 
-    IPage<SysLog> queryAll(@Param("criteria") SysLogQueryCriteria criteria);
+    List<SysLog> queryAll(@Param("criteria") SysLogQueryCriteria criteria);
 
     IPage<SysLog> queryAll(@Param("criteria") SysLogQueryCriteria criteria, Page<SysLog> page);
     IPage<SysLog> queryAllByUser(@Param("criteria") SysLogQueryCriteria criteria, Page<SysLog> page);
