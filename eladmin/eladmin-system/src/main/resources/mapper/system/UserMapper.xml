@@ -98,7 +98,7 @@
         ) u
         left join sys_users_jobs suj on u.user_user_id = suj.user_id
         left join sys_job j on suj.job_id = j.job_id
-        left join sys_users_roles sur on suj.user_id = sur.user_id
+        left join sys_users_roles sur on u.user_user_id = sur.user_id
         left join sys_role r on sur.role_id = r.role_id
         order by u.user_user_id desc
     </select>
