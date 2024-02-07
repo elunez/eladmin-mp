@@ -27,7 +27,7 @@
             <if test="criteria.jobName != null and criteria.jobName != ''">
                 AND job_name LIKE CONCAT('%',#{criteria.jobName},'%')
             </if>
-            <if test="criteria.isSuccess != null and criteria.isSuccess != ''">
+            <if test="criteria.isSuccess != null">
                 AND is_success = #{criteria.isSuccess}
             </if>
             <if test="criteria.createTime != null and criteria.createTime.size() > 0">
