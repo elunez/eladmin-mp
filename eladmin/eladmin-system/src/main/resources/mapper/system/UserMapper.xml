@@ -60,9 +60,6 @@
             <if test="criteria.enabled != null">
                 and u.enabled = #{criteria.enabled}
             </if>
-            <if test="criteria.deptId != null">
-                and u.dept_id = #{criteria.deptId}
-            </if>
             <if test="criteria.deptIds != null and criteria.deptIds.size() != 0">
                 and u.dept_id in
                 <foreach collection="criteria.deptIds" item="deptId" open="(" separator="," close=")">
