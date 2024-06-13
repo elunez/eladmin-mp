@@ -205,4 +205,34 @@ public class UserController {
             throw new BadRequestException("角色权限不足");
         }
     }
+
+    /**
+     * @description: 生成邀请码
+     * @param: Long userId
+     * @returns: org.springframework.http.ResponseEntity<java.lang.Object>
+     * @auther: John Lee
+     * @date: 2024/6/12 22:46
+     */
+    @Log("生成邀请码")
+    @ApiOperation("生成邀请码")
+    @GetMapping(value = "/generator")
+    @PreAuthorize("@el.check('userInvitationCodeBind:edit')")
+    public ResponseEntity<Object> getInvitationCode(User user)  {
+        if (!SecurityUtils.getCurrentUserId().equals(user.getId())) {
+            throw new BadRequestException("请勿替代他人操作");
+        }
+        String invitationCode = userService.invitationCodeGenerator(user.getId());
+        return new ResponseEntity<>(invitationCode,HttpStatus.OK);
+    }
+
+    @Log("查询邀请码")
+    @ApiOperation("查询邀请码")
+    @GetMapping(value = "/get/invitation/code")
+    @PreAuthorize("@el.check('userInvitationCodeBind:list')")
+    public ResponseEntity<Object> getInvitationCode(@RequestParam Long userId)  {
+        if (!SecurityUtils.getCurrentUserId().equals(userId)) {
+           return new ResponseEntity<>("暂未生成邀请码(点击按钮重新生成)",HttpStatus.OK);
+        }
+        return new ResponseEntity<>(userService.invitationCodeQuery(userId),HttpStatus.OK);
+    }
 }
