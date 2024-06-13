@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.invitationcode.mapper.UserInvitationCodeBindMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.modules.invitationcode.domain.UserInvitationCodeBind">
+        <id column="bind_id" property="bindId"/>
+        <result column="user_id" property="userId"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="invitation_code" property="invitationCode"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        bind_id, user_id, customer_id, invitation_code, create_by, update_by, create_time, update_time
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_invitation_code_bind
+        <where>
+        </where>
+        order by bind_id desc
+    </select>
+
+    <delete id="deleteByUserId">
+        DELETE FROM user_invitation_code_bind WHERE user_id = #{userId}
+    </delete>
+
+    <delete id="deleteByUserIds">
+        DELETE FROM user_invitation_code_bind WHERE user_id IN
+        <foreach collection="userIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

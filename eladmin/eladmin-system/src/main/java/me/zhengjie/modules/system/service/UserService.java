@@ -133,4 +133,22 @@ public interface UserService extends IService<User> {
      * @param pwd 密码
      */
     void resetPwd(Set<Long> ids, String pwd);
+
+    /***
+     * @description: 生成邀请码
+     * @param: Long userId
+     * @returns: void
+     * @auther: John Lee
+     * @date: 2024/6/12 22:44
+     */
+    String invitationCodeGenerator(Long userId);
+
+    /**
+     * @description: 查看邀请码
+     * @param: Long userId
+     * @returns: java.lang.String
+     * @auther: John Lee
+     * @date: 2024/6/13 1:00
+     */
+    String invitationCodeQuery(Long userId);
 }

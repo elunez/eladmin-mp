@@ -15,11 +15,15 @@
  */
 package me.zhengjie.modules.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.config.FileProperties;
 import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.modules.invitationcode.domain.UserInvitationCodeBind;
+import me.zhengjie.modules.invitationcode.mapper.UserInvitationCodeBindMapper;
+import me.zhengjie.modules.invitationcode.service.UserInvitationCodeBindService;
 import me.zhengjie.modules.security.service.OnlineUserService;
 import me.zhengjie.modules.security.service.UserCacheManager;
 import me.zhengjie.modules.system.domain.Job;
@@ -42,6 +46,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,6 +66,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private final RedisUtils redisUtils;
     private final UserCacheManager userCacheManager;
     private final OnlineUserService onlineUserService;
+    private final UserInvitationCodeBindService userInvitationCodeBindService;
+    private final UserInvitationCodeBindMapper userInvitationCodeBindMapper;
 
     @Override
     public PageResult<User> queryAll(UserQueryCriteria criteria, Page<Object> page) {
@@ -182,6 +189,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userJobMapper.deleteByUserIds(ids);
         // 删除用户角色
         userRoleMapper.deleteByUserIds(ids);
+        // 删除用户邀请码
+        userInvitationCodeBindMapper.deleteByUserIds(ids);
     }
 
     @Override
@@ -210,6 +219,58 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Transactional(rollbackFor = Exception.class)
     public void resetPwd(Set<Long> ids, String pwd) {
         userMapper.resetPwd(ids, pwd);
+    }
+
+    @Override
+    public String  invitationCodeGenerator(Long userId) {
+        if (userId == null) {
+            throw new EntityNotFoundException(User.class,"username","");
+        }
+
+        List<UserInvitationCodeBind> list = userInvitationCodeBindService
+                .lambdaQuery().eq(UserInvitationCodeBind::getUserId, userId)
+                .list();
+        //防止客户频繁操作。
+        UserInvitationCodeBind userInvitationCodeBind = list.stream()
+                .sorted(Comparator.comparing(UserInvitationCodeBind::getUpdateBy).reversed())
+                .collect(Collectors.toList()).get(0);
+        long lastUpdateTimeMillis = userInvitationCodeBind.getUpdateTime().getTime();
+        long currentTimeMillis = System.currentTimeMillis();
+        long duringMillis = (currentTimeMillis - lastUpdateTimeMillis)/1000;
+        if (duringMillis < 60) {
+            throw new BadRequestException("请于"+(60-duringMillis)+"s后再试，每分钟只能生成一个邀请码！");
+        }
+        //更新用户邀请码
+        //若是用户原本已有邀请码，则只更新邀请码
+        userInvitationCodeBind.setInvitationCode(UUID.randomUUID().toString());
+        userInvitationCodeBind.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        userInvitationCodeBindService.updateById(userInvitationCodeBind);
+        //TODO 更新历史客户邀请码，避免用户丢失客户
+        return userInvitationCodeBindService.getById(userInvitationCodeBind.getBindId()).getInvitationCode();
+    }
+
+    @Override
+    public String invitationCodeQuery(Long userId) {
+        if (userId == null) {
+            throw new EntityNotFoundException(User.class,"username","");
+        }
+        List<UserInvitationCodeBind> list =
+                userInvitationCodeBindService
+                        .lambdaQuery()
+                        .eq(UserInvitationCodeBind::getUserId, userId)
+                        .list();
+        if (CollUtil.isEmpty(list)) {
+            UserInvitationCodeBind records = new UserInvitationCodeBind();
+            records.setUserId(userId);
+            records.setInvitationCode(UUID.randomUUID().toString());
+            records.setCreateBy(SecurityUtils.getCurrentUserId().toString());
+            records.setUpdateBy(SecurityUtils.getCurrentUserId().toString());
+            records.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            records.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+            userInvitationCodeBindService.create(records);
+        }
+
+        return userInvitationCodeBindService.lambdaQuery().eq(UserInvitationCodeBind::getUserId,userId).list().get(0).getInvitationCode();
     }
 
     @Override

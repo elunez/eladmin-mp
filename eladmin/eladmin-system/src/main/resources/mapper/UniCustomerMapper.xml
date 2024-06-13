@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.uniapp.mapper.UniCustomerMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.modules.uniapp.domain.UniCustomer">
+        <id column="customer_id" property="customerId"/>
+        <result column="customer_num" property="customerNum"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="invitation_code" property="invitationCode"/>
+        <result column="password" property="password"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        customer_id, customer_num, customer_name, invitation_code, password, create_time, update_time, create_by, update_by
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from uni_customer
+        <where>
+            <if test="criteria.customerNum != null">
+                and customer_num like concat('%',#{criteria.customerNum},'%')
+            </if>
+            <if test="criteria.customerName != null">
+                and customer_name like concat('%',#{criteria.customerName},'%')
+            </if>
+            <if test="criteria.invitationCode != null">
+                and invitation_code = #{criteria.invitationCode}
+            </if>
+            <if test="criteria.createTime != null and criteria.createTime.size() > 0">
+                AND create_time BETWEEN #{criteria.createTime[0]} AND #{criteria.createTime[1]}
+            </if>
+            <if test="criteria.updateTime != null and criteria.updateTime.size() > 0">
+                AND update_time BETWEEN #{criteria.updateTime[0]} AND #{criteria.updateTime[1]}
+            </if>
+        </where>
+        order by customer_id desc
+    </select>
+</mapper>

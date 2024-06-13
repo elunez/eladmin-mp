@@ -55,8 +55,12 @@
                     <el-radio label="女">女</el-radio>
                   </el-radio-group>
                 </el-form-item>
-                <el-form-item label="">
+                <el-form-item label="操作">
                   <el-button :loading="saveLoading" size="mini" type="primary" @click="doSubmit">保存配置</el-button>
+                  <el-button :loading="generatorInvitationCodeLoading" size="mini" type="primary" @click="generatorInvitationCode">生成邀请码</el-button>
+                </el-form-item>
+                <el-form-item label="邀请码">
+                  <span style="color: #303133; margin-left: 10px; font-style: italic;">暂无邀请码(点击按钮生成)</span>
                 </el-form-item>
               </el-form>
             </el-tab-pane>
