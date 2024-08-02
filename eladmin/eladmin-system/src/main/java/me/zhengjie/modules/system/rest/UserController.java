@@ -189,8 +189,8 @@ public class UserController {
         if(!passwordEncoder.matches(password, user.getPassword())){
             throw new BadRequestException("密码错误");
         }
-        verificationCodeService.validated(CodeEnum.EMAIL_RESET_EMAIL_CODE.getKey() + user.getEmail(), code);
-        userService.updateEmail(user.getUsername(),user.getEmail());
+        verificationCodeService.validated(CodeEnum.EMAIL_RESET_EMAIL_CODE.getKey() + resources.getEmail(), code);
+        userService.updateEmail(user.getUsername(),resources.getEmail());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
