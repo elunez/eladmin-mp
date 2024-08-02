@@ -90,6 +90,7 @@
             left join sys_dept d on u.dept_id = d.dept_id
             <include refid="Whrer_Sql"/>
             <if test="criteria.offset != null">
+                order by u.user_id desc
                 limit #{criteria.offset}, #{criteria.size}
             </if>
         ) u
