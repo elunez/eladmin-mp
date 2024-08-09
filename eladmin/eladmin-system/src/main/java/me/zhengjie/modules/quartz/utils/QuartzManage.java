@@ -56,8 +56,12 @@ public class QuartzManage {
             //重置启动时间
             ((CronTriggerImpl)cronTrigger).setStartTime(new Date());
 
-            //执行定时任务
-            scheduler.scheduleJob(jobDetail,cronTrigger);
+            //执行定时任务，如果是持久化的，这里会报错，捕获输出
+            try {
+                scheduler.scheduleJob(jobDetail,cronTrigger);
+            } catch (ObjectAlreadyExistsException e) {
+                log.warn("定时任务已存在，跳过加载");
+            }
 
             // 暂停任务
             if (quartzJob.getIsPause()) {
