@@ -27,6 +27,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomP6SpyLogger implements MessageFormattingStrategy {
 
+    // 重置颜色
+    private static final String RESET = "\u001B[0m";
+    // 红色
+    private static final String RED = "\u001B[31m";
+    // 绿色
+    private static final String GREEN = "\u001B[32m";
+
     /**
      * 格式化 sql
      * @param connectionId 连接id
@@ -44,6 +51,12 @@ public class CustomP6SpyLogger implements MessageFormattingStrategy {
         if(StrUtil.isNotBlank(sql)){
             sql = sql.replaceAll("\\s+", " ").trim();
         }
-        return String.format("sql- %s [Time: %dms] - %s;", now, elapsed, sql);
+
+        // 格式化并加上颜色
+        return String.format(
+                "sql- %s%s%s %s[Time: %dms]%s - %s;",
+                RED, now, RESET, GREEN, elapsed, RESET, sql
+        );
     }
 }
+
