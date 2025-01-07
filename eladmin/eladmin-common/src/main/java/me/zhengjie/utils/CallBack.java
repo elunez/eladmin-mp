@@ -20,7 +20,7 @@ package me.zhengjie.utils;
  * @author: liaojinlong
  * @date: 2020/6/9 17:02
  * @since: 1.0
- * @see {@link SpringContextHolder}
+ * @see {@link SpringBeanHolder}
  * 针对某些初始化方法，在SpringContextHolder 初始化前时，<br>
  * 可提交一个 提交回调任务。<br>
  * 在SpringContextHolder 初始化后，进行回调使用

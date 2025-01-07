@@ -1,16 +1,15 @@
 package me.zhengjie.utils;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
+import lombok.*;
+import java.io.Serializable;
 import java.util.List;
 
-@Getter
-@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public class PageResult<T> {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class PageResult<T> implements Serializable {
 
-    private final List<T> content;
+    private List<T> content;
 
-    private final long totalElements;
+    private long totalElements;
 }

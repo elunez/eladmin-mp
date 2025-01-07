@@ -31,7 +31,7 @@ import java.util.List;
  * @date 2019-01-07
  */
 @Slf4j
-public class SpringContextHolder implements ApplicationContextAware, DisposableBean {
+public class SpringBeanHolder implements ApplicationContextAware, DisposableBean {
 
     private static ApplicationContext applicationContext = null;
     private static final List<CallBack> CALL_BACKS = new ArrayList<>();
@@ -45,7 +45,7 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
      */
     public synchronized static void addCallBacks(CallBack callBack) {
         if (addCallback) {
-            SpringContextHolder.CALL_BACKS.add(callBack);
+            SpringBeanHolder.CALL_BACKS.add(callBack);
         } else {
             log.warn("CallBack：{} 已无法添加！立即执行", callBack.getCallBackName());
             callBack.executor();
@@ -127,22 +127,22 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 
     @Override
     public void destroy() {
-        SpringContextHolder.clearHolder();
+        SpringBeanHolder.clearHolder();
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        if (SpringContextHolder.applicationContext != null) {
-            log.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:" + SpringContextHolder.applicationContext);
+        if (SpringBeanHolder.applicationContext != null) {
+            log.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:" + SpringBeanHolder.applicationContext);
         }
-        SpringContextHolder.applicationContext = applicationContext;
+        SpringBeanHolder.applicationContext = applicationContext;
         if (addCallback) {
-            for (CallBack callBack : SpringContextHolder.CALL_BACKS) {
+            for (CallBack callBack : SpringBeanHolder.CALL_BACKS) {
                 callBack.executor();
             }
             CALL_BACKS.clear();
         }
-        SpringContextHolder.addCallback = false;
+        SpringBeanHolder.addCallback = false;
     }
 
     /**
