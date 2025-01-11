@@ -16,7 +16,6 @@
 package me.zhengjie.infra.mybatisplus;
 
 import com.baomidou.mybatisplus.annotation.DbType;
-import com.baomidou.mybatisplus.extension.injector.methods.InsertBatchSomeColumn;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
@@ -53,7 +52,7 @@ public class MybatisPlusConfig {
      * Mapper支持批量插入
      */
     @Bean
-    public InsertBatchSomeColumn insertBatchSqlInjector() {
-        return new InsertBatchSomeColumn();
+    public InsertBatchSqlInjector insertBatchSqlInjector() {
+        return new InsertBatchSqlInjector();
     }
 }
