@@ -15,24 +15,26 @@
  */
 package me.zhengjie.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import me.zhengjie.domain.vo.TradeVo;
 import me.zhengjie.domain.AlipayConfig;
+import me.zhengjie.domain.vo.TradeVo;
+import me.zhengjie.infra.mybatisplus.EasyService;
 
 /**
  * @author Zheng Jie
  * @date 2018-12-31
  */
-public interface AliPayService extends IService<AlipayConfig> {
+public interface AliPayService extends EasyService<AlipayConfig> {
 
     /**
      * 查询配置
+     *
      * @return AlipayConfig
      */
     AlipayConfig find();
 
     /**
      * 更新配置
+     *
      * @param alipayConfig 支付宝配置
      * @return AlipayConfig
      */
@@ -40,8 +42,9 @@ public interface AliPayService extends IService<AlipayConfig> {
 
     /**
      * 处理来自PC的交易请求
+     *
      * @param alipay 支付宝配置
-     * @param trade 交易详情
+     * @param trade  交易详情
      * @return String
      * @throws Exception 异常
      */
@@ -49,8 +52,9 @@ public interface AliPayService extends IService<AlipayConfig> {
 
     /**
      * 处理来自手机网页的交易请求
+     *
      * @param alipay 支付宝配置
-     * @param trade 交易详情
+     * @param trade  交易详情
      * @return String
      * @throws Exception 异常
      */

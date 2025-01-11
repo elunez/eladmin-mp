@@ -31,4 +31,9 @@ public class ElConstant {
      * mac 系统
      */
     public static final String MAC = "mac";
+
+    /**
+     * 管理员
+     */
+    public static final String ADMIN = "admin";
 }

@@ -15,8 +15,8 @@
  */
 package me.zhengjie.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.zhengjie.domain.AlipayConfig;
+import me.zhengjie.infra.mybatisplus.EasyMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -25,6 +25,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2023-06-14
  **/
 @Mapper
-public interface AliPayConfigMapper extends BaseMapper<AlipayConfig> {
+public interface AliPayConfigMapper extends EasyMapper<AlipayConfig> {
 
 }

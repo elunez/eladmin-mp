@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import me.zhengjie.domain.vo.TradeVo;
 import me.zhengjie.domain.AlipayConfig;
 import me.zhengjie.infra.exception.BadRequestException;
+import me.zhengjie.infra.mybatisplus.impl.EasyServiceImpl;
 import me.zhengjie.mapper.AliPayConfigMapper;
 import me.zhengjie.service.AliPayService;
 import org.springframework.cache.annotation.CacheConfig;
@@ -39,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @CacheConfig(cacheNames = "aliPay")
-public class AliPayServiceImpl extends ServiceImpl<AliPayConfigMapper, AlipayConfig> implements AliPayService {
+public class AliPayServiceImpl extends EasyServiceImpl<AliPayConfigMapper, AlipayConfig> implements AliPayService {
 
     @Override
     @Cacheable(key = "'config'")
