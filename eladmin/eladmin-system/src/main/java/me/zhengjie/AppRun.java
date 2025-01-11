@@ -17,7 +17,7 @@ package me.zhengjie;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import me.zhengjie.annotation.rest.AnonymousGetMapping;
+import me.zhengjie.infra.security.annotation.AnonymousGetMapping;
 import me.zhengjie.utils.SpringBeanHolder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

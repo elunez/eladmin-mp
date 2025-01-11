@@ -12,6 +12,8 @@ const api = {
     updateAvatarApi: baseUrl + '/api/users/updateAvatar',
     // 上传文件到七牛云
     qiNiuUploadApi: baseUrl + '/api/qiNiuContent',
+    // websocket
+    websocketApi: baseUrl + '/webSocket/{sid}',
     // Sql 监控
     sqlApi: baseUrl + '/druid/index.html',
     // swagger

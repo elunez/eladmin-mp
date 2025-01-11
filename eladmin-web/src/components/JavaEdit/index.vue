@@ -47,7 +47,7 @@ export default {
       cursorHeight: 0.9,
       // 替换主题这里需修改名称
       theme: 'idea',
-      readOnly: true
+      readOnly: false
     })
     this.editor.setSize('auto', this.height)
     this.editor.setValue(this.value)

@@ -16,7 +16,7 @@
 package me.zhengjie.modules.quartz.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.infra.exception.BadRequestException;
 import me.zhengjie.modules.quartz.domain.QuartzJob;
 import org.quartz.*;
 import org.quartz.impl.triggers.CronTriggerImpl;

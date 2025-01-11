@@ -17,8 +17,8 @@ package me.zhengjie.modules.security.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.zhengjie.exception.BadRequestException;
-import me.zhengjie.exception.EntityNotFoundException;
+import me.zhengjie.infra.exception.BadRequestException;
+import me.zhengjie.infra.exception.EntityNotFoundException;
 import me.zhengjie.modules.security.service.dto.JwtUserDto;
 import me.zhengjie.modules.system.domain.User;
 import me.zhengjie.modules.system.service.DataService;

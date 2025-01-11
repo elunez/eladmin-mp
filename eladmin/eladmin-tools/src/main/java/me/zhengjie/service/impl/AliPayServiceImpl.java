@@ -23,7 +23,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.domain.vo.TradeVo;
 import me.zhengjie.domain.AlipayConfig;
-import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.infra.exception.BadRequestException;
 import me.zhengjie.mapper.AliPayConfigMapper;
 import me.zhengjie.service.AliPayService;
 import org.springframework.cache.annotation.CacheConfig;

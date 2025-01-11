@@ -18,7 +18,7 @@ package me.zhengjie.modules.mnt.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
-import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.infra.exception.BadRequestException;
 import me.zhengjie.modules.mnt.domain.App;
 import me.zhengjie.modules.mnt.mapper.AppMapper;
 import me.zhengjie.modules.mnt.mapper.DeployMapper;

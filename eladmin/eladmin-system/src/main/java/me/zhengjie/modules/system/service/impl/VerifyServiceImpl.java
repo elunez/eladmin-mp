@@ -23,7 +23,7 @@ import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.domain.vo.EmailVo;
-import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.infra.exception.BadRequestException;
 import me.zhengjie.modules.system.service.VerifyService;
 import me.zhengjie.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Value;

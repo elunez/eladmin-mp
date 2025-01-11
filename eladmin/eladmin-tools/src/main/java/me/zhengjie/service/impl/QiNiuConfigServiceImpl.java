@@ -18,7 +18,7 @@ package me.zhengjie.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.domain.QiniuConfig;
-import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.infra.exception.BadRequestException;
 import me.zhengjie.mapper.QiniuConfigMapper;
 import me.zhengjie.service.QiNiuConfigService;
 import org.springframework.cache.annotation.CacheConfig;

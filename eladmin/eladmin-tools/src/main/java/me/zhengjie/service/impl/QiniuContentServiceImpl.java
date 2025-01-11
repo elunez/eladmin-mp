@@ -33,7 +33,7 @@ import me.zhengjie.mapper.QiniuContentMapper;
 import me.zhengjie.domain.vo.QiniuQueryCriteria;
 import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.QiNiuUtil;
-import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.infra.exception.BadRequestException;
 import me.zhengjie.service.QiniuContentService;
 import me.zhengjie.utils.FileUtil;
 import me.zhengjie.utils.PageUtil;

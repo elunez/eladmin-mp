@@ -1,5 +1,76 @@
-#配置数据源
+server:
+  port: 8000
+  http2:
+    # 提高网络传输效率, 默认为false
+    enabled: true
+  undertow:
+    threads:
+      # 工作线程数，默认设置为io-threads * 8。如果你的应用程序有很多同步阻塞操作，可以适当增加这个值
+      worker: 16
+      # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+      # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
+      io: 2
+    # 设置为true以使用直接内存（堆外内存）来存储缓冲区。这可以减少垃圾回收的开销。
+    direct-buffers: true
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+    # 每块buffer的空间大小,越小的空间被利用越充分
+    buffer-size: 1024
+    accesslog:
+      # 关闭日志
+      enabled: false
+  compression:
+    # 是否开启压缩
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+  # 启用优雅停机，并遵守spring.lifecycle.timeout-per-shutdown-phase属性中给出的超时
+  # GRACEFUL (优雅): 当应用程序以"GRACEFUL"模式关闭时，它不会接受新的请求且会尝试完成所有正在进行的请求和处理，然后才会终止。这种方式适用于那些可能需要一些时间来清理资源或完成正在进行的任务的场景。
+  # IMMEDIATE(立即): 当应用程序以"IMMEDIATE"模式关闭时，它会立即终止，而不管当前是否有任何活动任务或请求。这种方式适用于那些可以立即停止而不会造成严重问题的情况。
+  shutdown: graceful
+mybatis-plus:
+  configuration:
+    # 开启 Mybatis 二级缓存，默认为 true
+    cache-enabled: false
+    # 设置本地缓存作用域, Mybatis 一级缓存, 默认为 SESSION
+    # 同一个 session 相同查询语句不会再次查询数据库
+    # 微服务中, 建议设置为STATEMENT, 即关闭一级缓存
+    local-cache-scope: STATEMENT
+    # 是否开启自动驼峰命名规则（camel case）映射, 即从经典数据库列名 A_COLUMN（下划线命名） 到经典 Java 属性名 aColumn（驼峰命名） 的类似映射
+    map-underscore-to-camel-case: true
+    # Sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # 启动时是否检查 MyBatis XML 文件的存在, 默认不检查
+  check-config-location: true
+  # MyBatis Mapper 所对应的 XML 文件位置
+  # Maven 多模块项目的扫描路径需以 classpath*: 开头 （即加载多个 jar 包下的 XML 文件）
+  mapper-locations: classpath*:/mapper/**/*.xml
+  # MyBatis-Plus 全局策略中的 DB 策略配置
+  global-config:
+    db-config:
+      # 逻辑已删除值(逻辑删除下有效)
+      logic-delete-value: 0
+      # 逻辑未删除值(逻辑删除下有效)
+      logic-not-delete-value: 1
+      # 全局默认主键类型, 这里为自增主键
+      id-type: auto
+      # 表名是否使用驼峰转下划线命名,只对表名生效
+      table-underline: true
+    # 是否控制台 print mybatis-plus 的 LOGO
+    banner: true
+# 配置数据源
 spring:
+  freemarker:
+    # 是否检查模板位置是否存在
+    check-template-location: false
+    # 模板编码
+    charset: utf-8
+  data:
+    redis:
+      repositories:
+        # 是否启用Redis存储(关闭防止出现 Multiple Spring Data modules found, entering strict repository configuration mode)
+        enabled: false
+  lifecycle:
+    # 采用java.time.Duration格式的值,如果在这个时间内，优雅停机没有停掉应用，超过这个时间就会强制停止应用
+    timeout-per-shutdown-phase: 30s
   datasource:
     druid:
       db-type: com.alibaba.druid.pool.DruidDataSource
@@ -50,24 +121,32 @@ spring:
         wall:
           config:
             multi-statement-allow: true
+  redis:
+    # 数据库索引
+    database: ${REDIS_DB:1}
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PWD:}
+    # 连接超时时间
+    timeout: 5000
 
 # 登录相关配置
 login:
-  #  是否限制单用户登录
+  # 是否限制单用户登录
   single-login: false
   # Redis用户登录缓存配置
   user-cache:
     # 存活时间/秒
     idle-time: 21600
-  #  验证码
+  # 验证码
   login-code:
-    #  验证码类型配置 查看 LoginProperties 类
+    # 验证码类型配置 查看 LoginProperties 类
     code-type: arithmetic
-    #  登录图形验证码有效时间/分钟
+    # 登录图形验证码有效时间/分钟
     expiration: 2
-    #  验证码高度
+    # 验证码高度
     width: 111
-    #  验证码宽度
+    # 验证码宽度
     height: 36
     # 内容长度
     length: 2
@@ -76,7 +155,7 @@ login:
     # 字体大小
     font-size: 25
 
-#jwt
+# jwt
 jwt:
   header: Authorization
   # 令牌前缀
@@ -94,18 +173,18 @@ jwt:
   # 续期时间范围，默认 1小时，这里单位毫秒
   renew: 3600000
 
-#是否允许生成代码，生产环境设置为false
+# 是否允许生成代码，生产环境设置为false
 generator:
   enabled: false
 
-#如果生产环境要开启swagger，需要配置请求地址
+# 如果生产环境要开启swagger，需要配置请求地址
 #springfox:
-#  documentation:
-#    swagger:
-#      v2:
-#        host: # 接口域名或外网ip
+# documentation:
+#   swagger:
+#     v2:
+#       host: # 接口域名或外网ip
 
-#是否开启 swagger-ui
+# 是否开启 swagger-ui
 swagger:
   enabled: false
 
@@ -123,3 +202,26 @@ file:
   # 文件大小 /M
   maxSize: 100
   avatarMaxSize: 5
+task:
+  pool:
+    # 核心线程池大小
+    core-pool-size: 10
+    # 最大线程数
+    max-pool-size: 30
+    # 活跃时间
+    keep-alive-seconds: 60
+    # 队列容量
+    queue-capacity: 50
+
+# 七牛云
+qiniu:
+  # 文件大小 /M
+  max-size: 15
+
+# 邮箱验证码有效时间/秒
+code:
+  expiration: 300
+
+# 密码加密传输，前端公钥加密，后端私钥解密
+rsa:
+  private_key: MIIBUwIBADANBgkqhkiG9w0BAQEFAASCAT0wggE5AgEAAkEA0vfvyTdGJkdbHkB8mp0f3FE0GYP3AYPaJF7jUd1M0XxFSE2ceK3k2kw20YvQ09NJKk+OMjWQl9WitG9pB6tSCQIDAQABAkA2SimBrWC2/wvauBuYqjCFwLvYiRYqZKThUS3MZlebXJiLB+Ue/gUifAAKIg1avttUZsHBHrop4qfJCwAI0+YRAiEA+W3NK/RaXtnRqmoUUkb59zsZUBLpvZgQPfj1MhyHDz0CIQDYhsAhPJ3mgS64NbUZmGWuuNKp5coY2GIj/zYDMJp6vQIgUueLFXv/eZ1ekgz2Oi67MNCk5jeTF2BurZqNLR3MSmUCIFT3Q6uHMtsB9Eha4u7hS31tj1UWE+D+ADzp59MGnoftAiBeHT7gDMuqeJHPL4b+kC+gzV4FGTfhR9q3tTbklZkD2A==

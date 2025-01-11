@@ -168,47 +168,58 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-  .login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    background-size: cover;
-  }
-  .title {
-    margin: 0 auto 30px auto;
-    text-align: center;
-    color: #707070;
+.login {
+  display: flex;
+  justify-content: flex-end;
+  height: 100%;
+  background-size: cover;
+}
+
+.title {
+  margin: 0 auto 30px auto;
+  text-align: center;
+  font-size: xx-large;
+  color: white;
+}
+
+.login-form {
+  background: rgba(255, 255, 255, 0.40);
+  width: 400px;
+  padding: 10% 25px 5px 25px;
+
+  .el-input {
+    height: 38px;
+
+    input {
+      height: 38px;
+    }
   }
 
-  .login-form {
-    border-radius: 6px;
-    background: #ffffff;
-    width: 385px;
-    padding: 25px 25px 5px 25px;
-    .el-input {
-      height: 38px;
-      input {
-        height: 38px;
-      }
-    }
-    .input-icon{
-      height: 39px;width: 14px;margin-left: 2px;
-    }
+  .input-icon {
+    height: 39px;
+    width: 14px;
+    margin-left: 2px;
   }
-  .login-tip {
-    font-size: 13px;
-    text-align: center;
-    color: #bfbfbf;
+
+  float: right;
+}
+
+.login-tip {
+  font-size: 13px;
+  text-align: center;
+  color: #bfbfbf;
+}
+
+.login-code {
+  width: 33%;
+  display: inline-block;
+  height: 38px;
+  float: right;
+
+  img {
+    cursor: pointer;
+    vertical-align: middle;
   }
-  .login-code {
-    width: 33%;
-    display: inline-block;
-    height: 38px;
-    float: right;
-    img{
-      cursor: pointer;
-      vertical-align:middle
-    }
-  }
+}
 </style>
+

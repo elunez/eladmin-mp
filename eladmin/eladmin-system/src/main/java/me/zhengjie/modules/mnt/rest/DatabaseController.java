@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.annotation.Log;
-import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.infra.exception.BadRequestException;
 import me.zhengjie.modules.mnt.domain.Database;
 import me.zhengjie.modules.mnt.service.DatabaseService;
 import me.zhengjie.modules.mnt.domain.vo.DatabaseQueryCriteria;

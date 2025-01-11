@@ -6,17 +6,27 @@
 
 模板文档： [https://panjiachen.github.io/vue-element-admin-site/zh/guide/](https://panjiachen.github.io/vue-element-admin-site/zh/guide/)
 
-#### Build Setup
+## 快速开始
+
+### 环境要求
+
 **推荐 node 版本：12-16**
+
+### 安装依赖
+
 ``` bash
-# 配置镜像加速
-https://www.ydyno.com/archives/1219.html
-
 # 安装依赖
-npm install
+npm install --registry https://registry.npmmirror.com
+```
 
+### 启动服务
+
+```bash
 # 启动服务 localhost:8013
 npm run dev
+
+# (或) 启动服务 localhost:8013
+IDEA -> Current File -> Edit Configurations... -> Add New Configuration -> npm -> Script选dev -> Apply -> Ok
 
 # 构建生产环境
 npm run build:prod

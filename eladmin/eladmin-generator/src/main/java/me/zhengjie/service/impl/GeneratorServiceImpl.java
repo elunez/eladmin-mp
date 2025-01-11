@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.domain.GenConfig;
 import me.zhengjie.domain.ColumnInfo;
 import me.zhengjie.domain.vo.TableInfo;
-import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.infra.exception.BadRequestException;
 import me.zhengjie.mapper.ColumnInfoMapper;
 import me.zhengjie.service.GeneratorService;
 import me.zhengjie.utils.*;

@@ -74,22 +74,28 @@
 			<artifactId>ganymed-ssh2</artifactId>
 			<version>build210</version>
 		</dependency>
-		<dependency>
-			<groupId>com.jcraft</groupId>
-			<artifactId>jsch</artifactId>
-			<version>0.1.55</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.jcraft</groupId>-->
+<!--			<artifactId>jsch</artifactId>-->
+<!--			<version>0.1.55</version>-->
+<!--		</dependency>-->
+        <dependency>
+            <groupId>com.github.mwiede</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.2.21</version>
+        </dependency>
 
         <!-- 获取系统信息 -->
         <dependency>
             <groupId>com.github.oshi</groupId>
             <artifactId>oshi-core</artifactId>
-            <version>6.1.4</version>
+            <version>6.6.5</version>
         </dependency>
     </dependencies>
 
     <!-- 打包 -->
     <build>
+        <finalName>eladmin-system</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -101,6 +107,14 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>9</source>
+                    <target>9</target>
                 </configuration>
             </plugin>
         </plugins>
