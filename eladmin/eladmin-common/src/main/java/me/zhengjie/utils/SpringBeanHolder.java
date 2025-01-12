@@ -22,6 +22,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +33,6 @@ import java.util.List;
  */
 @Slf4j
 public class SpringBeanHolder implements ApplicationContextAware, DisposableBean {
-
     private static ApplicationContext applicationContext = null;
     private static final List<CallBack> CALL_BACKS = new ArrayList<>();
     private static boolean addCallback = true;
@@ -81,7 +81,8 @@ public class SpringBeanHolder implements ApplicationContextAware, DisposableBean
         T result = defaultValue;
         try {
             result = getBean(Environment.class).getProperty(property, requiredType);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         return result;
     }
 
@@ -120,8 +121,7 @@ public class SpringBeanHolder implements ApplicationContextAware, DisposableBean
      * 清除SpringContextHolder中的ApplicationContext为Null.
      */
     private static void clearHolder() {
-        log.debug("清除SpringContextHolder中的ApplicationContext:"
-                + applicationContext);
+        log.debug("清除SpringContextHolder中的ApplicationContext:{}", applicationContext);
         applicationContext = null;
     }
 
@@ -133,7 +133,7 @@ public class SpringBeanHolder implements ApplicationContextAware, DisposableBean
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         if (SpringBeanHolder.applicationContext != null) {
-            log.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:" + SpringBeanHolder.applicationContext);
+            log.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:{}", SpringBeanHolder.applicationContext);
         }
         SpringBeanHolder.applicationContext = applicationContext;
         if (addCallback) {
@@ -147,6 +147,7 @@ public class SpringBeanHolder implements ApplicationContextAware, DisposableBean
 
     /**
      * 获取 @Service 的所有 bean 名称
+     *
      * @return /
      */
     public static List<String> getAllServiceBeanName() {
