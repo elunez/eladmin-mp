@@ -127,6 +127,8 @@ spring:
     password: ${REDIS_PWD:}
     # 连接超时时间
     timeout: 5000
+  application:
+    name: eladmin
 
 # 登录相关配置
 login:
@@ -185,11 +187,11 @@ file:
     path: ~/file/
     avatar: ~/avatar/
   linux:
-    path: /home/eladmin/file/
-    avatar: /home/eladmin/avatar/
+    path: /home/${spring.application.name}/file/
+    avatar: /home/${spring.application.name}/avatar/
   windows:
-    path: C:\eladmin\file\
-    avatar: C:\eladmin\avatar\
+    path: C:\${spring.application.name}\file\
+    avatar: C:\${spring.application.name}\avatar\
   # 文件大小 /M
   maxSize: 100
   avatarMaxSize: 5
