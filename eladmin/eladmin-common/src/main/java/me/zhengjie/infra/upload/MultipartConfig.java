@@ -34,7 +34,7 @@ public class MultipartConfig {
      * 文件上传临时路径
      */
     @Bean
-    public MultipartConfigElement multipartConfigElement() {
+    MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         String location = System.getProperty("user.home") + "/." + ElContext.applicationName + "/file/tmp";
         File tmpFile = new File(location);
