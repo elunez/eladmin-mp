@@ -36,4 +36,9 @@ public class ElConstant {
      * 管理员
      */
     public static final String ADMIN = "admin";
+
+    /**
+     * 应用名称
+     */
+    public static final String APP_NAME = "eladmin";
 }

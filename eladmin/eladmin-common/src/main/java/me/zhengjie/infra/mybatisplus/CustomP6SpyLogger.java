@@ -18,6 +18,7 @@ package me.zhengjie.infra.mybatisplus;
 import cn.hutool.core.util.StrUtil;
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
 import lombok.extern.slf4j.Slf4j;
+import me.zhengjie.infra.context.ElContext;
 
 /**
  * @author Zheng Jie
@@ -56,7 +57,7 @@ public class CustomP6SpyLogger implements MessageFormattingStrategy {
         }
         // 格式化并加上颜色
         return String.format(
-                "eladmin - %s%s%s %s[%s] %sREVIEW_SQL [Interval: %dms]%s -> %s;",
+                ElContext.applicationName + " - %s%s%s %s[%s] %sREVIEW_SQL [Interval: %dms]%s -> %s;",
                 RED, now, RESET,
                 GREEN, Thread.currentThread().getName(),
                 BLUE,
