@@ -34,6 +34,12 @@ import java.util.List;
 public class ${className}QueryCriteria{
 <#if queryColumns??>
     <#list queryColumns as column>
+
+        <#if column.remark != ''>
+    @ApiModelProperty(value = "${column.remark}")
+        <#else>
+    @ApiModelProperty(value = "${column.changeColumnName}")
+        </#if>
     private ${column.columnType} ${column.changeColumnName};
     </#list>
 </#if>

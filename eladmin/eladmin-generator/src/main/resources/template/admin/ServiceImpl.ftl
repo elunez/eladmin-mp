@@ -67,7 +67,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(${className} resources) {
-        save(resources);
+        ${changeClassName}Mapper.insert(resources);
     }
 
     @Override
@@ -75,13 +75,13 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     public void update(${className} resources) {
         ${className} ${changeClassName} = getById(resources.get${pkCapitalColName}());
         ${changeClassName}.copy(resources);
-        saveOrUpdate(${changeClassName});
+        ${changeClassName}Mapper.update(${changeClassName});
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteAll(List<${pkColumnType}> ids) {
-        removeBatchByIds(ids);
+        ${changeClassName}Mapper.deleteBatchIds(ids);
     }
 
     @Override
