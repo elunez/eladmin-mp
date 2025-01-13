@@ -15,6 +15,7 @@
  */
 package me.zhengjie.utils;
 
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -91,7 +92,7 @@ public class SecurityUtils {
      */
     public static String getDataScopeType() {
         List<Long> dataScopes = getCurrentUserDataScope();
-        if(dataScopes.size() != 0){
+        if(CollUtil.isEmpty(dataScopes)){
             return "";
         }
         return DataScopeEnum.ALL.getValue();

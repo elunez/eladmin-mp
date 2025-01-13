@@ -26,7 +26,6 @@ import me.zhengjie.modules.system.domain.Job;
 import me.zhengjie.modules.system.domain.Role;
 import me.zhengjie.modules.system.domain.User;
 import me.zhengjie.exception.EntityExistException;
-import me.zhengjie.exception.EntityNotFoundException;
 import me.zhengjie.modules.system.domain.vo.UserQueryCriteria;
 import me.zhengjie.modules.system.mapper.UserJobMapper;
 import me.zhengjie.modules.system.mapper.UserMapper;
@@ -191,12 +190,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public User getLoginData(String userName) {
-        User user = userMapper.findByUsername(userName);
-        if (user == null) {
-            throw new EntityNotFoundException(User.class, "name", userName);
-        } else {
-            return user;
-        }
+        return userMapper.findByUsername(userName);
     }
 
     @Override

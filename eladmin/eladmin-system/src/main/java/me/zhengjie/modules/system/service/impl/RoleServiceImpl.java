@@ -166,7 +166,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     @Cacheable(key = "'auth:' + #p0.id")
-    public List<AuthorityDto> mapToGrantedAuthorities(User user) {
+    public List<AuthorityDto> buildAuthorities(User user) {
         Set<String> permissions = new HashSet<>();
         // 如果是管理员直接返回
         if (user.getIsAdmin()) {
