@@ -17,7 +17,7 @@ package me.zhengjie.modules.security.security;
 
 import cn.hutool.core.util.StrUtil;
 import io.jsonwebtoken.ExpiredJwtException;
-import me.zhengjie.modules.security.config.bean.SecurityProperties;
+import me.zhengjie.modules.security.config.SecurityProperties;
 import me.zhengjie.modules.security.service.UserCacheManager;
 import me.zhengjie.modules.security.service.dto.OnlineUserDto;
 import me.zhengjie.modules.security.service.OnlineUserService;

@@ -13,31 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.zhengjie.modules.security.config.bean;
+package me.zhengjie.sysrunner;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
 
 /**
- * 验证码配置枚举
- *
- * @author: liaojinlong
- * @date: 2020/6/10 17:40
- */
+ * @author Zheng Jie
+ * @description 程序启动后处理数据
+ * @date 2025-01-13
+ **/
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class SystemRunner implements ApplicationRunner {
 
-public enum LoginCodeEnum {
-    /**
-     * 算数
-     */
-    ARITHMETIC,
-    /**
-     * 中文
-     */
-    CHINESE,
-    /**
-     * 中文闪图
-     */
-    CHINESE_GIF,
-    /**
-     * 闪图
-     */
-    GIF,
-    SPEC
+    @Override
+    public void run(ApplicationArguments args) {
+    }
 }

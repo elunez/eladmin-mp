@@ -13,53 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.zhengjie.utils;
+package me.zhengjie.modules.security.config.enums;
 
 /**
+ * 验证码配置枚举
+ *
  * @author liaojinlong
- * @date 2020/6/11 15:49
- * @description 关于缓存的Key集合
+ * @date 2020/6/10 17:40
  */
-public interface CacheKey {
 
+public enum LoginCodeEnum {
     /**
-     * 用户
+     * 算数
      */
-    String USER_ID = "user::id:";
-
+    ARITHMETIC,
     /**
-     * 数据
+     * 中文
      */
-    String DATA_USER = "data::user:";
-
+    CHINESE,
     /**
-     * 菜单
+     * 中文闪图
      */
-    String MENU_ID = "menu::id:";
-    String MENU_USER = "menu::user:";
-
+    CHINESE_GIF,
     /**
-     * 角色授权
+     * 闪图
      */
-    String ROLE_AUTH = "role::auth:";
-
+    GIF,
     /**
-     * 角色信息
+     * 静态
      */
-    String ROLE_ID = "role::id:";
-
-    /**
-     * 部门
-     */
-    String DEPT_ID = "dept::id:";
-
-    /**
-     * 岗位
-     */
-    String JOB_ID = "job::id:";
-
-    /**
-     * 数据字典
-     */
-    String DICT_NAME = "dict::name:";
+    SPEC
 }

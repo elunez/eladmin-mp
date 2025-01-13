@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.zhengjie.modules.security.config.bean;
+package me.zhengjie.modules.security.config;
 
 import com.wf.captcha.*;
 import com.wf.captcha.base.Captcha;
 import lombok.Data;
 import lombok.Getter;
 import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.modules.security.config.enums.LoginCodeEnum;
 import me.zhengjie.utils.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +34,7 @@ import java.awt.*;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "login.code")
-public class CodeProperties {
+public class CaptchaConfig {
 
     /**
      * 验证码配置

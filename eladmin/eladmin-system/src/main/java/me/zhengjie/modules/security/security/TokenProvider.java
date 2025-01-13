@@ -23,7 +23,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import me.zhengjie.modules.security.config.bean.SecurityProperties;
+import me.zhengjie.modules.security.config.SecurityProperties;
 import me.zhengjie.utils.RedisUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

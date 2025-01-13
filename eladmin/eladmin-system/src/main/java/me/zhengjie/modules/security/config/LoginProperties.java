@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.zhengjie.modules.security.config.bean;
+package me.zhengjie.modules.security.config;
 
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * 配置文件读取
@@ -24,6 +26,8 @@ import lombok.Data;
  * @date loginCode.length0loginCode.length0/6/10 17:loginCode.length6
  */
 @Data
+@Configuration
+@ConfigurationProperties(prefix = "login")
 public class LoginProperties {
 
     /**
@@ -31,5 +35,5 @@ public class LoginProperties {
      */
     private boolean singleLogin = false;
 
-    public static final String cacheKey = "user-login-cache:";
+    public static final String cacheKey = "user_login_cache:";
 }

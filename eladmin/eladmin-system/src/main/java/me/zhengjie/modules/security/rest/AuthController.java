@@ -27,10 +27,10 @@ import me.zhengjie.annotation.rest.AnonymousGetMapping;
 import me.zhengjie.annotation.rest.AnonymousPostMapping;
 import me.zhengjie.config.properties.RsaProperties;
 import me.zhengjie.exception.BadRequestException;
-import me.zhengjie.modules.security.config.bean.CodeProperties;
-import me.zhengjie.modules.security.config.bean.LoginCodeEnum;
-import me.zhengjie.modules.security.config.bean.LoginProperties;
-import me.zhengjie.modules.security.config.bean.SecurityProperties;
+import me.zhengjie.modules.security.config.CaptchaConfig;
+import me.zhengjie.modules.security.config.enums.LoginCodeEnum;
+import me.zhengjie.modules.security.config.LoginProperties;
+import me.zhengjie.modules.security.config.SecurityProperties;
 import me.zhengjie.modules.security.security.TokenProvider;
 import me.zhengjie.modules.security.service.dto.AuthUserDto;
 import me.zhengjie.modules.security.service.dto.JwtUserDto;
@@ -70,7 +70,7 @@ public class AuthController {
     private final OnlineUserService onlineUserService;
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final CodeProperties codeProperties;
+    private final CaptchaConfig captchaConfig;
     private final LoginProperties loginProperties;
 
     @Log("用户登录")
@@ -124,7 +124,7 @@ public class AuthController {
     @AnonymousGetMapping(value = "/code")
     public ResponseEntity<Object> getCode() {
         // 获取运算的结果
-        Captcha captcha = codeProperties.getCaptcha();
+        Captcha captcha = captchaConfig.getCaptcha();
         String uuid = properties.getCodeKey() + IdUtil.simpleUUID();
         //当验证码类型为 arithmetic时且长度 >= 2 时，captcha.text()的结果有几率为浮点型
         String captchaValue = captcha.text();
@@ -132,7 +132,7 @@ public class AuthController {
             captchaValue = captchaValue.split("\\.")[0];
         }
         // 保存
-        redisUtils.set(uuid, captchaValue, codeProperties.getExpiration(), TimeUnit.MINUTES);
+        redisUtils.set(uuid, captchaValue, captchaConfig.getExpiration(), TimeUnit.MINUTES);
         // 验证码信息
         Map<String, Object> imgResult = new HashMap<String, Object>(2) {{
             put("img", captcha.toBase64());
