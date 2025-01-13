@@ -1,9 +1,26 @@
+/*
+ *  Copyright 2019-2020 Zheng Jie
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package me.zhengjie.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.scheduling.annotation.AsyncConfigurer;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -13,8 +30,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @description
  * @date 2023-06-08
  **/
+@EnableAsync
 @Configuration
-public class AsyncExecutor {
+public class AsyncExecutor implements AsyncConfigurer {
 
     public static int corePoolSize;
 
@@ -48,9 +66,8 @@ public class AsyncExecutor {
      * 自定义线程池，用法 @Async
      * @return Executor
      */
-    @Bean
-    @Primary
-    public Executor elAsync() {
+    @Override
+    public Executor getAsyncExecutor() {
         // 自定义工厂
         ThreadFactory factory = r -> new Thread(r, "el-async-" + new AtomicInteger(1).getAndIncrement());
         // 自定义线程池
@@ -60,16 +77,19 @@ public class AsyncExecutor {
     }
 
     /**
-     * 自定义线程池，用法 @Async("otherAsync")
-     * @return Executor
+     * 自定义线程池，用法，注入到类中使用
+     * private ThreadPoolTaskExecutor taskExecutor;
+     * @return ThreadPoolTaskExecutor
      */
-    @Bean
-    public Executor otherAsync() {
-        // 自定义工厂
-        ThreadFactory factory = r -> new Thread(r, "tpl-other-" + new AtomicInteger(1).getAndIncrement());
-        // 自定义线程池
-        return new ThreadPoolExecutor(2, 4, keepAliveSeconds,
-                TimeUnit.SECONDS, new ArrayBlockingQueue<>(20), factory,
-                new ThreadPoolExecutor.CallerRunsPolicy());
+    @Bean("taskAsync")
+    public ThreadPoolTaskExecutor taskAsync() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(2);
+        executor.setMaxPoolSize(4);
+        executor.setQueueCapacity(20);
+        executor.setKeepAliveSeconds(60);
+        executor.setThreadNamePrefix("el-task-");
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        return executor;
     }
 }

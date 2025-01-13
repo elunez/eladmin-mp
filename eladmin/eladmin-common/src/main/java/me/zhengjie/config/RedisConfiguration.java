@@ -77,6 +77,8 @@ public class RedisConfiguration {
         ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.system.domain");
         // 模块内的 Dto
         ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.security.service.dto");
+        // 分页返回数据
+        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.utils.PageResult");
         // key的序列化采用StringRedisSerializer
         template.setKeySerializer(new StringRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());

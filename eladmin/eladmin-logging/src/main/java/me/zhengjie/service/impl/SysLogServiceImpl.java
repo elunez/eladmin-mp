@@ -28,6 +28,7 @@ import me.zhengjie.domain.vo.SysLogQueryCriteria;
 import me.zhengjie.utils.*;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,6 +64,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         return PageUtil.toPage(sysLogMapper.queryAllByUser(criteria, page));
     }
 
+    @Async
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, SysLog sysLog) {

@@ -21,11 +21,9 @@ import me.zhengjie.domain.SysLog;
 import me.zhengjie.domain.vo.SysLogQueryCriteria;
 import me.zhengjie.utils.PageResult;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.springframework.scheduling.annotation.Async;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Zheng Jie
@@ -65,7 +63,6 @@ public interface SysLogService extends IService<SysLog>{
      * @param joinPoint /
      * @param sysLog 日志实体
      */
-    @Async
     void save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, SysLog sysLog);
 
     /**

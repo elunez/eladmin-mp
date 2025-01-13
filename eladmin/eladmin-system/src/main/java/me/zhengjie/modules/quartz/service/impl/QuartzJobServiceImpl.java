@@ -30,7 +30,6 @@ import me.zhengjie.modules.quartz.domain.vo.QuartzJobQueryCriteria;
 import me.zhengjie.modules.quartz.utils.QuartzManage;
 import me.zhengjie.utils.*;
 import org.quartz.CronExpression;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletResponse;
@@ -124,7 +123,6 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
         }
     }
 
-    @Async
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void executionSubJob(String[] tasks) throws InterruptedException {
