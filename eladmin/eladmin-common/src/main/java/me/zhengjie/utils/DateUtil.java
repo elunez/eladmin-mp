@@ -22,9 +22,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
- * @author: liaojinlong
- * @date: 2020/6/11 16:28
- * @apiNote: JDK 8  新日期类 格式化与字符串转换 工具类
+ * @author liaojinlong
+ * @date 2020/6/11 16:28
+ * @description JDK 8  新日期类 格式化与字符串转换 工具类
  */
 public class DateUtil {
 

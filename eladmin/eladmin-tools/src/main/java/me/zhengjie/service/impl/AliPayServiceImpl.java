@@ -38,7 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "aliPay")
+@CacheConfig(cacheNames = "aliPay", keyGenerator = "keyGenerator")
 public class AliPayServiceImpl extends ServiceImpl<AliPayConfigMapper, AlipayConfig> implements AliPayService {
 
     @Override

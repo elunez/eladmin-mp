@@ -37,7 +37,7 @@ public class EncryptUtils {
     private static final IvParameterSpec IV = new IvParameterSpec(STR_PARAM.getBytes(StandardCharsets.UTF_8));
 
     private static DESKeySpec getDesKeySpec(String source) throws Exception {
-        if (source == null || source.length() == 0){
+        if (source == null || source.isEmpty()){
             return null;
         }
         cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");

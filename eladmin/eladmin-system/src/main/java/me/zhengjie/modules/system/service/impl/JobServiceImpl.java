@@ -41,7 +41,7 @@ import java.util.*;
 */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "job")
+@CacheConfig(cacheNames = "job", keyGenerator = "keyGenerator")
 public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobService {
 
     private final JobMapper jobMapper;
@@ -49,6 +49,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
     private final UserMapper userMapper;
 
     @Override
+    @Cacheable
     public PageResult<Job> queryAll(JobQueryCriteria criteria, Page<Object> page) {
         return PageUtil.toPage(jobMapper.findAll(criteria, page));
     }

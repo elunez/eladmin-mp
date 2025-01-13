@@ -13,26 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.config;
+package me.zhengjie.config.webConfig;
 
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 /**
- * @author Zheng Jie
- * @website <a href="https://eladmin.vip">...</a>
- * @description
- * @date 2020-05-18
- **/
-@Data
-@Component
-public class RsaProperties {
+ * @author ZhangHouYing
+ * @date 2019-08-24 15:44
+ */
+@Configuration
+public class WebSocketConfig {
 
-    public static String privateKey;
-
-    @Value("${rsa.private_key}")
-    public void setPrivateKey(String privateKey) {
-        RsaProperties.privateKey = privateKey;
-    }
+	@Bean
+	public ServerEndpointExporter serverEndpointExporter() {
+		return new ServerEndpointExporter();
+	}
 }

@@ -52,7 +52,7 @@ import java.util.*;
  */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "qiNiu")
+@CacheConfig(cacheNames = "qiNiu", keyGenerator = "keyGenerator")
 public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, QiniuContent> implements QiniuContentService {
 
     private final QiniuContentMapper qiniuContentMapper;

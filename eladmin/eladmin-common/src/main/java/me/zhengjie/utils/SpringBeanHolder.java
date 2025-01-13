@@ -31,6 +31,7 @@ import java.util.List;
  * @date 2019-01-07
  */
 @Slf4j
+@SuppressWarnings("all")
 public class SpringBeanHolder implements ApplicationContextAware, DisposableBean {
 
     private static ApplicationContext applicationContext = null;
@@ -55,7 +56,6 @@ public class SpringBeanHolder implements ApplicationContextAware, DisposableBean
     /**
      * 从静态变量applicationContext中取得Bean, 自动转型为所赋值对象的类型.
      */
-    @SuppressWarnings("unchecked")
     public static <T> T getBean(String name) {
         assertContextInjected();
         return (T) applicationContext.getBean(name);
@@ -152,5 +152,21 @@ public class SpringBeanHolder implements ApplicationContextAware, DisposableBean
     public static List<String> getAllServiceBeanName() {
         return new ArrayList<>(Arrays.asList(applicationContext
                 .getBeanNamesForAnnotation(Service.class)));
+    }
+
+    interface CallBack {
+
+        /**
+         * 回调执行方法
+         */
+        void executor();
+
+        /**
+         * 本回调任务名称
+         * @return /
+         */
+        default String getCallBackName() {
+            return Thread.currentThread().getId() + ":" + this.getClass().getName();
+        }
     }
 }

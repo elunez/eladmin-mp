@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2023 Zheng Jie
+ *  Copyright 2019-2020 Zheng Jie
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,19 +13,26 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.config;
+package me.zhengjie.config.properties;
 
-import org.apache.catalina.connector.Connector;
-import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
-import org.springframework.context.annotation.Configuration;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
- * @author bearBoy80
- */
-@Configuration(proxyBeanMethods = false)
-public class RelaxedQueryCharsConnectorCustomizer implements TomcatConnectorCustomizer {
-    @Override
-    public void customize(Connector connector) {
-        connector.setProperty("relaxedQueryChars", "[]{}");
+ * @author Zheng Jie
+ * @website <a href="https://eladmin.vip">...</a>
+ * @description
+ * @date 2020-05-18
+ **/
+@Data
+@Component
+public class RsaProperties {
+
+    public static String privateKey;
+
+    @Value("${rsa.private_key}")
+    public void setPrivateKey(String privateKey) {
+        RsaProperties.privateKey = privateKey;
     }
 }

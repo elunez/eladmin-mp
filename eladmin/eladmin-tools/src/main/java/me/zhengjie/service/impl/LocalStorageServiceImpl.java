@@ -19,7 +19,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
-import me.zhengjie.config.FileProperties;
+import me.zhengjie.config.properties.FileProperties;
 import me.zhengjie.domain.LocalStorage;
 import me.zhengjie.domain.vo.LocalStorageQueryCriteria;
 import me.zhengjie.exception.BadRequestException;

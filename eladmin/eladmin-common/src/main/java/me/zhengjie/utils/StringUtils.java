@@ -32,7 +32,7 @@ import java.util.*;
  * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类
  */
 @Slf4j
-@SuppressWarnings({"unchecked","all"})
+@SuppressWarnings({"all"})
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     private static final char SEPARATOR = '_';

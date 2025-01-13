@@ -37,7 +37,7 @@ import java.util.List;
 */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "dict")
+@CacheConfig(cacheNames = "dict", keyGenerator = "keyGenerator")
 public class DictDetailServiceImpl extends ServiceImpl<DictDetailMapper, DictDetail> implements DictDetailService {
 
     private final DictMapper dictMapper;

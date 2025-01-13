@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "qiNiu")
+@CacheConfig(cacheNames = "qiNiu", keyGenerator = "keyGenerator")
 public class QiNiuConfigServiceImpl extends ServiceImpl<QiniuConfigMapper, QiniuConfig> implements QiNiuConfigService {
 
     @Override

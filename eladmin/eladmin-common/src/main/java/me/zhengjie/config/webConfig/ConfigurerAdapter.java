@@ -13,15 +13,17 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.config;
+package me.zhengjie.config.webConfig;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import me.zhengjie.config.properties.FileProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -73,16 +75,22 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        // 使用 fastjson 序列化，会导致 @JsonIgnore 失效，可以使用 @JSONField(serialize = false) 替换
-        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+        // 添加默认的 StringHttpMessageConverter
+        converters.add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
+        // 配置 FastJsonHttpMessageConverter
+        FastJsonHttpMessageConverter fastJsonConverter = new FastJsonHttpMessageConverter();
         List<MediaType> supportMediaTypeList = new ArrayList<>();
         supportMediaTypeList.add(MediaType.APPLICATION_JSON);
         FastJsonConfig config = new FastJsonConfig();
         config.setDateFormat("yyyy-MM-dd HH:mm:ss");
-        config.setSerializerFeatures(SerializerFeature.DisableCircularReferenceDetect);
-        converter.setFastJsonConfig(config);
-        converter.setSupportedMediaTypes(supportMediaTypeList);
-        converter.setDefaultCharset(StandardCharsets.UTF_8);
-        converters.add(converter);
+        config.setSerializerFeatures(
+                SerializerFeature.WriteEnumUsingToString,
+                SerializerFeature.DisableCircularReferenceDetect
+        );
+        fastJsonConverter.setFastJsonConfig(config);
+        fastJsonConverter.setSupportedMediaTypes(supportMediaTypeList);
+        fastJsonConverter.setDefaultCharset(StandardCharsets.UTF_8);
+        // 将 FastJsonHttpMessageConverter 添加到列表末尾
+        converters.add(fastJsonConverter);
     }
 }

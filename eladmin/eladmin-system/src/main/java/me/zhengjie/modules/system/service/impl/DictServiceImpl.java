@@ -39,7 +39,7 @@ import java.util.*;
 */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "dict")
+@CacheConfig(cacheNames = "dict", keyGenerator = "keyGenerator")
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
     private final DictMapper dictMapper;

@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "role")
+@CacheConfig(cacheNames = "role", keyGenerator = "keyGenerator")
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 
     private final RoleMapper roleMapper;
@@ -154,7 +154,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public Integer findByRoles(Set<Role> roles) {
-        if (roles.size() == 0) {
+        if (CollUtil.isEmpty(roles)) {
             return Integer.MAX_VALUE;
         }
         Set<Role> roleSet = new HashSet<>();

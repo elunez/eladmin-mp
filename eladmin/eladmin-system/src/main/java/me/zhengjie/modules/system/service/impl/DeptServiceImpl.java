@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "dept")
+@CacheConfig(cacheNames = "dept", keyGenerator = "keyGenerator")
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
 
     private final DeptMapper deptMapper;
