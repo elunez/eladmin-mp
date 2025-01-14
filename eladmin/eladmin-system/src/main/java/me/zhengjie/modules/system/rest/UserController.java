@@ -76,7 +76,8 @@ public class UserController {
     @ApiOperation("查询用户")
     @GetMapping
     @PreAuthorize("@el.check('user:list')")
-    public ResponseEntity<PageResult<User>> queryUser(UserQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<User>> queryUser(UserQueryCriteria criteria){
+        Page<Object> page = new Page<>(criteria.getPage(), criteria.getSize());
         if (!ObjectUtils.isEmpty(criteria.getDeptId())) {
             criteria.getDeptIds().add(criteria.getDeptId());
             // 先查找是否存在子节点

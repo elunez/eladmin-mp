@@ -52,8 +52,8 @@ public class GeneratorController {
 
     @ApiOperation("查询数据库数据")
     @GetMapping(value = "/tables")
-    public ResponseEntity<PageResult<TableInfo>> queryTables(@RequestParam(defaultValue = "") String name, Page<Object> page){
-        return new ResponseEntity<>(generatorService.getTables(name, page), HttpStatus.OK);
+    public ResponseEntity<PageResult<TableInfo>> queryTables(@RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size){
+        return new ResponseEntity<>(generatorService.getTables(name, new Page<>(page, size)), HttpStatus.OK);
     }
 
     @ApiOperation("查询字段数据")

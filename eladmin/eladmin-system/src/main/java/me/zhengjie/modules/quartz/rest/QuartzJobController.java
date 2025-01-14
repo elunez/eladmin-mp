@@ -54,7 +54,8 @@ public class QuartzJobController {
     @ApiOperation("查询定时任务")
     @GetMapping
     @PreAuthorize("@el.check('timing:list')")
-    public ResponseEntity<PageResult<QuartzJob>> queryQuartzJob(QuartzJobQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<QuartzJob>> queryQuartzJob(QuartzJobQueryCriteria criteria){
+        Page<Object> page = new Page<>(criteria.getPage(), criteria.getSize());
         return new ResponseEntity<>(quartzJobService.queryAll(criteria,page), HttpStatus.OK);
     }
 
@@ -75,7 +76,8 @@ public class QuartzJobController {
     @ApiOperation("查询任务执行日志")
     @GetMapping(value = "/logs")
     @PreAuthorize("@el.check('timing:list')")
-    public ResponseEntity<PageResult<QuartzLog>> queryQuartzJobLog(QuartzJobQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<QuartzLog>> queryQuartzJobLog(QuartzJobQueryCriteria criteria){
+        Page<Object> page = new Page<>(criteria.getPage(), criteria.getSize());
         return new ResponseEntity<>(quartzJobService.queryAllLog(criteria,page), HttpStatus.OK);
     }
 

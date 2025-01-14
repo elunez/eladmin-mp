@@ -49,7 +49,8 @@ public class LocalStorageController {
     @GetMapping
     @ApiOperation("查询文件")
     @PreAuthorize("@el.check('storage:list')")
-    public ResponseEntity<PageResult<LocalStorage>> queryFile(LocalStorageQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<LocalStorage>> queryFile(LocalStorageQueryCriteria criteria){
+        Page<Object> page = new Page<>(criteria.getPage(), criteria.getSize());
         return new ResponseEntity<>(localStorageService.queryAll(criteria,page),HttpStatus.OK);
     }
 

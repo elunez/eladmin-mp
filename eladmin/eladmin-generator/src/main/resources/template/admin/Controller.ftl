@@ -54,7 +54,8 @@ public class ${className}Controller {
     @GetMapping
     @ApiOperation("查询${apiAlias}")
     @PreAuthorize("@el.check('${changeClassName}:list')")
-    public ResponseEntity<PageResult<${className}>> query${className}(${className}QueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<${className}>> query${className}(${className}QueryCriteria criteria){
+        Page<Object> page = new Page<>(criteria.getPage(), criteria.getSize());
         return new ResponseEntity<>(${changeClassName}Service.queryAll(criteria,page),HttpStatus.OK);
     }
 

@@ -74,7 +74,8 @@ public class QiniuController {
 
     @ApiOperation("查询文件")
     @GetMapping
-    public ResponseEntity<PageResult<QiniuContent>> queryQiNiu(QiniuQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<QiniuContent>> queryQiNiu(QiniuQueryCriteria criteria){
+        Page<Object> page = new Page<>(criteria.getPage(), criteria.getSize());
         return new ResponseEntity<>(qiniuContentService.queryAll(criteria, page),HttpStatus.OK);
     }
 

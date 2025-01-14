@@ -57,7 +57,8 @@ public class JobController {
     @ApiOperation("查询岗位")
     @GetMapping
     @PreAuthorize("@el.check('job:list','user:list')")
-    public ResponseEntity<PageResult<Job>> queryJob(JobQueryCriteria criteria, Page<Object> page){
+    public ResponseEntity<PageResult<Job>> queryJob(JobQueryCriteria criteria){
+        Page<Object> page = new Page<>(criteria.getPage(), criteria.getSize());
         return new ResponseEntity<>(jobService.queryAll(criteria, page),HttpStatus.OK);
     }
 
