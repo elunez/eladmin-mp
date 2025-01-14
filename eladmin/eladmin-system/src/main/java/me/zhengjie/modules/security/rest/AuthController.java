@@ -100,7 +100,7 @@ public class AuthController {
         Authentication authentication = new UsernamePasswordAuthenticationToken(jwtUser, null, jwtUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         // 生成令牌
-        String token = tokenProvider.createToken(authentication);
+        String token = tokenProvider.createToken(jwtUser);
         // 将密码设置为空
         jwtUser.setPassword(null);
         // 返回 token 与 用户信息

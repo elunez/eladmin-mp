@@ -18,7 +18,6 @@ package me.zhengjie.modules.security.config;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.modules.security.security.*;
 import me.zhengjie.modules.security.service.OnlineUserService;
-import me.zhengjie.modules.security.service.UserCacheManager;
 import me.zhengjie.utils.AnonTagUtils;
 import me.zhengjie.utils.enums.RequestMethodEnum;
 import org.springframework.context.ApplicationContext;
@@ -52,7 +51,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     private final ApplicationContext applicationContext;
     private final SecurityProperties properties;
     private final OnlineUserService onlineUserService;
-    private final UserCacheManager userCacheManager;
 
     @Bean
     GrantedAuthorityDefaults grantedAuthorityDefaults() {
@@ -129,6 +127,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private TokenConfigurer securityConfigurerAdapter() {
-        return new TokenConfigurer(tokenProvider, properties, onlineUserService, userCacheManager);
+        return new TokenConfigurer(tokenProvider, properties, onlineUserService);
     }
 }
