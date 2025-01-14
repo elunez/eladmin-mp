@@ -15,6 +15,7 @@
  */
 package me.zhengjie.modules.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -33,14 +34,13 @@ import me.zhengjie.modules.system.service.MenuService;
 import me.zhengjie.modules.system.service.RoleService;
 import me.zhengjie.modules.system.domain.dto.MenuQueryCriteria;
 import me.zhengjie.utils.*;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -48,7 +48,6 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "menu", keyGenerator = "keyGenerator")
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
     private final MenuMapper menuMapper;
@@ -86,9 +85,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    @Cacheable(key = "'id:' + #p0")
     public Menu findById(long id) {
-        return getById(id);
+        String key = CacheKey.MENU_ID + id;
+        Menu menu = redisUtils.get(key, Menu.class);
+        if(menu == null){
+            menu = getById(id);
+            redisUtils.set(key, menu, 1, TimeUnit.DAYS);
+        }
+        return menu;
     }
 
     /**
@@ -97,12 +101,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
      * @return /
      */
     @Override
-    @Cacheable(key = "'user:' + #p0")
     public List<Menu> findByUser(Long currentUserId) {
-        List<Role> roles = roleService.findByUsersId(currentUserId);
-        Set<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toSet());
-        LinkedHashSet<Menu> menus = menuMapper.findByRoleIdsAndTypeNot(roleIds, 2);
-        return new ArrayList<>(menus);
+        String key = CacheKey.MENU_USER + currentUserId;
+        List<Menu> menus = redisUtils.getList(key, Menu.class);
+        if (CollUtil.isEmpty(menus)){
+            List<Role> roles = roleService.findByUsersId(currentUserId);
+            Set<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toSet());
+            menus = new ArrayList<>(menuMapper.findByRoleIdsAndTypeNot(roleIds, 2));
+            redisUtils.set(key, menus, 1, TimeUnit.DAYS);
+        }
+        return menus;
     }
 
     @Override
@@ -188,7 +196,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         for (Menu menu : menuList) {
             menuSet.add(menu);
             List<Menu> menus = menuMapper.findByPidOrderByMenuSort(menu.getId());
-            if(menus!=null && menus.size()!=0){
+            if(CollUtil.isNotEmpty(menus)){
                 getChildMenus(menus, menuSet);
             }
         }
@@ -246,7 +254,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                 }
             }
         }
-        if(trees.size() == 0){
+        if(CollUtil.isNotEmpty(trees)){
             trees = menus.stream().filter(s -> !ids.contains(s.getId())).collect(Collectors.toList());
         }
         return trees;
@@ -281,16 +289,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                             menuVo.setChildren(buildMenus(menuList));
                             // 处理是一级菜单并且没有子菜单的情况
                         } else if(menu.getPid() == null){
-                            MenuVo menuVo1 = new MenuVo();
-                            menuVo1.setMeta(menuVo.getMeta());
-                            // 非外链
-                            if(!menu.getIFrame()){
-                                menuVo1.setPath("index");
-                                menuVo1.setName(menuVo.getName());
-                                menuVo1.setComponent(menuVo.getComponent());
-                            } else {
-                                menuVo1.setPath(menu.getPath());
-                            }
+                            MenuVo menuVo1 = getMenuVo(menu, menuVo);
                             menuVo.setName(null);
                             menuVo.setMeta(null);
                             menuVo.setComponent("Layout");
@@ -340,5 +339,25 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         // 清除 Role 缓存
         List<Role> roles = roleService.findByMenuId(id);
         redisUtils.delByKeys(CacheKey.ROLE_ID, roles.stream().map(Role::getId).collect(Collectors.toSet()));
+    }
+
+    /**
+     * 获取 MenuVo
+     * @param menu /
+     * @param menuVo /
+     * @return /
+     */
+    private static MenuVo getMenuVo(Menu menu, MenuVo menuVo) {
+        MenuVo menuVo1 = new MenuVo();
+        menuVo1.setMeta(menuVo.getMeta());
+        // 非外链
+        if(!menu.getIFrame()){
+            menuVo1.setPath("index");
+            menuVo1.setName(menuVo.getName());
+            menuVo1.setComponent(menuVo.getComponent());
+        } else {
+            menuVo1.setPath(menu.getPath());
+        }
+        return menuVo1;
     }
 }

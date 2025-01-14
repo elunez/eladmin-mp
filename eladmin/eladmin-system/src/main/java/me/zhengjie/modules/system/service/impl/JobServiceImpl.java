@@ -20,20 +20,20 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.exception.EntityExistException;
+import me.zhengjie.modules.system.domain.Dict;
 import me.zhengjie.modules.system.domain.Job;
 import me.zhengjie.modules.system.mapper.UserMapper;
 import me.zhengjie.modules.system.domain.dto.JobQueryCriteria;
 import me.zhengjie.utils.*;
 import me.zhengjie.modules.system.mapper.JobMapper;
 import me.zhengjie.modules.system.service.JobService;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
 * @author Zheng Jie
@@ -41,7 +41,6 @@ import java.util.*;
 */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "job", keyGenerator = "keyGenerator")
 public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobService {
 
     private final JobMapper jobMapper;
@@ -49,7 +48,6 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
     private final UserMapper userMapper;
 
     @Override
-    @Cacheable
     public PageResult<Job> queryAll(JobQueryCriteria criteria, Page<Object> page) {
         return PageUtil.toPage(jobMapper.findAll(criteria, page));
     }
@@ -60,9 +58,14 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
     }
 
     @Override
-    @Cacheable(key = "'id:' + #p0")
     public Job findById(Long id) {
-        return getById(id);
+        String key = CacheKey.JOB_ID + id;
+        Job job = redisUtils.get(key, Job.class);
+        if(job == null){
+            job = getById(id);
+            redisUtils.set(key, job, 1, TimeUnit.DAYS);
+        }
+        return job;
     }
 
     @Override
@@ -76,7 +79,6 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
     }
 
     @Override
-    @CacheEvict(key = "'id:' + #p0.id")
     @Transactional(rollbackFor = Exception.class)
     public void update(Job resources) {
         Job job = getById(resources.getId());
@@ -86,6 +88,8 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
         }
         resources.setId(job.getId());
         saveOrUpdate(resources);
+        // 删除缓存
+        delCaches(resources.getId());
     }
 
     @Override
@@ -93,7 +97,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
     public void delete(Set<Long> ids) {
         removeBatchByIds(ids);
         // 删除缓存
-        redisUtils.delByKeys(CacheKey.JOB_ID, ids);
+        ids.forEach(this::delCaches);
     }
 
     @Override
@@ -114,5 +118,9 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
         if(userMapper.countByJobs(ids) > 0){
             throw new BadRequestException("所选的岗位中存在用户关联，请解除关联再试！");
         }
+    }
+
+    public void delCaches(Long id){
+        redisUtils.del(CacheKey.JOB_ID + id);
     }
 }

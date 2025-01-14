@@ -27,7 +27,6 @@ import me.zhengjie.modules.system.domain.dto.DictQueryCriteria;
 import me.zhengjie.utils.*;
 import me.zhengjie.modules.system.mapper.DictMapper;
 import me.zhengjie.modules.system.service.DictService;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +39,6 @@ import java.util.*;
 */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "dict", keyGenerator = "keyGenerator")
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
     private final DictMapper dictMapper;

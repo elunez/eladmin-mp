@@ -33,8 +33,6 @@ import me.zhengjie.modules.system.mapper.UserMapper;
 import me.zhengjie.modules.system.mapper.UserRoleMapper;
 import me.zhengjie.modules.system.service.UserService;
 import me.zhengjie.utils.*;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +41,7 @@ import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -51,7 +50,6 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "user", keyGenerator = "keyGenerator")
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     private final UserMapper userMapper;
@@ -74,10 +72,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    @Cacheable(key = "'id:' + #p0")
     @Transactional(rollbackFor = Exception.class)
     public User findById(long id) {
-        return getById(id);
+        String key = CacheKey.USER_ID + id;
+        User user = redisUtils.get(key, User.class);
+        if (user == null) {
+            user = getById(id);
+            redisUtils.set(key, user, 1, TimeUnit.DAYS);
+        }
+        return user;
     }
 
     @Override

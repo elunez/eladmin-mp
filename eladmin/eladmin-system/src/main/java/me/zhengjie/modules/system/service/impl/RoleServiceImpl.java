@@ -35,13 +35,12 @@ import me.zhengjie.modules.system.mapper.UserMapper;
 import me.zhengjie.modules.system.service.RoleService;
 import me.zhengjie.modules.system.domain.dto.RoleQueryCriteria;
 import me.zhengjie.utils.*;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -50,7 +49,6 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "role", keyGenerator = "keyGenerator")
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 
     private final RoleMapper roleMapper;
@@ -77,9 +75,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    @Cacheable(key = "'id:' + #p0")
     public Role findById(long id) {
-        return roleMapper.findById(id);
+        String key = CacheKey.ROLE_ID + id;
+        Role role = redisUtils.get(key, Role.class);
+        if (role == null) {
+            role = roleMapper.findById(id);
+            redisUtils.set(key, role, 1, TimeUnit.DAYS);
+        }
+        return role;
     }
 
     @Override
@@ -164,21 +167,26 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    @Cacheable(key = "'auth:' + #p0.id")
     public List<AuthorityDto> buildAuthorities(User user) {
-        Set<String> permissions = new HashSet<>();
-        // 如果是管理员直接返回
-        if (user.getIsAdmin()) {
-            permissions.add("admin");
-            return permissions.stream().map(AuthorityDto::new)
+        String key = CacheKey.ROLE_AUTH + user.getId();
+        List<AuthorityDto> authorityDtos = redisUtils.getList(key, AuthorityDto.class);
+        if (CollUtil.isEmpty(authorityDtos)) {
+            Set<String> permissions = new HashSet<>();
+            // 如果是管理员直接返回
+            if (user.getIsAdmin()) {
+                permissions.add("admin");
+                return permissions.stream().map(AuthorityDto::new)
+                        .collect(Collectors.toList());
+            }
+            List<Role> roles = roleMapper.findByUserId(user.getId());
+            permissions = roles.stream().flatMap(role -> role.getMenus().stream())
+                    .map(Menu::getPermission)
+                    .filter(StringUtils::isNotBlank).collect(Collectors.toSet());
+            authorityDtos = permissions.stream().map(AuthorityDto::new)
                     .collect(Collectors.toList());
+            redisUtils.set(key, authorityDtos, 1, TimeUnit.HOURS);
         }
-        List<Role> roles = roleMapper.findByUserId(user.getId());
-        permissions = roles.stream().flatMap(role -> role.getMenus().stream())
-                .map(Menu::getPermission)
-                .filter(StringUtils::isNotBlank).collect(Collectors.toSet());
-        return permissions.stream().map(AuthorityDto::new)
-                .collect(Collectors.toList());
+        return authorityDtos;
     }
 
     @Override

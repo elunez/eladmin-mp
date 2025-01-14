@@ -15,6 +15,7 @@
  */
 package me.zhengjie.modules.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -29,14 +30,13 @@ import me.zhengjie.utils.*;
 import me.zhengjie.modules.system.mapper.DeptMapper;
 import me.zhengjie.modules.system.service.DeptService;
 import me.zhengjie.utils.enums.DataScopeEnum;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -45,7 +45,6 @@ import java.util.stream.Collectors;
 */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "dept", keyGenerator = "keyGenerator")
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
 
     private final DeptMapper deptMapper;
@@ -86,9 +85,14 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     }
 
     @Override
-    @Cacheable(key = "'id:' + #p0")
     public Dept findById(Long id) {
-        return getById(id);
+        String key = CacheKey.DEPT_ID + id;
+        Dept dept = redisUtils.get(key, Dept.class);
+        if(dept == null){
+            dept = deptMapper.selectById(id);
+            redisUtils.set(key, dept, 1, TimeUnit.DAYS);
+        }
+        return dept;
     }
 
     @Override
@@ -159,7 +163,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         for (Dept dept : menuList) {
             deptSet.add(dept);
             List<Dept> depts = deptMapper.findByPid(dept.getId());
-            if(depts!=null && depts.size()!=0){
+            if(CollUtil.isNotEmpty(depts)){
                 getDeleteDepts(depts, deptSet);
             }
         }
@@ -172,7 +176,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         deptList.forEach(dept -> {
                     if (dept!=null && dept.getEnabled()) {
                         List<Dept> depts = deptMapper.findByPid(dept.getId());
-                        if (depts.size() != 0) {
+                        if (CollUtil.isNotEmpty(depts)) {
                             list.addAll(getDeptChildren(depts));
                         }
                         list.add(dept.getId());

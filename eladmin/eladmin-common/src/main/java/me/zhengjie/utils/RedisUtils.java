@@ -780,11 +780,6 @@ public class RedisUtils {
             keys.addAll(redisTemplate.keys(new StringBuffer(prefix).append(id).toString()));
         }
         long count = redisTemplate.delete(keys);
-        // 此处提示可自行删除
-        log.debug("--------------------------------------------");
-        log.debug("成功删除缓存：" + keys.toString());
-        log.debug("缓存删除数量：" + count + "个");
-        log.debug("--------------------------------------------");
     }
 
     // ============================incr=============================
