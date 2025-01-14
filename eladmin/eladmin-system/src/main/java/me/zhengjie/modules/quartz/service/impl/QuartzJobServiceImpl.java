@@ -98,6 +98,7 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateIsPause(QuartzJob quartzJob) {
+        // 置换暂停状态
         if (quartzJob.getIsPause()) {
             quartzManage.resumeJob(quartzJob);
             quartzJob.setIsPause(false);
