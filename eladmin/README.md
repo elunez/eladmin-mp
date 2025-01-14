@@ -11,18 +11,16 @@
 
 #### 项目源码
 
-|     | 后端源码                                 |   前端源码  |
-|---  |--------------------------------------| --- |
-|  github   | https://github.com/elunez/eladmin-mp |  https://github.com/elunez/eladmin-web-mp   |
-|  码云   | https://gitee.com/elunez/eladmin-mp     |  https://gitee.com/elunez/eladmin-web-mp   |
+| github                                 |   gitee  |
+|--------------------------------------| --- |
+| https://github.com/elunez/eladmin-mp |  https://gitee.com/elunez/eladmin-mp   |
 
 #### VPS推荐
 <a href="https://bwh81.net/aff.php?aff=70876" target="_blank">
 <img src="https://eladmin.vip/images/banner/side.jpeg" style="width: 435px;border-radius: 2px;">
 </a>
 
-使用优惠码: `BWHCCNCXVV`，可获得 6.81% 的折扣 [查看介绍](https://bwhstock.in/)
-
+使用优惠码: `BWHNCXNVXV`，可获得 6.81% 的折扣， [查看介绍](https://eladmin.vip/pages/040101/)
 #### 主要特性
 - 使用最新技术栈，社区资源丰富。
 - 高效率开发，代码生成器可一键生成前后端代码

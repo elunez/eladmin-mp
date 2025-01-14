@@ -1,18 +1,13 @@
 <h1 style="text-align: center">ELADMIN 后台管理系统</h1>
 
 #### 项目简介
-一个基于 Spring Boot 2.6.4 、 Mybatis-Plus、 JWT、Spring Security、Redis、Vue的前后端分离的后台管理系统
+一个基于 Spring Boot 2.6.6 、 Mybatis-Plus、 JWT、Spring Security、Redis、Vue的前后端分离的后台管理系统
 
 **开发文档：**  [https://eladmin.vip](https://eladmin.vip)
 
 **体验地址：**  [https://eladmin.vip/demo](https://eladmin.vip/demo)
 
 **账号密码：** `admin / 123456`
-
-#### 项目目录
-- eladmin 项目后端源码
-- eladmin-web 项目前端源码
-- sql 项目数据库文件，导入数据时选择 utf8mb4 或 utf8 格式编码
 
 #### 项目源码
 
@@ -27,7 +22,6 @@
 
 使用优惠码: `BWHNCXNVXV`，可获得 6.81% 的折扣， [查看介绍](https://eladmin.vip/pages/040101/)
 
-
 #### 主要特性
 - 使用最新技术栈，社区资源丰富。
 - 高效率开发，代码生成器可一键生成前后端代码
@@ -38,7 +32,6 @@
 - 对一些常用地前端组件封装：表格数据请求、数据字典等
 - 前后端统一异常拦截处理，统一输出异常，避免繁琐的判断
 - 支持在线用户管理与服务器性能监控，支持限制单用户登录
-- 支持运维管理，可方便地对远程服务器的应用进行部署与管理
 
 #### 系统功能
 - 用户管理：提供用户的相关配置，新增用户后，默认密码为123456
@@ -55,9 +48,8 @@
 - 七牛云存储：可同步七牛云存储的数据到系统，无需登录七牛云直接操作云数据
 - 支付宝支付：整合了支付宝支付并且提供了测试账号，可自行测试
 - 服务监控：监控服务器的负载情况
-- 运维管理：一键部署你的应用
 
-#### 后端项目结构
+#### 项目结构
 项目采用按功能分模块的开发方式，结构如下
 
 - `eladmin-common` 为系统的公共模块，各种工具类，公共配置存在该模块
@@ -77,15 +69,30 @@
     - annotation 为系统自定义注解
     - aspect 自定义注解的切面
     - base 提供了 Entity 基类
-    - config 自定义权限实现、redis配置、swagger配置、Rsa配置等
+    - config 项目通用配置
+        - Mybatis-Plus 配置
+        - Web配置跨域与静态资源映射、Swagger配置，文件上传临时路径配置
+        - Redis配置，Redission配置, 异步线程池配置
+        - 权限拦截配置：AuthorityConfig、Druid 删除广告配置
     - exception 项目统一异常的处理
-    - utils 系统通用工具类
+    - utils 系统通用工具类，列举一些常用的工具类
+        - BigDecimaUtils 金额计算工具类
+        - RequestHolder 请求工具类
+        - SecurityUtils 安全工具类
+        - StringUtils 字符串工具类
+        - SpringBeanHolder Spring Bean工具类
+        - RedisUtils Redis工具类
+        - EncryptUtils 加密工具类
+        - FileUtil 文件工具类
 - eladmin-system 系统核心模块（系统启动入口）
-	- config 配置跨域与静态资源，与数据权限
-	    - thread 线程池相关
-	- modules 系统相关模块(登录授权、系统监控、定时任务、运维管理等)
+    - sysrunner 程序启动后处理数据
+	- modules 系统相关模块(登录授权、系统监控、定时任务、系统模块)
 - eladmin-logging 系统日志模块
 - eladmin-tools 系统第三方工具模块
+    - email 邮件工具
+    - qiniu 七牛云存储工具
+    - alipay 支付宝支付工具
+    - local-storage 本地存储工具
 - eladmin-generator 系统代码生成模块
 ```
 
@@ -94,8 +101,6 @@
 - 感谢 [PanJiaChen](https://github.com/PanJiaChen/vue-element-admin) 大佬提供的前端模板
 
 - 感谢 [Moxun](https://github.com/moxun1639) 大佬提供的前端 Curd 通用组件
-
-- 感谢 [zhy6599](https://gitee.com/zhy6599) 大佬提供的后端运维管理相关功能
 
 - 感谢 [j.yao.SUSE](https://github.com/everhopingandwaiting) 大佬提供的匿名接口与Redis限流等功能
 
