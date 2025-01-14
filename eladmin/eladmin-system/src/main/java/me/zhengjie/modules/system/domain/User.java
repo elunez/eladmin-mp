@@ -15,6 +15,7 @@
  */
 package me.zhengjie.modules.system.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -87,6 +88,7 @@ public class User extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "头像存储的路径", hidden = true)
     private String avatarPath;
 
+    @JSONField(serialize = false)
     @ApiModelProperty(value = "密码")
     private String password;
 

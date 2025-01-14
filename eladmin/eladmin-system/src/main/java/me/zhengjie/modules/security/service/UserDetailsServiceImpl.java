@@ -50,7 +50,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 if (!user.getEnabled()) {
                     throw new BadRequestException("账号未激活！");
                 }
-                jwtUserDto = new JwtUserDto(user, dataService.getDeptIds(user), roleService.buildAuthorities(user));
+                jwtUserDto = new JwtUserDto(user, dataService.getDeptIds(user), roleService.buildAuthorities(user), user.getPassword());
                 // 添加缓存数据
                 userCacheManager.addUserCache(username, jwtUserDto);
             }

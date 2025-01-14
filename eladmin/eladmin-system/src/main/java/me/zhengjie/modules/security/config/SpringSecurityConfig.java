@@ -33,7 +33,6 @@ import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 import java.util.*;
 
@@ -74,7 +73,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 // 禁用 CSRF
                 .csrf().disable()
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilter(corsFilter)
                 // 授权异常
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationErrorHandler)
