@@ -133,6 +133,10 @@ public class QuartzJobController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * 验证Bean是不是合法的，合法的定时任务 Bean 需要用 @Service 定义
+     * @param beanName Bean名称
+     */
     private void checkBean(String beanName){
         // 避免调用攻击者可以从SpringContextHolder获得控制jdbcTemplate类
         // 并使用getDeclaredMethod调用jdbcTemplate的queryForMap函数，执行任意sql命令。
