@@ -9,27 +9,15 @@
         <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
-        <collection property="dictDetails" ofType="me.zhengjie.modules.system.domain.DictDetail">
-            <id column="dd_id" property="id" jdbcType="BIGINT"/>
-            <result column="label" property="label" jdbcType="VARCHAR"/>
-            <result column="value" property="value" jdbcType="VARCHAR"/>
-            <result column="dd_create_time" property="createTime" jdbcType="TIMESTAMP"/>
-        </collection>
     </resultMap>
 
     <sql id="Base_Column_List">
         d.dict_id, d.name, d.description, d.create_by, d.update_by, d.create_time, d.update_time
     </sql>
 
-    <sql id="Dict_Details_Column_List">
-        dd.detail_id as dd_id, dd.label, dd.`value`, dd.create_time as dd_create_time
-    </sql>
-
     <select id="findAll" resultMap="BaseResultMap">
-        SELECT <include refid="Base_Column_List"/>,
-        <include refid="Dict_Details_Column_List"/>
+        SELECT <include refid="Base_Column_List"/>
         from sys_dict d
-        left join sys_dict_detail dd on d.dict_id = dd.dict_id
         <where>
             <if test="criteria.blurry != null and criteria.blurry != ''">
                 and (

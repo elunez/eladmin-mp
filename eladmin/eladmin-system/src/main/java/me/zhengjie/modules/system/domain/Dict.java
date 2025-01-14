@@ -16,7 +16,6 @@
 package me.zhengjie.modules.system.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,7 +25,6 @@ import me.zhengjie.base.BaseEntity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
 
 /**
 * @author Zheng Jie
@@ -41,10 +39,6 @@ public class Dict extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "ID", hidden = true)
     @TableId(value = "dict_id", type = IdType.AUTO)
     private Long id;
-
-    @TableField(exist = false)
-    @ApiModelProperty(value = "字典详情")
-    private List<DictDetail> dictDetails;
 
     @NotBlank
     @ApiModelProperty(value = "名称")

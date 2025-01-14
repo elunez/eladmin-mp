@@ -35,9 +35,9 @@ public interface RoleMapper extends BaseMapper<Role> {
 
     List<Role> queryAll();
 
-    List<Role> findAll(@Param("criteria") RoleQueryCriteria criteria);
+    Long countAll(@Param("criteria") RoleQueryCriteria criteria);
 
-    IPage<Role> findAll(@Param("criteria") RoleQueryCriteria criteria, Page<Object> page);
+    List<Role> findAll(@Param("criteria") RoleQueryCriteria criteria);
 
     Role findById(@Param("roleId") Long roleId);
 

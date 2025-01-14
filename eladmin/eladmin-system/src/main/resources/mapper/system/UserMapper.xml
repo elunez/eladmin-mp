@@ -36,7 +36,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-           u.user_id as user_user_id, u.dept_id as user_dept_id, u.username as user_username,
+        u.user_id as user_user_id, u.dept_id as user_dept_id, u.username as user_username,
            u.nick_name as user_nick_name, u.email as user_email, u.phone as user_phone,
            u.gender as user_gender, u.avatar_name as user_avatar_name, u.avatar_path as user_avatar_path,
            u.enabled as user_enabled, u.pwd_reset_time as user_pwd_reset_time, u.create_by as user_create_by,
@@ -52,17 +52,7 @@
         r.role_id as role_id, r.name as role_name, r.level as role_level, r.data_scope as role_data_scope
     </sql>
 
-    <select id="findAll" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>,
-        <include refid="Job_Column_List"/>,
-        <include refid="Role_Column_List"/>
-        from sys_user u
-        left join sys_dept d on u.dept_id = d.dept_id
-        left join sys_users_jobs suj on u.user_id = suj.user_id
-        left join sys_job j on suj.job_id = j.job_id
-        left join sys_users_roles sur on u.user_id = sur.user_id
-        left join sys_role r on sur.role_id = r.role_id
+    <sql id="Whrer_Sql">
         <where>
             <if test="criteria.id != null">
                 and u.user_id = #{criteria.id}
@@ -87,7 +77,34 @@
                 and u.create_time between #{criteria.createTime[0]} and #{criteria.createTime[1]}
             </if>
         </where>
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select u.*,
+        <include refid="Job_Column_List"/>,
+        <include refid="Role_Column_List"/>
+        from (
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user u
+        left join sys_dept d on u.dept_id = d.dept_id
+        <include refid="Whrer_Sql"/>
         order by u.user_id desc
+        <if test="criteria.offset != null">
+            limit #{criteria.offset}, #{criteria.size}
+        </if>
+        ) u
+        left join sys_users_jobs suj on u.user_user_id = suj.user_id
+        left join sys_job j on suj.job_id = j.job_id
+        left join sys_users_roles sur on u.user_user_id = sur.user_id
+        left join sys_role r on sur.role_id = r.role_id
+        order by u.user_user_id desc
+    </select>
+
+    <select id="countAll" resultType="java.lang.Long">
+        select count(*)
+        from sys_user u
+        <include refid="Whrer_Sql"/>
     </select>
 
     <select id="findByUsername" resultMap="BaseResultMap">

@@ -36,21 +36,7 @@
         dept.dept_id as dept_id, dept.name as dept_name
     </sql>
 
-    <select id="queryAll" resultType="me.zhengjie.modules.system.domain.Role">
-        select role_id as id, name, level
-        from sys_role order by level
-    </select>
-
-    <select id="findAll" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>,
-        <include refid="Dept_Column_List"/>,
-        <include refid="Menu_Column_List"/>
-        from sys_role role
-        left join sys_roles_menus srm on role.role_id = srm.role_id
-        left join  sys_menu menu on menu.menu_id = srm.menu_id
-        left join sys_roles_depts srd on role.role_id = srd.role_id
-        left join sys_dept dept on dept.dept_id = srd.dept_id
+    <sql id="Where_sql">
         <where>
             <if test="criteria.blurry != null and criteria.blurry != ''">
                 and (
@@ -62,7 +48,38 @@
                 and role.create_time between #{criteria.createTime[0]} and #{criteria.createTime[1]}
             </if>
         </where>
+    </sql>
+
+    <select id="queryAll" resultType="me.zhengjie.modules.system.domain.Role">
+        select role_id as id, name, level
+        from sys_role order by level
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select role.*,
+        <include refid="Dept_Column_List"/>,
+        <include refid="Menu_Column_List"/>
+        from (
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role role
+        <include refid="Where_sql"/>
         order by role.level
+        <if test="criteria.offset != null">
+            limit #{criteria.offset}, #{criteria.size}
+        </if>
+        ) role
+        left join sys_roles_menus srm on role.role_role_id = srm.role_id
+        left join  sys_menu menu on menu.menu_id = srm.menu_id
+        left join sys_roles_depts srd on role.role_role_id = srd.role_id
+        left join sys_dept dept on dept.dept_id = srd.dept_id
+        order by role.role_level
+    </select>
+
+    <select id="countAll" resultType="java.lang.Long">
+        select count(*)
+        from sys_role role
+        <include refid="Where_sql"/>
     </select>
 
     <select id="findByName" resultType="me.zhengjie.modules.system.domain.Role">

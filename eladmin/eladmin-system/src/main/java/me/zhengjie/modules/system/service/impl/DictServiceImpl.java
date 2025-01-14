@@ -44,6 +44,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     private final DictMapper dictMapper;
     private final RedisUtils redisUtils;
     private final DictDetailMapper deleteDetail;
+    private final DictDetailMapper dictDetailMapper;
 
     @Override
     public PageResult<Dict> queryAll(DictQueryCriteria criteria, Page<Object> page){
@@ -91,8 +92,9 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     public void download(List<Dict> dicts, HttpServletResponse response) throws IOException {
         List<Map<String, Object>> list = new ArrayList<>();
         for (Dict dict : dicts) {
-            if(CollectionUtil.isNotEmpty(dict.getDictDetails())){
-                for (DictDetail dictDetail : dict.getDictDetails()) {
+            List<DictDetail> dictDetails = dictDetailMapper.findByDictName(dict.getName());
+            if(CollectionUtil.isNotEmpty(dictDetails)){
+                for (DictDetail dictDetail : dictDetails) {
                     Map<String,Object> map = new LinkedHashMap<>();
                     map.put("字典名称", dict.getName());
                     map.put("字典描述", dict.getDescription());

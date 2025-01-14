@@ -34,6 +34,8 @@ import java.util.Set;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
+    Long countAll(@Param("criteria") UserQueryCriteria criteria);
+
     List<User> findAll(@Param("criteria") UserQueryCriteria criteria);
 
     IPage<User> findAll(@Param("criteria") UserQueryCriteria criteria, Page<Object> page);
