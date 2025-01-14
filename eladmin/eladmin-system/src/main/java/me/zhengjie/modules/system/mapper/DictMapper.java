@@ -16,6 +16,8 @@
 package me.zhengjie.modules.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.zhengjie.modules.system.domain.Dict;
 import me.zhengjie.modules.system.domain.vo.DictQueryCriteria;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,7 +31,7 @@ import java.util.List;
 @Mapper
 public interface DictMapper extends BaseMapper<Dict> {
 
-    List<Dict> findAll(@Param("criteria") DictQueryCriteria criteria);
+    IPage<Dict> findAll(@Param("criteria") DictQueryCriteria criteria, Page<Object> page);
 
-    Long countAll(@Param("criteria") DictQueryCriteria criteria);
+    List<Dict> findAll(@Param("criteria") DictQueryCriteria criteria);
 }

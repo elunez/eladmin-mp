@@ -17,6 +17,7 @@ package me.zhengjie.modules.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -71,10 +72,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public PageResult<Role> queryAll(RoleQueryCriteria criteria, Page<Object> page) {
-        criteria.setOffset(page.offset());
-        List<Role> roles = roleMapper.findAll(criteria);
-        Long total = roleMapper.countAll(criteria);
-        return PageUtil.toPage(roles, total);
+        IPage<Role> roles = roleMapper.findAll(criteria, page);
+        return PageUtil.toPage(roles);
     }
 
     @Override

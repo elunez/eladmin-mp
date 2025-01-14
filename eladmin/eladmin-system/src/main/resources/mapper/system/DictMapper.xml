@@ -25,35 +25,19 @@
         dd.detail_id as dd_id, dd.label, dd.`value`, dd.create_time as dd_create_time
     </sql>
 
-    <sql id="Where_sql">
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>,
+        <include refid="Dict_Details_Column_List"/>
+        from sys_dict d
+        left join sys_dict_detail dd on d.dict_id = dd.dict_id
         <where>
             <if test="criteria.blurry != null and criteria.blurry != ''">
                 and (
-                    d.name like concat('%', #{criteria.blurry}, '%')
-                    or d.description like concat('%', #{criteria.blurry}, '%')
+                d.name like concat('%', #{criteria.blurry}, '%')
+                or d.description like concat('%', #{criteria.blurry}, '%')
                 )
             </if>
         </where>
-    </sql>
-
-    <select id="findAll" resultMap="BaseResultMap">
-        SELECT d.*,
-        <include refid="Dict_Details_Column_List"/>
-        from (
-            select <include refid="Base_Column_List"/>
-            from sys_dict d
-            <include refid="Where_sql"/>
-            <if test="criteria.offset != null">
-                limit #{criteria.offset}, #{criteria.size}
-            </if>
-        ) d
-        left join sys_dict_detail dd on d.dict_id = dd.dict_id
         order by d.dict_id desc
-    </select>
-
-    <select id="countAll" resultType="java.lang.Long">
-        select count(*)
-        from sys_dict d
-        <include refid="Where_sql"/>
     </select>
 </mapper>

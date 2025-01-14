@@ -16,6 +16,8 @@
 package me.zhengjie.modules.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.zhengjie.modules.system.domain.Role;
 import me.zhengjie.modules.system.domain.vo.RoleQueryCriteria;
 import org.apache.ibatis.annotations.Mapper;
@@ -33,18 +35,20 @@ public interface RoleMapper extends BaseMapper<Role> {
 
     List<Role> queryAll();
 
+    List<Role> findAll(@Param("criteria") RoleQueryCriteria criteria);
+
+    IPage<Role> findAll(@Param("criteria") RoleQueryCriteria criteria, Page<Object> page);
+
     Role findById(@Param("roleId") Long roleId);
+
     Role findByName(@Param("name") String name);
 
     List<Role> findByUserId(@Param("userId") Long userId);
-
-    Long countAll(@Param("criteria") RoleQueryCriteria criteria);
-
-    List<Role> findAll(@Param("criteria") RoleQueryCriteria criteria);
 
     int countByDepts(@Param("deptIds") Set<Long> deptIds);
 
     @Select("SELECT role.role_id as id FROM sys_role role, sys_roles_menus rm " +
             "WHERE role.role_id = rm.role_id AND rm.menu_id = #{menuId}")
     List<Role> findByMenuId(@Param("menuId") Long menuId);
+
 }

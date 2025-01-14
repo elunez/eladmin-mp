@@ -16,6 +16,8 @@
 package me.zhengjie.modules.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.zhengjie.modules.system.domain.User;
 import me.zhengjie.modules.system.domain.vo.UserQueryCriteria;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,7 +36,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     List<User> findAll(@Param("criteria") UserQueryCriteria criteria);
 
-    Long countAll(@Param("criteria") UserQueryCriteria criteria);
+    IPage<User> findAll(@Param("criteria") UserQueryCriteria criteria, Page<Object> page);
 
     User findByUsername(@Param("username") String username);
 

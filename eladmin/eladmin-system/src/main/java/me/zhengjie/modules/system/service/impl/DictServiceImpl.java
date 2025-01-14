@@ -16,6 +16,7 @@
 package me.zhengjie.modules.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -48,10 +49,8 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
 
     @Override
     public PageResult<Dict> queryAll(DictQueryCriteria criteria, Page<Object> page){
-        criteria.setOffset(page.offset());
-        List<Dict> dicts = dictMapper.findAll(criteria);
-        Long total = dictMapper.countAll(criteria);
-        return PageUtil.toPage(dicts,total);
+        IPage<Dict> dicts = dictMapper.findAll(criteria, page);
+        return PageUtil.toPage(dicts);
     }
 
     @Override

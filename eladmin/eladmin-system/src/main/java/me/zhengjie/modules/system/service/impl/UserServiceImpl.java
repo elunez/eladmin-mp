@@ -15,6 +15,7 @@
  */
 package me.zhengjie.modules.system.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -63,10 +64,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public PageResult<User> queryAll(UserQueryCriteria criteria, Page<Object> page) {
-        criteria.setOffset(page.offset());
-        List<User> users = userMapper.findAll(criteria);
-        Long total = userMapper.countAll(criteria);
-        return PageUtil.toPage(users, total);
+        IPage<User> users = userMapper.findAll(criteria, page);
+        return PageUtil.toPage(users);
     }
 
     @Override

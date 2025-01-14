@@ -40,8 +40,4 @@ public class UserQueryCriteria implements Serializable {
     private Long deptId;
 
     private List<Timestamp> createTime;
-
-    private Long offset;
-
-    private Long size;
 }

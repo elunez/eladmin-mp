@@ -29,8 +29,4 @@ public class RoleQueryCriteria {
     private String blurry;
 
     private List<Timestamp> createTime;
-
-    private Long offset;
-
-    private Long size;
 }
