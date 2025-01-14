@@ -32,7 +32,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@TableName("code_column_config")
+@TableName("code_column")
 public class ColumnInfo implements Serializable {
 
     @ApiModelProperty(value = "ID", hidden = true)

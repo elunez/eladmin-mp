@@ -32,7 +32,7 @@
     <select id="findByTableNameOrderByIdAsc" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from code_column_config
+        from code_column
         where table_name = #{tableName}
         order by column_id
     </select>

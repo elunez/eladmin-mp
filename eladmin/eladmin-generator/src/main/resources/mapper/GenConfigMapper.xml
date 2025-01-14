@@ -21,7 +21,7 @@
     <select id="findByTableName" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM code_gen_config
+        FROM code_config
         WHERE table_name = #{tableName}
     </select>
 </mapper>

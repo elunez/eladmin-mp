@@ -149,9 +149,9 @@
               <el-input v-model="form.moduleName" style="width: 40%" />
               <span style="color: #C0C0C0;margin-left: 10px;">模块的名称，请选择项目中已存在的模块</span>
             </el-form-item>
-            <el-form-item label="至于包下" prop="pack">
+            <el-form-item label="项目包名" prop="pack">
               <el-input v-model="form.pack" style="width: 40%" />
-              <span style="color: #C0C0C0;margin-left: 10px;">项目包的名称，生成的代码放到哪个包里面</span>
+              <span style="color: #C0C0C0;margin-left: 10px;">项目包的名称，如：me.zhengjie</span>
             </el-form-item>
             <el-form-item label="接口名称" prop="apiAlias">
               <el-input v-model="form.apiAlias" style="width: 40%" />

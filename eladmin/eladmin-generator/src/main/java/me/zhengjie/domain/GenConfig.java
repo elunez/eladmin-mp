@@ -34,7 +34,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@TableName("code_gen_config")
+@TableName("code_config")
 public class GenConfig implements Serializable {
 
     public GenConfig(String tableName) {
