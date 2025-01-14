@@ -13,28 +13,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.domain.vo;
+package me.zhengjie.domain.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* @author Zheng Jie
-* @date 2019-03-25
-*/
+ * @author Zheng Jie
+ * @date 2019-6-4 09:54:37
+ */
 @Data
-public class DeptQueryCriteria{
+public class QiniuQueryCriteria{
 
-    private List<Long> ids;
+    @ApiModelProperty(value = "名称查询")
+    private String key;
 
-    private String name;
-
-    private Boolean enabled;
-
-    private Long pid;
-
-    private Boolean pidIsNull;
-
+    @ApiModelProperty(value = "创建时间")
     private List<Timestamp> createTime;
 }

@@ -16,7 +16,7 @@
 package me.zhengjie.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import me.zhengjie.domain.vo.TradeVo;
+import me.zhengjie.domain.dto.TradeDto;
 import me.zhengjie.domain.AlipayConfig;
 
 /**
@@ -45,7 +45,7 @@ public interface AliPayService extends IService<AlipayConfig> {
      * @return String
      * @throws Exception 异常
      */
-    String toPayAsPc(AlipayConfig alipay, TradeVo trade) throws Exception;
+    String toPayAsPc(AlipayConfig alipay, TradeDto trade) throws Exception;
 
     /**
      * 处理来自手机网页的交易请求
@@ -54,5 +54,5 @@ public interface AliPayService extends IService<AlipayConfig> {
      * @return String
      * @throws Exception 异常
      */
-    String toPayAsWeb(AlipayConfig alipay, TradeVo trade) throws Exception;
+    String toPayAsWeb(AlipayConfig alipay, TradeDto trade) throws Exception;
 }

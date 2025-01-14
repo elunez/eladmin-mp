@@ -13,23 +13,28 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.domain.vo;
+package me.zhengjie.modules.system.domain.dto;
 
-import lombok.AllArgsConstructor;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import java.io.Serializable;
+import lombok.NoArgsConstructor;
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
- * @author Zheng Jie
- * @date 2018-12-20
- */
+* @author Zheng Jie
+* @date 2019-6-4 14:49:34
+*/
 @Data
-@AllArgsConstructor
-public class MenuMetaVo implements Serializable {
+@NoArgsConstructor
+public class JobQueryCriteria {
 
-    private String title;
+    @ApiModelProperty(value = "岗位名称")
+    private String name;
 
-    private String icon;
+    @ApiModelProperty(value = "是否启用")
+    private Boolean enabled;
 
-    private Boolean noCache;
+    @ApiModelProperty(value = "创建时间")
+    private List<Timestamp> createTime;
 }

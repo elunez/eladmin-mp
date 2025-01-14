@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import me.zhengjie.modules.mnt.domain.DeployHistory;
 import me.zhengjie.modules.mnt.mapper.DeployHistoryMapper;
 import me.zhengjie.modules.mnt.service.DeployHistoryService;
-import me.zhengjie.modules.mnt.domain.vo.DeployHistoryQueryCriteria;
+import me.zhengjie.modules.mnt.domain.dto.DeployHistoryQueryCriteria;
 import me.zhengjie.utils.DateUtil;
 import me.zhengjie.utils.FileUtil;
 import me.zhengjie.utils.PageResult;

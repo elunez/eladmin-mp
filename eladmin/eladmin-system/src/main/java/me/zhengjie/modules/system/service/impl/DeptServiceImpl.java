@@ -24,7 +24,7 @@ import me.zhengjie.modules.system.domain.Dept;
 import me.zhengjie.modules.system.domain.User;
 import me.zhengjie.modules.system.mapper.RoleMapper;
 import me.zhengjie.modules.system.mapper.UserMapper;
-import me.zhengjie.modules.system.domain.vo.DeptQueryCriteria;
+import me.zhengjie.modules.system.domain.dto.DeptQueryCriteria;
 import me.zhengjie.utils.*;
 import me.zhengjie.modules.system.mapper.DeptMapper;
 import me.zhengjie.modules.system.service.DeptService;

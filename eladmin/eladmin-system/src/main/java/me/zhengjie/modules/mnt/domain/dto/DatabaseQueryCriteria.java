@@ -13,16 +13,26 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.domain.vo;
+package me.zhengjie.modules.mnt.domain.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
- * @author Zheng Jie
- * 公共查询类
- */
+* @author zhanghouying
+* @date 2019-08-24
+*/
 @Data
-public class DictQueryCriteria {
+public class DatabaseQueryCriteria{
 
-    private String blurry;
+    @ApiModelProperty(value = "名称")
+    private String name;
+
+    @ApiModelProperty(value = "数据源")
+    private String jdbcUrl;
+
+    @ApiModelProperty(value = "创建时间")
+    private List<Timestamp> createTime;
 }

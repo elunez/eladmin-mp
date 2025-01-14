@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import me.zhengjie.annotation.Log;
 import me.zhengjie.modules.mnt.domain.App;
 import me.zhengjie.modules.mnt.service.AppService;
-import me.zhengjie.modules.mnt.domain.vo.AppQueryCriteria;
+import me.zhengjie.modules.mnt.domain.dto.AppQueryCriteria;
 import me.zhengjie.utils.PageResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

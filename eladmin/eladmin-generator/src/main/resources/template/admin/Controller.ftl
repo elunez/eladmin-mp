@@ -18,7 +18,7 @@ package ${package}.rest;
 import me.zhengjie.annotation.Log;
 import ${package}.domain.${className};
 import ${package}.service.${className}Service;
-import ${package}.domain.vo.${className}QueryCriteria;
+import ${package}.domain.dto.${className}QueryCriteria;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
 import org.springframework.http.HttpStatus;

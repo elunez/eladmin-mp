@@ -19,7 +19,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.modules.mnt.domain.Deploy;
 import me.zhengjie.modules.mnt.domain.DeployHistory;
-import me.zhengjie.modules.mnt.domain.vo.DeployQueryCriteria;
+import me.zhengjie.modules.mnt.domain.dto.DeployQueryCriteria;
 import me.zhengjie.utils.PageResult;
 
 import javax.servlet.http.HttpServletResponse;

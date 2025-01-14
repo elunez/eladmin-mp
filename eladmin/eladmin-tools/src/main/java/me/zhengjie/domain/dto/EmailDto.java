@@ -13,25 +13,35 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.domain.vo;
+package me.zhengjie.domain.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import java.sql.Timestamp;
+import lombok.NoArgsConstructor;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
- * 日志查询类
- * @author Zheng Jie
- * @date 2019-6-4 09:23:07
+ * 发送邮件时，接收参数的类
+ * @author 郑杰
+ * @date 2018/09/28 12:02:14
  */
 @Data
-public class SysLogQueryCriteria {
+@AllArgsConstructor
+@NoArgsConstructor
+public class EmailDto {
 
-    private String blurry;
+    @NotEmpty
+    @ApiModelProperty(value = "收件人")
+    private List<String> tos;
 
-    private String username;
+    @NotBlank
+    @ApiModelProperty(value = "主题")
+    private String subject;
 
-    private String logType;
-
-    private List<Timestamp> createTime;
+    @NotBlank
+    @ApiModelProperty(value = "内容")
+    private String content;
 }

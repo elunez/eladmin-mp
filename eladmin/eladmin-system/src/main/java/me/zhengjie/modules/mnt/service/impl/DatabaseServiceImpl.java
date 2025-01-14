@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.modules.mnt.domain.Database;
 import me.zhengjie.modules.mnt.mapper.DatabaseMapper;
 import me.zhengjie.modules.mnt.service.DatabaseService;
-import me.zhengjie.modules.mnt.domain.vo.DatabaseQueryCriteria;
+import me.zhengjie.modules.mnt.domain.dto.DatabaseQueryCriteria;
 import me.zhengjie.modules.mnt.util.SqlUtils;
 import me.zhengjie.utils.FileUtil;
 import me.zhengjie.utils.PageResult;

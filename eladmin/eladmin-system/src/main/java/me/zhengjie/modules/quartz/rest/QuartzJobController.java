@@ -25,7 +25,7 @@ import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.modules.quartz.domain.QuartzJob;
 import me.zhengjie.modules.quartz.domain.QuartzLog;
 import me.zhengjie.modules.quartz.service.QuartzJobService;
-import me.zhengjie.modules.quartz.domain.vo.QuartzJobQueryCriteria;
+import me.zhengjie.modules.quartz.domain.dto.QuartzJobQueryCriteria;
 import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.SpringBeanHolder;
 import org.springframework.http.HttpStatus;

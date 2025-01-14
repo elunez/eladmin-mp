@@ -21,7 +21,7 @@
         column_id, table_name, column_name, column_type, key_type, extra, remark, not_null, list_show, form_show, form_type, query_type, dict_name
     </sql>
 
-    <select id="getTables" resultType="me.zhengjie.domain.vo.TableInfo">
+    <select id="getTables" resultType="me.zhengjie.domain.dto.TableInfo">
         select table_name, create_time, engine, table_collation as coding, table_comment as remark
         from information_schema.tables
         where table_schema = (select database())

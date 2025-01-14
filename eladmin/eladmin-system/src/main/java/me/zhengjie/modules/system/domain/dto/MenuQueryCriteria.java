@@ -13,8 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.domain.vo;
+package me.zhengjie.modules.system.domain.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import java.sql.Timestamp;
 import java.util.List;
@@ -24,9 +25,17 @@ import java.util.List;
  * 公共查询类
  */
 @Data
-public class RoleQueryCriteria {
+public class MenuQueryCriteria {
 
+    @ApiModelProperty(value = "模糊查询")
     private String blurry;
 
+    @ApiModelProperty(value = "创建时间")
     private List<Timestamp> createTime;
+
+    @ApiModelProperty(value = "PID为空查询")
+    private Boolean pidIsNull;
+
+    @ApiModelProperty(value = "PID")
+    private Long pid;
 }

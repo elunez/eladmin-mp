@@ -43,6 +43,7 @@ public class Dict extends BaseEntity implements Serializable {
     private Long id;
 
     @TableField(exist = false)
+    @ApiModelProperty(value = "字典详情")
     private List<DictDetail> dictDetails;
 
     @NotBlank

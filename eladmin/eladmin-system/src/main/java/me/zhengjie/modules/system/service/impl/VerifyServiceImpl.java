@@ -22,7 +22,7 @@ import cn.hutool.extra.template.TemplateConfig;
 import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
 import lombok.RequiredArgsConstructor;
-import me.zhengjie.domain.vo.EmailVo;
+import me.zhengjie.domain.dto.EmailDto;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.modules.system.service.VerifyService;
 import me.zhengjie.utils.RedisUtils;
@@ -45,8 +45,8 @@ public class VerifyServiceImpl implements VerifyService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public EmailVo sendEmail(String email, String key) {
-        EmailVo emailVo;
+    public EmailDto sendEmail(String email, String key) {
+        EmailDto emailDto;
         String content;
         String redisKey = key + email;
         // 如果不存在有效的验证码，就创建一个新的
@@ -64,8 +64,8 @@ public class VerifyServiceImpl implements VerifyService {
         } else {
             content = template.render(Dict.create().set("code",oldCode));
         }
-        emailVo = new EmailVo(Collections.singletonList(email),"ELADMIN后台管理系统",content);
-        return emailVo;
+        emailDto = new EmailDto(Collections.singletonList(email),"ELADMIN后台管理系统",content);
+        return emailDto;
     }
 
     @Override

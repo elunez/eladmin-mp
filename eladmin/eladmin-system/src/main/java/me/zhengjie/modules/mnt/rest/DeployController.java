@@ -23,7 +23,7 @@ import me.zhengjie.annotation.Log;
 import me.zhengjie.modules.mnt.domain.Deploy;
 import me.zhengjie.modules.mnt.domain.DeployHistory;
 import me.zhengjie.modules.mnt.service.DeployService;
-import me.zhengjie.modules.mnt.domain.vo.DeployQueryCriteria;
+import me.zhengjie.modules.mnt.domain.dto.DeployQueryCriteria;
 import me.zhengjie.utils.FileUtil;
 import me.zhengjie.utils.PageResult;
 import org.springframework.http.HttpStatus;
@@ -65,7 +65,7 @@ public class DeployController {
     @GetMapping
 	@PreAuthorize("@el.check('deploy:list')")
     public ResponseEntity<PageResult<Deploy>> queryDeployData(DeployQueryCriteria criteria, Page<Object> page){
-    	return new ResponseEntity<>(deployService.queryAll(criteria, page),HttpStatus.OK);
+		return new ResponseEntity<>(deployService.queryAll(criteria, page),HttpStatus.OK);
     }
 
     @Log("新增部署")

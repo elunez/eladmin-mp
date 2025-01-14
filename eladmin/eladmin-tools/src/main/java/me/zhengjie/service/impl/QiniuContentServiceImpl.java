@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 import me.zhengjie.domain.QiniuConfig;
 import me.zhengjie.domain.QiniuContent;
 import me.zhengjie.mapper.QiniuContentMapper;
-import me.zhengjie.domain.vo.QiniuQueryCriteria;
+import me.zhengjie.domain.dto.QiniuQueryCriteria;
 import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.QiNiuUtil;
 import me.zhengjie.exception.BadRequestException;

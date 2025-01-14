@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 import me.zhengjie.domain.SysLog;
 import me.zhengjie.mapper.SysLogMapper;
 import me.zhengjie.service.SysLogService;
-import me.zhengjie.domain.vo.SysLogQueryCriteria;
+import me.zhengjie.domain.dto.SysLogQueryCriteria;
 import me.zhengjie.utils.*;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;

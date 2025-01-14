@@ -17,6 +17,7 @@ package me.zhengjie.modules.mnt.service.impl;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ import me.zhengjie.modules.mnt.mapper.DeployServerMapper;
 import me.zhengjie.modules.mnt.service.DeployHistoryService;
 import me.zhengjie.modules.mnt.service.DeployService;
 import me.zhengjie.modules.mnt.service.ServerService;
-import me.zhengjie.modules.mnt.domain.vo.DeployQueryCriteria;
+import me.zhengjie.modules.mnt.domain.dto.DeployQueryCriteria;
 import me.zhengjie.modules.mnt.util.ExecuteShellUtil;
 import me.zhengjie.modules.mnt.util.ScpClientUtil;
 import me.zhengjie.modules.mnt.websocket.MsgType;
@@ -65,10 +66,8 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
 
 	@Override
 	public PageResult<Deploy> queryAll(DeployQueryCriteria criteria, Page<Object> page) {
-		criteria.setOffset(page.offset());
-		List<Deploy> deploys = deployMapper.findAll(criteria);
-		Long total = deployMapper.countAll(criteria);
-		return PageUtil.toPage(deploys, total);
+		IPage<Deploy> deploys = deployMapper.findAll(criteria, page);
+		return PageUtil.toPage(deploys);
 	}
 
 	@Override

@@ -18,7 +18,7 @@ package me.zhengjie.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.domain.LocalStorage;
-import me.zhengjie.domain.vo.LocalStorageQueryCriteria;
+import me.zhengjie.domain.dto.LocalStorageQueryCriteria;
 import me.zhengjie.utils.PageResult;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;

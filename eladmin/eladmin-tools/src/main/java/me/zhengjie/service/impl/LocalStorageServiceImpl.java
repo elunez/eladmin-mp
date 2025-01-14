@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.config.properties.FileProperties;
 import me.zhengjie.domain.LocalStorage;
-import me.zhengjie.domain.vo.LocalStorageQueryCriteria;
+import me.zhengjie.domain.dto.LocalStorageQueryCriteria;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.mapper.LocalStorageMapper;
 import me.zhengjie.utils.*;

@@ -22,7 +22,7 @@ import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.exception.EntityExistException;
 import me.zhengjie.modules.system.domain.Job;
 import me.zhengjie.modules.system.mapper.UserMapper;
-import me.zhengjie.modules.system.domain.vo.JobQueryCriteria;
+import me.zhengjie.modules.system.domain.dto.JobQueryCriteria;
 import me.zhengjie.utils.*;
 import me.zhengjie.modules.system.mapper.JobMapper;
 import me.zhengjie.modules.system.service.JobService;

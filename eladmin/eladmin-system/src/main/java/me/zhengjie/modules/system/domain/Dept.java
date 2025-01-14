@@ -51,6 +51,7 @@ public class Dept extends BaseEntity implements Serializable {
     private Set<Role> roles;
 
     @TableField(exist = false)
+    @ApiModelProperty(value = "子部门")
     private List<Dept> children;
 
     @ApiModelProperty(value = "排序")

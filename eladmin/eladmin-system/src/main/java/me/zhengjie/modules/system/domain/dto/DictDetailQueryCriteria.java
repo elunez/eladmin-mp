@@ -13,22 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.mnt.domain.vo;
+package me.zhengjie.modules.system.domain.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import java.sql.Timestamp;
-import java.util.List;
 
 /**
-* @author zhanghouying
-* @date 2019-08-24
+* @author Zheng Jie
+* @date 2019-04-10
 */
 @Data
-public class DeployHistoryQueryCriteria{
+public class DictDetailQueryCriteria {
 
-	private String blurry;
+    @ApiModelProperty(value = "标签")
+    private String label;
 
-	private Long deployId;
-
-	private List<Timestamp> deployDate;
+    @ApiModelProperty(value = "字典名称")
+    private String dictName;
 }

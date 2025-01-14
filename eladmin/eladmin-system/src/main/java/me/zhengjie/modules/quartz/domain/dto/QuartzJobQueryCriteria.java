@@ -13,24 +13,26 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.mnt.domain.vo;
+package me.zhengjie.modules.quartz.domain.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* @author zhanghouying
-* @date 2019-08-24
-*/
+ * @author Zheng Jie
+ * @date 2019-6-4 10:33:02
+ */
 @Data
-public class DeployQueryCriteria{
+public class QuartzJobQueryCriteria {
 
-    private String appName;
+    @ApiModelProperty(value = "定时任务名称")
+    private String jobName;
 
-	private List<Timestamp> createTime;
+    @ApiModelProperty(value = "是否成功")
+    private Boolean isSuccess;
 
-    private Long offset;
-
-    private Long size;
+    @ApiModelProperty(value = "创建时间")
+    private List<Timestamp> createTime;
 }

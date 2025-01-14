@@ -23,7 +23,7 @@ import me.zhengjie.annotation.Log;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.modules.system.domain.Job;
 import me.zhengjie.modules.system.service.JobService;
-import me.zhengjie.modules.system.domain.vo.JobQueryCriteria;
+import me.zhengjie.modules.system.domain.dto.JobQueryCriteria;
 import me.zhengjie.utils.PageResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

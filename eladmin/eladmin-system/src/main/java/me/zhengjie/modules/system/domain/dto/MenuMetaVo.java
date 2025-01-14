@@ -13,34 +13,27 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.utils;
+package me.zhengjie.modules.system.domain.dto;
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import java.io.Serializable;
 
 /**
- * 支付状态
- * @author zhengjie
- * @date 2018/08/01 16:45:43
+ * @author Zheng Jie
+ * @date 2018-12-20
  */
-public enum  AliPayStatusEnum {
+@Data
+@AllArgsConstructor
+public class MenuMetaVo implements Serializable {
 
-    /** 交易成功 */
-    FINISHED("TRADE_FINISHED"),
+    @ApiModelProperty(value = "菜单标题")
+    private String title;
 
-    /** 支付成功 */
-    SUCCESS("TRADE_SUCCESS"),
+    @ApiModelProperty(value = "菜单图标")
+    private String icon;
 
-    /** 交易创建 */
-    BUYER_PAY("WAIT_BUYER_PAY"),
-
-    /** 交易关闭 */
-    CLOSED("TRADE_CLOSED");
-
-    private final String value;
-
-    AliPayStatusEnum(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
-    }
+    @ApiModelProperty(value = "缓存")
+    private Boolean noCache;
 }

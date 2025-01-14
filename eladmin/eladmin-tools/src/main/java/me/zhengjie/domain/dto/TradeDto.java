@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.domain.vo;
+package me.zhengjie.domain.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,37 +27,32 @@ import java.sql.Timestamp;
  * @date 2018-12-31
  */
 @Data
-public class TradeVo {
+public class TradeDto {
 
-    /** （必填）商品描述 */
     @NotBlank
+    @ApiModelProperty(value = "商品描述")
     private String body;
 
-    /** （必填）商品名称 */
     @NotBlank
+    @ApiModelProperty(value = "商品名称")
     private String subject;
 
-    /** （必填）商户订单号，应该由后台生成 */
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "商户订单号", hidden = true)
     private String outTradeNo;
 
-    /** （必填）第三方订单号 */
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "第三方订单号", hidden = true)
     private String tradeNo;
 
-    /** （必填）价格 */
     @NotBlank
+    @ApiModelProperty(value = "价格")
     private String totalAmount;
 
-    /** 订单状态,已支付，未支付，作废 */
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "订单状态,已支付，未支付，作废", hidden = true)
     private String state;
 
-    /** 创建时间，存入数据库时需要 */
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "创建时间", hidden = true)
     private Timestamp createTime;
 
-    /** 作废时间，存入数据库时需要 */
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "作废时间", hidden = true)
     private Date cancelTime;
 }

@@ -13,20 +13,35 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.mnt.domain.vo;
+package me.zhengjie.modules.system.domain.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* @author zhanghouying
-* @date 2019-08-24
+* @author Zheng Jie
+* @date 2019-03-25
 */
 @Data
-public class AppQueryCriteria{
+public class DeptQueryCriteria{
 
+    @ApiModelProperty(value = "部门id集合")
+    private List<Long> ids;
+
+    @ApiModelProperty(value = "部门名称")
     private String name;
 
-	private List<Timestamp> createTime;
+    @ApiModelProperty(value = "是否启用")
+    private Boolean enabled;
+
+    @ApiModelProperty(value = "上级部门")
+    private Long pid;
+
+    @ApiModelProperty(value = "PID为空查询")
+    private Boolean pidIsNull;
+
+    @ApiModelProperty(value = "创建时间")
+    private List<Timestamp> createTime;
 }

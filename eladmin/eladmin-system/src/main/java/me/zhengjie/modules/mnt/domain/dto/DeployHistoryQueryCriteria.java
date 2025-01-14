@@ -13,36 +13,26 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.domain.vo;
+package me.zhengjie.modules.mnt.domain.dto;
 
-import lombok.AllArgsConstructor;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
- * 表的数据信息
- * @author Zheng Jie
- * @date 2019-01-02
- */
+* @author zhanghouying
+* @date 2019-08-24
+*/
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class TableInfo {
+public class DeployHistoryQueryCriteria{
 
-    /** 表名称 */
-    private Object tableName;
+	@ApiModelProperty(value = "模糊查询")
+	private String blurry;
 
-    /** 创建日期 */
-    private Object createTime;
+	@ApiModelProperty(value = "部署ID")
+	private Long deployId;
 
-    /** 数据库引擎 */
-    private Object engine;
-
-    /** 编码集 */
-    private Object coding;
-
-    /** 备注 */
-    private Object remark;
-
-
+	@ApiModelProperty(value = "部署时间")
+	private List<Timestamp> deployDate;
 }

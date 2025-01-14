@@ -19,7 +19,7 @@ import cn.hutool.extra.template.Template;
 import cn.hutool.extra.template.TemplateConfig;
 import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
-import me.zhengjie.domain.vo.EmailVo;
+import me.zhengjie.domain.dto.EmailDto;
 import me.zhengjie.modules.quartz.domain.QuartzJob;
 import me.zhengjie.modules.quartz.domain.QuartzLog;
 import me.zhengjie.modules.quartz.mapper.QuartzLogMapper;
@@ -106,8 +106,8 @@ public class ExecutionJob extends QuartzJobBean {
                 EmailService emailService = SpringBeanHolder.getBean(EmailService.class);
                 // 邮箱报警
                 if(StringUtils.isNoneBlank(quartzJob.getEmail())){
-                    EmailVo emailVo = taskAlarm(quartzJob, ThrowableUtil.getStackTrace(e));
-                    emailService.send(emailVo, emailService.find());
+                    EmailDto emailDto = taskAlarm(quartzJob, ThrowableUtil.getStackTrace(e));
+                    emailService.send(emailDto, emailService.find());
                 }
             }
         } finally {
@@ -115,17 +115,17 @@ public class ExecutionJob extends QuartzJobBean {
         }
     }
 
-    private EmailVo taskAlarm(QuartzJob quartzJob, String msg) {
-        EmailVo emailVo = new EmailVo();
-        emailVo.setSubject("定时任务【"+ quartzJob.getJobName() +"】执行失败，请尽快处理！");
+    private EmailDto taskAlarm(QuartzJob quartzJob, String msg) {
+        EmailDto emailDto = new EmailDto();
+        emailDto.setSubject("定时任务【"+ quartzJob.getJobName() +"】执行失败，请尽快处理！");
         Map<String, Object> data = new HashMap<>(16);
         data.put("task", quartzJob);
         data.put("msg", msg);
         TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig("template", TemplateConfig.ResourceMode.CLASSPATH));
         Template template = engine.getTemplate("taskAlarm.ftl");
-        emailVo.setContent(template.render(data));
+        emailDto.setContent(template.render(data));
         List<String> emails = Arrays.asList(quartzJob.getEmail().split("[,，]"));
-        emailVo.setTos(emails);
-        return emailVo;
+        emailDto.setTos(emails);
+        return emailDto;
     }
 }

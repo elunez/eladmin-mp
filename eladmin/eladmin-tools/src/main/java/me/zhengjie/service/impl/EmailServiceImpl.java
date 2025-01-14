@@ -20,7 +20,7 @@ import cn.hutool.extra.mail.MailAccount;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import me.zhengjie.domain.EmailConfig;
-import me.zhengjie.domain.vo.EmailVo;
+import me.zhengjie.domain.dto.EmailDto;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.mapper.EmailConfigMapper;
 import me.zhengjie.service.EmailService;
@@ -62,7 +62,7 @@ public class EmailServiceImpl extends ServiceImpl<EmailConfigMapper, EmailConfig
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void send(EmailVo emailVo, EmailConfig emailConfig){
+    public void send(EmailDto emailDto, EmailConfig emailConfig){
         if(emailConfig.getId() == null){
             throw new BadRequestException("请先配置，再操作");
         }
@@ -87,13 +87,13 @@ public class EmailServiceImpl extends ServiceImpl<EmailConfigMapper, EmailConfig
         account.setStarttlsEnable(true);
         // 解决jdk8之后默认禁用部分tls协议，导致邮件发送失败的问题
         account.setSslProtocols("TLSv1 TLSv1.1 TLSv1.2");
-        String content = emailVo.getContent();
+        String content = emailDto.getContent();
         // 发送
         try {
-            int size = emailVo.getTos().size();
+            int size = emailDto.getTos().size();
             Mail.create(account)
-                    .setTos(emailVo.getTos().toArray(new String[size]))
-                    .setTitle(emailVo.getSubject())
+                    .setTos(emailDto.getTos().toArray(new String[size]))
+                    .setTitle(emailDto.getSubject())
                     .setContent(content)
                     .setHtml(true)
                     //关闭session

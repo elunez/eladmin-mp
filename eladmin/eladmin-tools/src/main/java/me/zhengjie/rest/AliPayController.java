@@ -22,9 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.annotation.rest.AnonymousAccess;
 import me.zhengjie.annotation.Log;
 import me.zhengjie.annotation.rest.AnonymousGetMapping;
-import me.zhengjie.domain.vo.TradeVo;
+import me.zhengjie.domain.dto.TradeDto;
 import me.zhengjie.domain.AlipayConfig;
-import me.zhengjie.utils.AliPayStatusEnum;
+import me.zhengjie.domain.enums.AliPayStatusEnum;
 import me.zhengjie.utils.AlipayUtils;
 import me.zhengjie.service.AliPayService;
 import org.springframework.http.HttpStatus;
@@ -68,7 +68,7 @@ public class AliPayController {
     @Log("支付宝PC网页支付")
     @ApiOperation("PC网页支付")
     @PostMapping(value = "/toPayAsPC")
-    public ResponseEntity<String> toPayAsPc(@Validated @RequestBody TradeVo trade) throws Exception {
+    public ResponseEntity<String> toPayAsPc(@Validated @RequestBody TradeDto trade) throws Exception {
         AlipayConfig aliPay = alipayService.find();
         trade.setOutTradeNo(alipayUtils.getOrderCode());
         String payUrl = alipayService.toPayAsPc(aliPay, trade);
@@ -78,7 +78,7 @@ public class AliPayController {
     @Log("支付宝手机网页支付")
     @ApiOperation("手机网页支付")
     @PostMapping(value = "/toPayAsWeb")
-    public ResponseEntity<String> toPayAsWeb(@Validated @RequestBody TradeVo trade) throws Exception {
+    public ResponseEntity<String> toPayAsWeb(@Validated @RequestBody TradeDto trade) throws Exception {
         AlipayConfig alipay = alipayService.find();
         trade.setOutTradeNo(alipayUtils.getOrderCode());
         String payUrl = alipayService.toPayAsWeb(alipay, trade);

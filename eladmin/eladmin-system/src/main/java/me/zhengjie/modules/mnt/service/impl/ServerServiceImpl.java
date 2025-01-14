@@ -22,7 +22,7 @@ import me.zhengjie.modules.mnt.domain.Server;
 import me.zhengjie.modules.mnt.mapper.DeployServerMapper;
 import me.zhengjie.modules.mnt.mapper.ServerMapper;
 import me.zhengjie.modules.mnt.service.ServerService;
-import me.zhengjie.modules.mnt.domain.vo.ServerQueryCriteria;
+import me.zhengjie.modules.mnt.domain.dto.ServerQueryCriteria;
 import me.zhengjie.modules.mnt.util.ExecuteShellUtil;
 import me.zhengjie.utils.FileUtil;
 import me.zhengjie.utils.PageResult;

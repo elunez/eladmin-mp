@@ -13,31 +13,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.system.domain.vo;
+package me.zhengjie.modules.system.domain.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author Zheng Jie
- * @date 2018-11-23
+ * 公共查询类
  */
 @Data
-public class UserQueryCriteria implements Serializable {
+public class DictQueryCriteria {
 
-    private Long id;
-
-    private Set<Long> deptIds = new HashSet<>();
-
+    @ApiModelProperty(value = "模糊查询")
     private String blurry;
-
-    private Boolean enabled;
-
-    private Long deptId;
-
-    private List<Timestamp> createTime;
 }

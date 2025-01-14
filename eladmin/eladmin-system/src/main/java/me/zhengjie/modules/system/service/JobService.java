@@ -18,7 +18,7 @@ package me.zhengjie.modules.system.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.modules.system.domain.Job;
-import me.zhengjie.modules.system.domain.vo.JobQueryCriteria;
+import me.zhengjie.modules.system.domain.dto.JobQueryCriteria;
 import me.zhengjie.utils.PageResult;
 
 import javax.servlet.http.HttpServletResponse;

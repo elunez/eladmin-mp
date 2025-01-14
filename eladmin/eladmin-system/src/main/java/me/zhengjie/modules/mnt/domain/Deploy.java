@@ -52,6 +52,7 @@ public class Deploy extends BaseEntity implements Serializable {
 	private Set<Server> deploys;
 
 	@TableField(exist = false)
+	@ApiModelProperty(value = "应用")
     private App app;
 
     public void copy(Deploy source){

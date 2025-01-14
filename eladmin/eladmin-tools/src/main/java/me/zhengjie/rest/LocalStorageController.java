@@ -21,7 +21,7 @@ import me.zhengjie.annotation.Log;
 import me.zhengjie.domain.LocalStorage;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.service.LocalStorageService;
-import me.zhengjie.domain.vo.LocalStorageQueryCriteria;
+import me.zhengjie.domain.dto.LocalStorageQueryCriteria;
 import me.zhengjie.utils.FileUtil;
 import me.zhengjie.utils.PageResult;
 import org.springframework.http.HttpStatus;

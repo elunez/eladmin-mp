@@ -37,7 +37,13 @@
         server.server_id as s_server_id,server.name as s_name,server.ip as s_ip,server.port as s_port,server.account as s_account,server.password as s_password
     </sql>
 
-    <sql id="Where_sql">
+    <select id="findAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>,
+        <include refid="Server_Column_List"/>
+        from mnt_deploy deploy
+        left join mnt_app app on deploy.app_id = app.app_id
+        left join mnt_deploy_server mds on deploy.deploy_id = mds.deploy_id
+        left join mnt_server server on server.server_id = mds.server_id
         <where>
             <if test="criteria.appName != null and criteria.appName != ''">
                 and app.name like concat('%',#{criteria.appName},'%')
@@ -46,30 +52,7 @@
                 and deploy.create_time between #{criteria.createTime[0]} and #{criteria.createTime[1]}
             </if>
         </where>
-    </sql>
-
-    <select id="findAll" resultMap="BaseResultMap">
-        select t.*,
-        <include refid="Server_Column_List"/>
-        from (
-            select <include refid="Base_Column_List"/>
-            from mnt_deploy deploy
-            left join mnt_app app on deploy.app_id = app.app_id
-            <include refid="Where_sql"/>
-            <if test="criteria.offset != null">
-                limit #{criteria.offset}, #{criteria.size}
-            </if>
-        ) t
-        left join mnt_deploy_server mds on t.d_deploy_id = mds.deploy_id
-        left join mnt_server server on server.server_id = mds.server_id
-        order by t.d_deploy_id desc
-    </select>
-
-    <select id="countAll" resultType="java.lang.Long">
-        select count(*)
-        from mnt_deploy deploy
-        left join mnt_app app on deploy.app_id = app.app_id
-        <include refid="Where_sql"/>
+        order by deploy.deploy_id desc
     </select>
 
     <select id="getIdByAppIds" resultType="java.lang.Long">

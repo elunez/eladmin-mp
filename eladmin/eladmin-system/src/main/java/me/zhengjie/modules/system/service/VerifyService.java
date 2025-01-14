@@ -15,7 +15,7 @@
  */
 package me.zhengjie.modules.system.service;
 
-import me.zhengjie.domain.vo.EmailVo;
+import me.zhengjie.domain.dto.EmailDto;
 
 /**
  * @author Zheng Jie
@@ -29,7 +29,7 @@ public interface VerifyService {
      * @param key /
      * @return /
      */
-    EmailVo sendEmail(String email, String key);
+    EmailDto sendEmail(String email, String key);
 
 
     /**

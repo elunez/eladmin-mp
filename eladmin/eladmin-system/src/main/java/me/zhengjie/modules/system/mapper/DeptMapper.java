@@ -17,7 +17,7 @@ package me.zhengjie.modules.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.zhengjie.modules.system.domain.Dept;
-import me.zhengjie.modules.system.domain.vo.DeptQueryCriteria;
+import me.zhengjie.modules.system.domain.dto.DeptQueryCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

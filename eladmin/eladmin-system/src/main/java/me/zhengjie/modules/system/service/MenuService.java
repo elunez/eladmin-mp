@@ -17,8 +17,8 @@ package me.zhengjie.modules.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.modules.system.domain.Menu;
-import me.zhengjie.modules.system.domain.vo.MenuQueryCriteria;
-import me.zhengjie.modules.system.domain.vo.MenuVo;
+import me.zhengjie.modules.system.domain.dto.MenuQueryCriteria;
+import me.zhengjie.modules.system.domain.dto.MenuVo;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

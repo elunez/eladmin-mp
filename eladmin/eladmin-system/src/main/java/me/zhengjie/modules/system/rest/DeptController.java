@@ -23,7 +23,7 @@ import me.zhengjie.annotation.Log;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.modules.system.domain.Dept;
 import me.zhengjie.modules.system.service.DeptService;
-import me.zhengjie.modules.system.domain.vo.DeptQueryCriteria;
+import me.zhengjie.modules.system.domain.dto.DeptQueryCriteria;
 import me.zhengjie.utils.PageResult;
 import me.zhengjie.utils.PageUtil;
 import org.springframework.http.HttpStatus;

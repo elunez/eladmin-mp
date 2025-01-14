@@ -370,7 +370,7 @@ public class GenUtil {
         }
 
         if ("QueryCriteria".equals(templateName)) {
-            return packagePath + "domain" + File.separator + "vo" + File.separator + className + "QueryCriteria.java";
+            return packagePath + "domain" + File.separator + "dto" + File.separator + className + "QueryCriteria.java";
         }
 
         if ("Mapper".equals(templateName)) {

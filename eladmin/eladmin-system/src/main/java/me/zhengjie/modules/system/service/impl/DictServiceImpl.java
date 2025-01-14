@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import me.zhengjie.modules.system.domain.Dict;
 import me.zhengjie.modules.system.domain.DictDetail;
 import me.zhengjie.modules.system.mapper.DictDetailMapper;
-import me.zhengjie.modules.system.domain.vo.DictQueryCriteria;
+import me.zhengjie.modules.system.domain.dto.DictQueryCriteria;
 import me.zhengjie.utils.*;
 import me.zhengjie.modules.system.mapper.DictMapper;
 import me.zhengjie.modules.system.service.DictService;

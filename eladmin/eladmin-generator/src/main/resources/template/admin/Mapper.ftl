@@ -16,7 +16,7 @@
 package ${package}.mapper;
 
 import ${package}.domain.${className};
-import ${package}.domain.vo.${className}QueryCriteria;
+import ${package}.domain.dto.${className}QueryCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;

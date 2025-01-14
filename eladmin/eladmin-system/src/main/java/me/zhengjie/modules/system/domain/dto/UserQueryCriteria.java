@@ -13,20 +13,38 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.domain.vo;
+package me.zhengjie.modules.system.domain.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Zheng Jie
- * @date 2019-6-4 09:54:37
+ * @date 2018-11-23
  */
 @Data
-public class QiniuQueryCriteria{
+public class UserQueryCriteria implements Serializable {
 
-    private String key;
+    @ApiModelProperty(value = "ID")
+    private Long id;
 
+    @ApiModelProperty(value = "多个ID")
+    private Set<Long> deptIds = new HashSet<>();
+
+    @ApiModelProperty(value = "模糊查询")
+    private String blurry;
+
+    @ApiModelProperty(value = "是否启用")
+    private Boolean enabled;
+
+    @ApiModelProperty(value = "部门ID")
+    private Long deptId;
+
+    @ApiModelProperty(value = "创建时间")
     private List<Timestamp> createTime;
 }

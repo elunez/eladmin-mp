@@ -19,7 +19,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.domain.GenConfig;
 import me.zhengjie.domain.ColumnInfo;
-import me.zhengjie.domain.vo.TableInfo;
+import me.zhengjie.domain.dto.TableInfo;
 import me.zhengjie.utils.PageResult;
 import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletRequest;

@@ -21,7 +21,7 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
-import me.zhengjie.domain.vo.TradeVo;
+import me.zhengjie.domain.dto.TradeDto;
 import me.zhengjie.domain.AlipayConfig;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.mapper.AliPayConfigMapper;
@@ -58,7 +58,7 @@ public class AliPayServiceImpl extends ServiceImpl<AliPayConfigMapper, AlipayCon
     }
 
     @Override
-    public String toPayAsPc(AlipayConfig alipay, TradeVo trade) throws Exception {
+    public String toPayAsPc(AlipayConfig alipay, TradeDto trade) throws Exception {
 
         if(alipay.getId() == null){
             throw new BadRequestException("请先添加相应配置，再操作");
@@ -88,7 +88,7 @@ public class AliPayServiceImpl extends ServiceImpl<AliPayConfigMapper, AlipayCon
     }
 
     @Override
-    public String toPayAsWeb(AlipayConfig alipay, TradeVo trade) throws Exception {
+    public String toPayAsWeb(AlipayConfig alipay, TradeDto trade) throws Exception {
         if(alipay.getId() == null){
             throw new BadRequestException("请先添加相应配置，再操作");
         }

@@ -13,32 +13,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.domain.vo;
+package me.zhengjie.modules.mnt.domain.dto;
 
-import lombok.AllArgsConstructor;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
- * 发送邮件时，接收参数的类
- * @author 郑杰
- * @date 2018/09/28 12:02:14
- */
+* @author zhanghouying
+* @date 2019-08-24
+*/
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class EmailVo {
+public class ServerQueryCriteria {
 
-    /** 收件人，支持多个收件人 */
-    @NotEmpty
-    private List<String> tos;
+    @ApiModelProperty(value = "模糊查询")
+    private String blurry;
 
-    @NotBlank
-    private String subject;
-
-    @NotBlank
-    private String content;
+    @ApiModelProperty(value = "创建时间")
+    private List<Timestamp> createTime;
 }

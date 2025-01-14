@@ -18,7 +18,7 @@ package me.zhengjie.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.zhengjie.domain.SysLog;
-import me.zhengjie.domain.vo.SysLogQueryCriteria;
+import me.zhengjie.domain.dto.SysLogQueryCriteria;
 import me.zhengjie.utils.PageResult;
 import org.aspectj.lang.ProceedingJoinPoint;
 import javax.servlet.http.HttpServletResponse;

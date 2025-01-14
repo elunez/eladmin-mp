@@ -13,20 +13,30 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.mnt.domain.vo;
+package me.zhengjie.domain.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* @author zhanghouying
-* @date 2019-08-24
-*/
+ * 日志查询类
+ * @author Zheng Jie
+ * @date 2019-6-4 09:23:07
+ */
 @Data
-public class ServerQueryCriteria {
+public class SysLogQueryCriteria {
 
+    @ApiModelProperty(value = "模糊查询")
     private String blurry;
 
-	private List<Timestamp> createTime;
+    @ApiModelProperty(value = "用户名称")
+    private String username;
+
+    @ApiModelProperty(value = "日志类型")
+    private String logType;
+
+    @ApiModelProperty(value = "创建时间")
+    private List<Timestamp> createTime;
 }

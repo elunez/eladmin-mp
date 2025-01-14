@@ -13,22 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.quartz.domain.vo;
+package me.zhengjie.modules.system.domain.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import java.sql.Timestamp;
-import java.util.List;
 
 /**
+ * 修改密码的 Vo 类
  * @author Zheng Jie
- * @date 2019-6-4 10:33:02
+ * @date 2019年7月11日13:59:49
  */
 @Data
-public class QuartzJobQueryCriteria {
+public class UserPassVo {
 
-    private String jobName;
+    @ApiModelProperty(value = "旧密码")
+    private String oldPass;
 
-    private Boolean isSuccess;
-
-    private List<Timestamp> createTime;
+    @ApiModelProperty(value = "新密码")
+    private String newPass;
 }

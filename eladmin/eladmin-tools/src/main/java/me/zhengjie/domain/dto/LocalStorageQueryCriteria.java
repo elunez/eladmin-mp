@@ -13,22 +13,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package me.zhengjie.modules.mnt.domain.vo;
+package me.zhengjie.domain.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* @author zhanghouying
-* @date 2019-08-24
+* @author Zheng Jie
+* @date 2019-09-05
 */
 @Data
-public class DatabaseQueryCriteria{
+public class LocalStorageQueryCriteria{
 
-    private String name;
+    @ApiModelProperty(value = "模糊查询")
+    private String blurry;
 
-    private String jdbcUrl;
-
-	private List<Timestamp> createTime;
+    @ApiModelProperty(value = "创建时间")
+    private List<Timestamp> createTime;
 }
