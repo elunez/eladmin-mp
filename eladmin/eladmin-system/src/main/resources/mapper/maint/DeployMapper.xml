@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis_deploy.org//DTD Mapper 3.0//EN" "http://mybatis_deploy.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.maint.mapper.DeployMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.modules.maint.domain.Deploy">
+        <id column="d_deploy_id" property="id"/>
+        <result column="d_app_id" property="appId"/>
+        <result column="d_create_by" property="createBy"/>
+        <result column="d_update_by" property="updateBy"/>
+        <result column="d_create_time" property="createTime"/>
+        <result column="d_update_time" property="updateTime"/>
+        <association property="app" javaType="me.zhengjie.modules.maint.domain.App">
+            <id column="a_app_id" property="id"/>
+            <result column="a_name" property="name"/>
+            <result column="a_port" property="port"/>
+            <result column="a_upload_path" property="uploadPath"/>
+            <result column="a_deploy_path" property="deployPath"/>
+            <result column="a_backup_path" property="backupPath"/>
+            <result column="a_start_script" property="startScript"/>
+            <result column="a_deploy_script" property="deployScript"/>
+        </association>
+        <collection property="deploys" ofType="me.zhengjie.modules.maint.domain.Server">
+            <id column="s_server_id" property="id"/>
+            <result column="s_name" property="name"/>
+            <result column="s_ip" property="ip"/>
+            <result column="s_port" property="port"/>
+            <result column="s_account" property="account"/>
+            <result column="s_password" property="password"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        deploy.deploy_id as d_deploy_id, deploy.app_id as d_app_id,deploy.create_by as d_create_by,deploy.update_by as d_update_by,deploy.create_time as d_create_time,deploy.update_time as d_update_time,
+        app.app_id as a_app_id,app.name as a_name,app.port as a_port,app.upload_path as a_upload_path,app.deploy_path as a_deploy_path,app.backup_path as a_backup_path,app.start_script as a_start_script,app.deploy_script as a_deploy_script
+    </sql>
+
+    <sql id="Server_Column_List">
+        server.server_id as s_server_id,server.name as s_name,server.ip as s_ip,server.port as s_port,server.account as s_account,server.password as s_password
+    </sql>
+
+    <sql id="Where_sql">
+        <where>
+            <if test="criteria.appName != null and criteria.appName != ''">
+                and app.name like concat('%',#{criteria.appName},'%')
+            </if>
+            <if test="criteria.createTime != null and criteria.createTime.size() != 0">
+                and deploy.create_time between #{criteria.createTime[0]} and #{criteria.createTime[1]}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select t.*,
+        <include refid="Server_Column_List"/>
+        from (
+        select <include refid="Base_Column_List"/>
+        from mnt_deploy deploy
+        left join mnt_app app on deploy.app_id = app.app_id
+        <include refid="Where_sql"/>
+        order by deploy.deploy_id desc
+        <if test="criteria.offset != null">
+            limit #{criteria.offset}, #{criteria.size}
+        </if>
+        ) t
+        left join mnt_deploy_server mds on t.d_deploy_id = mds.deploy_id
+        left join mnt_server server on server.server_id = mds.server_id
+        order by t.d_deploy_id desc
+    </select>
+
+    <select id="countAll" resultType="java.lang.Long">
+        select count(*)
+        from mnt_deploy deploy
+        left join mnt_app app on deploy.app_id = app.app_id
+        <include refid="Where_sql"/>
+    </select>
+
+    <select id="getIdByAppIds" resultType="java.lang.Long">
+        select deploy.deploy_id
+        from mnt_deploy deploy
+        where deploy.app_id in
+        <foreach collection="appIds" item="appId" open="(" separator="," close=")">
+            #{appId}
+        </foreach>
+    </select>
+
+    <select id="getDeployById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Server_Column_List"/>
+        from mnt_deploy deploy
+        left join mnt_app app on deploy.app_id = app.app_id
+        left join mnt_deploy_server mds on deploy.deploy_id = mds.deploy_id
+        left join mnt_server server on server.server_id = mds.server_id
+        where deploy.deploy_id = #{deployId}
+    </select>
+</mapper>

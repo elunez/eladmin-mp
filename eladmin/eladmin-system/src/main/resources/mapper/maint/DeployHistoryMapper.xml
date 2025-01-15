@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.modules.maint.mapper.DeployHistoryMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.modules.maint.domain.DeployHistory">
+        <id column="history_id" property="id"/>
+        <result column="app_name" property="appName"/>
+        <result column="ip" property="ip"/>
+        <result column="deploy_date" property="deployDate"/>
+        <result column="deploy_user" property="deployUser"/>
+        <result column="deploy_id" property="deployId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        history_id, app_name, ip, deploy_date, deploy_user, deploy_id
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM mnt_deploy_history
+        <where>
+            <if test="criteria.blurry != null and criteria.blurry != ''">
+                AND (
+                    app_name LIKE CONCAT('%',#{criteria.blurry},'%')
+                    or ip LIKE CONCAT('%',#{criteria.blurry},'%')
+                    or deploy_user LIKE CONCAT('%',#{criteria.blurry},'%')
+                )
+            </if>
+            <if test="criteria.deployId != null">
+                AND deploy_id = #{criteria.deployId}
+            </if>
+            <if test="criteria.deployDate != null and criteria.deployDate.size() != 0">
+                AND deploy_date BETWEEN #{criteria.deployDate[0]} AND #{criteria.deployDate[1]}
+            </if>
+        </where>
+        order by deploy_date desc
+    </select>
+
+</mapper>

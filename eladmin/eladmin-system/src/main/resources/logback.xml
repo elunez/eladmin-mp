@@ -18,5 +18,6 @@
     </root>
 
     <!--部分日志调整为ERROR-->
+    <logger name="io.undertow.websockets.jsr" level="ERROR"/>
     <logger name="io.netty.resolver.dns.DnsServerAddressStreamProviders" level="ERROR"/>
 </configuration>

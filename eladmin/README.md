@@ -17,7 +17,7 @@
 
 #### VPS推荐
 <a href="https://bwh81.net/aff.php?aff=70876" target="_blank">
-<img src="https://eladmin.vip/images/banner/side.jpeg" style="width: 435px;border-radius: 2px;">
+<img src="https://eladmin.vip/images/banner/side.jpeg" style="width: 435px;border-radius: 2px;" alt="帮瓦工">
 </a>
 
 使用优惠码: `BWHNCXNVXV`，可获得 6.81% 的折扣， [查看介绍](https://eladmin.vip/pages/040101/)
@@ -31,6 +31,7 @@
 - 对一些常用地前端组件封装：表格数据请求、数据字典等
 - 前后端统一异常拦截处理，统一输出异常，避免繁琐的判断
 - 支持在线用户管理与服务器性能监控，支持限制单用户登录
+- 支持运维管理，可方便地对远程服务器的应用进行部署与管理
 
 ####  系统功能
 - 用户管理：提供用户的相关配置，新增用户后，默认密码为123456
@@ -47,6 +48,7 @@
 - 七牛云存储：可同步七牛云存储的数据到系统，无需登录七牛云直接操作云数据
 - 支付宝支付：整合了支付宝支付并且提供了测试账号，可自行测试
 - 服务监控：监控服务器的负载情况
+- 运维管理：一键部署你的应用
 
 #### 项目结构
 项目采用按功能分模块的开发方式，结构如下
@@ -85,7 +87,7 @@
         - FileUtil 文件工具类
 - eladmin-system 系统核心模块（系统启动入口）
     - sysrunner 程序启动后处理数据
-	- modules 系统相关模块(登录授权、系统监控、定时任务、系统模块)
+	- modules 系统相关模块(登录授权、系统监控、定时任务、系统模块、运维模块)
 - eladmin-logging 系统日志模块
 - eladmin-tools 系统第三方工具模块
     - email 邮件工具
@@ -100,6 +102,8 @@
 - 感谢 [PanJiaChen](https://github.com/PanJiaChen/vue-element-admin) 大佬提供的前端模板
 
 - 感谢 [Moxun](https://github.com/moxun1639) 大佬提供的前端 Curd 通用组件
+
+- 感谢 [zhy6599](https://gitee.com/zhy6599) 大佬提供的后端运维管理相关功能
 
 - 感谢 [j.yao.SUSE](https://github.com/everhopingandwaiting) 大佬提供的匿名接口与Redis限流等功能
 
