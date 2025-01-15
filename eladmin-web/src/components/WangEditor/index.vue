@@ -55,16 +55,16 @@ export default {
           }
         }
       }},
-      computed: {
-        ...mapGetters([
-          'imagesUploadApi',
-          'baseApi'
-        ])
-      },
       editMode: 'simple',
       editor: null,
       editValue: null
     }
+  },
+  computed: {
+    ...mapGetters([
+      'imagesUploadApi',
+      'baseApi'
+    ])
   },
   watch: {
     editValue(newVal, oldVal) {
