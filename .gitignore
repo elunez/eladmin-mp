@@ -1,0 +1,4 @@
+### IDEA ###
+.idea/*
+.DS_Store
+application.pid
