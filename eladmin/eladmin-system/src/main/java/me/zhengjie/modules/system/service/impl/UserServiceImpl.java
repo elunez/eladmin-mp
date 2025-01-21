@@ -41,6 +41,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -207,6 +208,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void resetPwd(Set<Long> ids, String pwd) {
+        List<User> users = userMapper.selectBatchIds(ids);
+        // 清除缓存
+        users.forEach(user -> {
+            // 清除缓存
+            flushCache(user.getUsername());
+            // 强制退出
+            onlineUserService.kickOutForUsername(user.getUsername());
+        });
+        // 重置密码
         userMapper.resetPwd(ids, pwd);
     }
 
