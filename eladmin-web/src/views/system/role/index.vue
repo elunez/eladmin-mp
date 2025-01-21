@@ -63,7 +63,11 @@
             <el-table-column prop="name" label="名称" />
             <el-table-column prop="dataScope" label="数据权限" />
             <el-table-column prop="level" label="角色级别" />
-            <el-table-column :show-overflow-tooltip="true" prop="description" label="描述" />
+            <el-table-column :show-overflow-tooltip="true" prop="description" label="描述">
+              <template slot-scope="scope">
+                {{ scope.row.description == null ? '-' : scope.row.description }}
+              </template>
+            </el-table-column>
             <el-table-column :show-overflow-tooltip="true" width="135px" prop="createTime" label="创建日期" />
             <el-table-column v-if="checkPer(['admin','roles:edit','roles:del'])" label="操作" width="130px" align="center" fixed="right">
               <template slot-scope="scope">
@@ -152,9 +156,6 @@ export default {
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }
-        ],
-        permission: [
-          { required: true, message: '请输入权限', trigger: 'blur' }
         ]
       }
     }

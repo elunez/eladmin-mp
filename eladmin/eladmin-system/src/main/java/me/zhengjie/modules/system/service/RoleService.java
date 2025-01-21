@@ -114,7 +114,7 @@ public interface RoleService extends IService<Role> {
      * @param user 用户信息
      * @return 权限信息
      */
-    List<AuthorityDto> buildAuthorities(User user);
+    List<AuthorityDto> buildPermissions(User user);
 
     /**
      * 验证是否被用户关联

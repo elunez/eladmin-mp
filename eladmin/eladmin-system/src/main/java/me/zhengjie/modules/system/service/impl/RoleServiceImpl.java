@@ -152,7 +152,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public List<Role> findByUsersId(Long userId) {
-        return roleMapper.findByUserId(userId);
+        String key = CacheKey.ROLE_USER + userId;
+        List<Role> roles = redisUtils.getList(key, Role.class);
+        if (CollUtil.isEmpty(roles)) {
+            roles = roleMapper.findByUserId(userId);
+            redisUtils.set(key, roles, 1, TimeUnit.DAYS);
+        }
+        return roles;
     }
 
     @Override
@@ -168,7 +174,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public List<AuthorityDto> buildAuthorities(User user) {
+    public List<AuthorityDto> buildPermissions(User user) {
         String key = CacheKey.ROLE_AUTH + user.getId();
         List<AuthorityDto> authorityDtos = redisUtils.getList(key, AuthorityDto.class);
         if (CollUtil.isEmpty(authorityDtos)) {
@@ -228,6 +234,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             redisUtils.delByKeys(CacheKey.DATA_USER, userIds);
             redisUtils.delByKeys(CacheKey.MENU_USER, userIds);
             redisUtils.delByKeys(CacheKey.ROLE_AUTH, userIds);
+            redisUtils.delByKeys(CacheKey.ROLE_USER, userIds);
         }
         redisUtils.del(CacheKey.ROLE_ID + id);
     }
