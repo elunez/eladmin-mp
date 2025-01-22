@@ -232,7 +232,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         }
     }
 
-    @SuppressWarnings({"all"})
+    @SuppressWarnings({"unchecked","all"})
     public static List<Field> getAllFields(Class clazz, List<Field> fields) {
         if (clazz != null) {
             fields.addAll(Arrays.asList(clazz.getDeclaredFields()));

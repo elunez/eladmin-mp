@@ -7,7 +7,7 @@
 模板文档： [https://panjiachen.github.io/vue-element-admin-site/zh/guide/](https://panjiachen.github.io/vue-element-admin-site/zh/guide/)
 
 #### Build Setup
-**推荐 node 版本：12-16**
+**推荐 node 版本：12+**
 ``` bash
 # 配置镜像加速
 https://www.ydyno.com/archives/1219.html
@@ -34,7 +34,14 @@ npm run build:prod
 
 2、加速node-sass安装
 
-https://www.ydyno.com/archives/1219.html
+https://izlzl.com/archives/1219.html
+
+3、出现 npm ERR! ModuleNotFoundError: No module named 'distutils'
+
+```
+需要安装 python，安装 pip 或者 pip3
+然后安装 pip install distutils / pip3 install distutils
+```
 
 #### 特别鸣谢
 

@@ -130,7 +130,7 @@ public class SwaggerConfig {
      * @return /
      */
     @Bean
-    @SuppressWarnings({"all"})
+    @SuppressWarnings({"unchecked","all"})
     public static BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
         return new BeanPostProcessor() {
 

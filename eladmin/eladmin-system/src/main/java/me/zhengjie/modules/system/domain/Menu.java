@@ -15,7 +15,7 @@
  */
 package me.zhengjie.modules.system.domain;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -109,14 +109,17 @@ public class Menu extends BaseEntity implements Serializable {
         return Objects.hash(id);
     }
 
+    @ApiModelProperty(value = "是否有子节点")
     public Boolean getHasChildren() {
         return subCount > 0;
     }
 
+    @ApiModelProperty(value = "是否为叶子")
     public Boolean getLeaf() {
         return subCount <= 0;
     }
 
+    @ApiModelProperty(value = "标签名称")
     public String getLabel() {
         return title;
     }
