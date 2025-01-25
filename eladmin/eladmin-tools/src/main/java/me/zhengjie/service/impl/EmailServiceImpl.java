@@ -37,7 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "email", keyGenerator = "keyGenerator")
+@CacheConfig(cacheNames = "email")
 public class EmailServiceImpl extends ServiceImpl<EmailConfigMapper, EmailConfig> implements EmailService {
 
     @Override

@@ -52,7 +52,7 @@ import java.util.*;
  */
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "qiNiu", keyGenerator = "keyGenerator")
+@CacheConfig(cacheNames = "qiNiu")
 public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, QiniuContent> implements QiniuContentService {
 
     private final QiniuContentMapper qiniuContentMapper;
@@ -104,7 +104,7 @@ public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, Qin
             }
             return content;
         } catch (Exception e) {
-           throw new BadRequestException(e.getMessage());
+            throw new BadRequestException(e.getMessage());
         }
     }
 
