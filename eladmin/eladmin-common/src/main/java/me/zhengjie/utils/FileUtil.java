@@ -213,7 +213,7 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         BigExcelWriter writer = ExcelUtil.getBigWriter(file);
         // 处理数据以防止CSV注入
         List<Map<String, Object>> sanitizedList = list.parallelStream().map(map -> {
-            Map<String, Object> sanitizedMap = new HashMap<>();
+            Map<String, Object> sanitizedMap = new LinkedHashMap<>();
             map.forEach((key, value) -> {
                 if (value instanceof String) {
                     String strValue = (String) value;
