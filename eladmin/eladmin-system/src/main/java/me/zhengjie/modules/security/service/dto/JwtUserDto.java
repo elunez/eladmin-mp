@@ -43,12 +43,14 @@ public class JwtUserDto implements UserDetails {
     @ApiModelProperty(value = "角色")
     private final List<AuthorityDto> authorities;
 
-    @Setter
-    @ApiModelProperty(value = "密码")
-    private String password;
-
     public Set<String> getRoles() {
         return authorities.stream().map(AuthorityDto::getAuthority).collect(Collectors.toSet());
+    }
+
+    @Override
+    @JSONField(serialize = false)
+    public String getPassword() {
+        return user.getPassword();
     }
 
     @Override
