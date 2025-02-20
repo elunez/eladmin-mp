@@ -81,7 +81,7 @@ export default {
         if (this.params[item] === null || this.params[item] === '') this.params[item] = undefined
       })
       return {
-        current: this.page,
+        page: this.page,
         size: this.size,
         ...this.query,
         ...this.params

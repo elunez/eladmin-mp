@@ -346,7 +346,7 @@ function CRUD(options) {
         if (crud.params[item] === null || crud.params[item] === '') crud.params[item] = undefined
       })
       return {
-        current: crud.page.page,
+        page: crud.page.page,
         size: crud.page.size,
         ...crud.query,
         ...crud.params
