@@ -74,8 +74,9 @@ public class OnlineUserService {
      */
     public PageResult<OnlineUserDto> getAll(String username, Pageable pageable){
         List<OnlineUserDto> onlineUserDtos = getAll(username);
+        int pageNumber = pageable.getPageNumber() - 1;
         return PageUtil.toPage(
-                PageUtil.paging(pageable.getPageNumber(),pageable.getPageSize(), onlineUserDtos),
+                PageUtil.paging(pageNumber,pageable.getPageSize(), onlineUserDtos),
                 onlineUserDtos.size()
         );
     }
