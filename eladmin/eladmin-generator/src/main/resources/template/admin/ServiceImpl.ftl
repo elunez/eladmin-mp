@@ -75,7 +75,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     public void update(${className} resources) {
         ${className} ${changeClassName} = getById(resources.get${pkCapitalColName}());
         ${changeClassName}.copy(resources);
-        ${changeClassName}Mapper.update(${changeClassName});
+        ${changeClassName}Mapper.updateById(${changeClassName});
     }
 
     @Override
