@@ -63,7 +63,6 @@ public class LocalStorageController {
 
     @PostMapping
     @ApiOperation("上传文件")
-    @PreAuthorize("@el.check('storage:add')")
     public ResponseEntity<Object> createFile(@RequestParam String name, @RequestParam("file") MultipartFile file){
         localStorageService.create(name, file);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -84,7 +83,6 @@ public class LocalStorageController {
     @PutMapping
     @Log("修改文件")
     @ApiOperation("修改文件")
-    @PreAuthorize("@el.check('storage:edit')")
     public ResponseEntity<Object> updateFile(@Validated @RequestBody LocalStorage resources){
         localStorageService.update(resources);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -93,6 +91,7 @@ public class LocalStorageController {
     @Log("删除文件")
     @DeleteMapping
     @ApiOperation("多选删除")
+    @PreAuthorize("@el.check('storage:del')")
     public ResponseEntity<Object> deleteFile(@RequestBody Long[] ids) {
         localStorageService.deleteAll(ids);
         return new ResponseEntity<>(HttpStatus.OK);

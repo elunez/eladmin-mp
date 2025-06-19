@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.zhengjie.mapper.S3StorageMapper">
+    <resultMap id="BaseResultMap" type="me.zhengjie.domain.S3Storage">
+        <id column="storage_id" property="id"/>
+        <result column="file_name" property="fileName"/>
+        <result column="file_real_name" property="fileRealName"/>
+        <result column="file_size" property="fileSize"/>
+        <result column="file_mime_type" property="fileMimeType"/>
+        <result column="file_type" property="fileType"/>
+        <result column="file_path" property="filePath"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        storage_id, file_name, file_real_name, file_size, file_mime_type, file_type, file_path, create_by, update_by, create_time, update_time
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tool_s3_storage
+        <where>
+            <if test="criteria.fileName != null">
+                and file_name like concat('%',#{criteria.fileName},'%')
+            </if>
+        </where>
+        order by storage_id desc
+    </select>
+
+    <select id="selectFilePathById" resultType="java.lang.String">
+        select file_path
+        from tool_s3_storage
+        where storage_id = #{id}
+    </select>
+</mapper>

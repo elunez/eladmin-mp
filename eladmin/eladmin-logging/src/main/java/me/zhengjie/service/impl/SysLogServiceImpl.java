@@ -17,6 +17,7 @@ package me.zhengjie.service.impl;
 
 import cn.hutool.core.lang.Dict;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -126,7 +127,12 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
             // 将RequestBody注解修饰的参数作为请求参数
             RequestBody requestBody = parameters[i].getAnnotation(RequestBody.class);
             if (requestBody != null) {
-                params.putAll((JSONObject) JSON.toJSON(args[i]));
+                Object json = JSON.toJSON(args[i]);
+                if (json instanceof JSONArray) {
+                    params.put("reqBodyList", json);
+                } else {
+                    params.putAll((JSONObject) json);
+                }
             } else {
                 String key = parameters[i].getName();
                 params.put(key, args[i]);

@@ -127,3 +127,20 @@ file:
   # 文件大小 /M
   maxSize: 100
   avatarMaxSize: 5
+
+# 亚马逊S3协议云存储配置
+amz:
+  s3:
+    # 地域
+    region: 填写你的地域名称
+    # 地域对应的 endpoint
+    endPoint: 填写你的Endpoint地址
+    # 访问的域名
+    domain: 填写你的访问域名
+    # 账号的认证信息，或者子账号的认证信息
+    accessKey: 填写你的AccessKey
+    secretKey: 填写你的SecretKey
+    # 存储桶（Bucket）
+    defaultBucket: 填写你的存储桶名称
+    # 文件存储路径
+    timeformat: yyyy-MM
