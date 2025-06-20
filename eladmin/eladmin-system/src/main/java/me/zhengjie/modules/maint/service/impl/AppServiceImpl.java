@@ -61,6 +61,11 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(App resources) {
+        // 验证应用名称是否存在恶意攻击payload，https://github.com/elunez/eladmin/issues/873
+        String appName = resources.getName();
+        if (appName.contains(";") || appName.contains("|") || appName.contains("&")) {
+            throw new IllegalArgumentException("非法的应用名称，请勿包含[; | &]等特殊字符");
+        }
         verification(resources);
         save(resources);
     }
@@ -68,6 +73,11 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(App resources) {
+        // 验证应用名称是否存在恶意攻击payload，https://github.com/elunez/eladmin/issues/873
+        String appName = resources.getName();
+        if (appName.contains(";") || appName.contains("|") || appName.contains("&")) {
+            throw new IllegalArgumentException("非法的应用名称，请勿包含[; | &]等特殊字符");
+        }
         verification(resources);
         App app = getById(resources.getId());
         app.copy(resources);

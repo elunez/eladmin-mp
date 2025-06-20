@@ -263,8 +263,12 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
 	}
 
 	private boolean checkFile(ExecuteShellUtil executeShellUtil, App app) {
-		String result = executeShellUtil.executeForResult("find " + app.getDeployPath() + " -name " + app.getName());
-		return result.indexOf(app.getName())>0;
+		String deployPath = app.getDeployPath();
+		String appName = app.getName();
+		// 使用安全的命令执行方式，避免直接拼接字符串，https://github.com/elunez/eladmin/issues/873
+		String[] command = {"find", deployPath, "-name", appName};
+		String result = executeShellUtil.executeForResult(Arrays.toString(command));
+		return result.contains(appName);
 	}
 
 	/**
