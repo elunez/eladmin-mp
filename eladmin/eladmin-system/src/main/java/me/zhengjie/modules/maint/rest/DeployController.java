@@ -136,7 +136,7 @@ public class DeployController {
 	@PreAuthorize("@el.check('deploy:edit')")
 	public ResponseEntity<String> serverStatus(@Validated @RequestBody Deploy resources){
 		String result = deployService.serverStatus(resources);
-    	return new ResponseEntity<>(result,HttpStatus.OK);
+		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 
 	@Log("启动服务")
