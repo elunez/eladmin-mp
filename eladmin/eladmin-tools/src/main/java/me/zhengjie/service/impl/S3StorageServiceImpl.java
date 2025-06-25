@@ -71,12 +71,6 @@ public class S3StorageServiceImpl extends ServiceImpl<S3StorageMapper, S3Storage
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void create(S3Storage resources) {
-        s3StorageMapper.insert(resources);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
     public void deleteAll(List<Long> ids) {
         // 检查桶是否存在
         String bucketName = amzS3Config.getDefaultBucket();

@@ -49,12 +49,6 @@ public interface S3StorageService extends IService<S3Storage> {
     List<S3Storage> queryAll(S3StorageQueryCriteria criteria);
 
     /**
-    * 创建
-    * @param resources /
-    */
-    void create(S3Storage resources);
-
-    /**
     * 多选删除
     * @param ids /
     */

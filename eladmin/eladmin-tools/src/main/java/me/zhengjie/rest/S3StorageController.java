@@ -15,7 +15,6 @@
  */
 package me.zhengjie.rest;
 
-import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -56,21 +55,21 @@ public class S3StorageController {
     @ApiOperation("导出数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check('storage:list')")
-    public void exportQiNiu(HttpServletResponse response, S3StorageQueryCriteria criteria) throws IOException {
+    public void exportS3Storage(HttpServletResponse response, S3StorageQueryCriteria criteria) throws IOException {
         s3StorageService.download(s3StorageService.queryAll(criteria), response);
     }
 
     @GetMapping
     @ApiOperation("查询文件")
     @PreAuthorize("@el.check('storage:list')")
-    public ResponseEntity<PageResult<S3Storage>> queryQiNiu(S3StorageQueryCriteria criteria){
+    public ResponseEntity<PageResult<S3Storage>> queryS3Storage(S3StorageQueryCriteria criteria){
         Page<Object> page = new Page<>(criteria.getPage(), criteria.getSize());
         return new ResponseEntity<>(s3StorageService.queryAll(criteria, page),HttpStatus.OK);
     }
 
     @PostMapping
     @ApiOperation("上传文件")
-    public ResponseEntity<Object> uploadQiNiu(@RequestParam MultipartFile file){
+    public ResponseEntity<Object> uploadS3Storage(@RequestParam MultipartFile file){
         S3Storage storage = s3StorageService.upload(file);
         Map<String,Object> map = new HashMap<>(3);
         map.put("id",storage.getId());
@@ -82,7 +81,7 @@ public class S3StorageController {
     @Log("下载文件")
     @ApiOperation("下载文件")
     @GetMapping(value = "/download/{id}")
-    public ResponseEntity<Object> downloadQiNiu(@PathVariable Long id){
+    public ResponseEntity<Object> downloadS3Storage(@PathVariable Long id){
         Map<String,Object> map = new HashMap<>(1);
         S3Storage storage = s3StorageService.getById(id);
         if (storage == null) {
@@ -95,20 +94,11 @@ public class S3StorageController {
         return new ResponseEntity<>(map,HttpStatus.OK);
     }
 
-    @Log("删除文件")
-    @ApiOperation("删除文件")
-    @DeleteMapping(value = "/{id}")
-    @PreAuthorize("@el.check('storage:del')")
-    public ResponseEntity<Object> deleteQiNiu(@PathVariable Long id){
-        s3StorageService.deleteAll(ListUtil.of(id));
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @Log("删除多个文件")
     @DeleteMapping
     @ApiOperation("删除多个文件")
     @PreAuthorize("@el.check('storage:del')")
-    public ResponseEntity<Object> deleteAllQiNiu(@RequestBody List<Long> ids) {
+    public ResponseEntity<Object> deleteAllS3Storage(@RequestBody List<Long> ids) {
         s3StorageService.deleteAll(ids);
         return new ResponseEntity<>(HttpStatus.OK);
     }
