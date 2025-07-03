@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -90,6 +91,7 @@ public class Menu extends BaseEntity implements Serializable {
     private Integer subCount = 0;
 
     @ApiModelProperty(value = "外链菜单")
+    @JsonProperty("iFrame")
     private Boolean iFrame;
 
     @Override
