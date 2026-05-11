@@ -90,15 +90,15 @@
         left join sys_dept d on u.dept_id = d.dept_id
         <include refid="Whrer_Sql"/>
         order by u.user_id desc
-        <if test="criteria.offset != null">
-            limit #{criteria.offset}, #{criteria.size}
-        </if>
         ) u
         left join sys_users_jobs suj on u.user_user_id = suj.user_id
         left join sys_job j on suj.job_id = j.job_id
         left join sys_users_roles sur on u.user_user_id = sur.user_id
         left join sys_role r on sur.role_id = r.role_id
         order by u.user_user_id desc
+        <if test="criteria.offset != null">
+            limit #{criteria.offset}, #{criteria.size}
+        </if>
     </select>
 
     <select id="countAll" resultType="java.lang.Long">
